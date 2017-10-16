@@ -20,16 +20,16 @@ void GPS::init(){
   // Waiting for GPS fix:
   while(!GPSFix) {  // Wait for signal
     if (Serial1.available() > 0) {
-      //Message(F("##\t\tGPS:\twaiting"), F(""), F(""), 1);
+      Logger::Message(F("##\t\tGPS:\twaiting"), F(""), F(""), 1);
       if (gps.encode(Serial1.read()) && gps.location.isValid()) {
         // Initialization of the GPS location:
         GPS_latInit = gps.location.lat();
         GPS_longInit = gps.location.lng();
 
         // Feedback:
-        // Message(F("##\t\tGPS:\tFix"), F(""), F(""), 1);
-        // Message(F("##\t"), F("GPS Initial Latitude:"), String(*p_GPS_latInit), 1);
-        // Message(F("##\t"), F("GPS Initial Longitude:"), String(*p_GPS_longInit), 1);
+        Logger::Message(F("##\t\tGPS:\tFix"), F(""), F(""), 1);
+        Logger::Message(F("##\t"), F("GPS Initial Latitude:"), String(*p_GPS_latInit), 1);
+        Logger::Message(F("##\t"), F("GPS Initial Longitude:"), String(*p_GPS_longInit), 1);
 
         // End of the loop / the initialization
         GPSFix = true;  // Indicates success of the initialization
@@ -37,13 +37,13 @@ void GPS::init(){
     }
     if (millis() > 5000 && gps.charsProcessed() < 10) {
       // Feedback:
-      // Message(F("##\t\tGPS:\tNo Signal!"), F(""), F(""), 1);
+      Logger::Message(F("##\t\tGPS:\tNo Signal!"), F(""), F(""), 1);
     }
   }
 }
 
 void GPS::updateMeasures(){
-  // Log(1, F("GPSLoop()"), F(""));
+  Logger::Log(1, F("GPSLoop()"), F(""));
   
   if (Serial1.available() > 0) {
     if (gps.encode(Serial1.read())) {
@@ -53,21 +53,21 @@ void GPS::updateMeasures(){
         GPS_long = gps.location.lng();  // In degrees
         
         // Feedback:
-        // Message("\t", "GPS:", "Fix", 1);
-        // Log(0, F("GPS lat:"), String(latActual));
-        // Log(0, F("GPS longNext:"), String(longActual));
+        Logger::Message("\t", "GPS:", "Fix", 1);
+        Logger::Log(0, F("GPS lat:"), String(latActual));
+        Logger::Log(0, F("GPS longNext:"), String(longActual));
         
         // Changing the reference:
         GPS_PosX = (double)(EARTH_RADIUS*(GPS_lat - GPS_latInit)*(DEG_TO_RAD)*cos(GPS_longInit)); // x = EARTH_RADIUS*(a2-a1)*(pi/180)*cos(b1)
         GPS_PosY = (double)(EARTH_RADIUS*(GPS_long - GPS_longInit)*(DEG_TO_RAD)); // y = EARTH_RADIUS*(b2-b1)*pi/180
         
         // Feedback:
-        // Log(2, F("GPS X:"), String(*p_GPS_PosX));
-        // Log(2, F("GPS Y:"), String(*p_GPS_PosY));
+        Logger::Log(2, F("GPS X:"), String(*p_GPS_PosX));
+        Logger::Log(2, F("GPS Y:"), String(*p_GPS_PosY));
       }
     }
     else {
-      // Message(F("\t"), F("GPS:"), F("Lost!"), 1);
+      Logger::Message(F("\t"), F("GPS:"), F("Lost!"), 1);
     }
   }
 }

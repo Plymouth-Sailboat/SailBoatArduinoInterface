@@ -15,13 +15,13 @@ void Rudder::init(){
 }
 
 void Rudder::applyCommand(double command){
-	// Log(1, F("RudderApplyCommand()"), F(""));
+	Logger::Log(1, F("RudderApplyCommand()"), F(""));
 
 	unsigned int rudderCommandExact = RUDDER_POS_NEUTRAL;
 
 	// Generates the exact command:
 	rudderCommandExact = mapf(command, RUDDER_MIN, RUDDER_MAX, RUDDER_POS_MAX, RUDDER_POS_MIN);
-	// Log(0, F("RudderCommandExact"), String(rudderCommandExact));
+	Logger::Log(0, F("RudderCommandExact"), String(rudderCommandExact));
 
 	// Set the servo at the wanted position:
 	rudder.write(rudderCommandExact);

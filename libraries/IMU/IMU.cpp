@@ -35,7 +35,7 @@ void IMU::init(){
 }
 
 void IMU::updateMeasures(){
-	// Log(1, F("IMULoop()"), F(""));
+	Logger::Log(1, F("IMULoop()"), F(""));
 
 	// Temporary variables:
 	int Mx = 0,
@@ -77,7 +77,7 @@ void IMU::updateMeasures(){
 }
 
 int IMU::Read_Compass(byte axis) {
-	// Log(1, F("Read_Compass()"), F(""));
+	Logger::Log(1, F("Read_Compass()"), F(""));
 
 	int Data;
 
@@ -115,7 +115,7 @@ void IMU::Trigger_Compass(void) {
 }
 
 double IMU::findHeading(int compass_x, int compass_y) {
-	// Log(1, F("findHeading()"), F(""));
+	Logger::Log(1, F("findHeading()"), F(""));
 	// TODO: Implement a tilt compensated compass
 
 	double angle,

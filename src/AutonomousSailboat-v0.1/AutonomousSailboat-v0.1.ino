@@ -8,11 +8,10 @@ void setup() {
   
   Sailboat::Instance()->init();
 
-  Sailboat::Instance()->controller = new Controller(3);
-  Sailboat::Instance()->controller->init();
+  Sailboat::Instance()->setController(new Controller(3));
 }
 
 void loop() {
   Sailboat::Instance()->updateSensors();
-  Sailboat::Instance()->controller->Control();
+  Sailboat::Instance()->Control();
 }

@@ -13,28 +13,31 @@
 #include <ControllerInterface.h>
 
 class Sailboat{
-	public:
-		Sailboat(){}
-		~Sailboat();
-		
-		void init();
-		void updateSensors();
-		
-		WindSensor* getWindSensor(){return (WindSensor*)sensors[SENSOR_WINDSENSOR];}
-		GPS* getGPS(){return (GPS*)sensors[SENSOR_GPS];}
-		IMU* getIMU(){return (IMU*)sensors[SENSOR_IMU];}
-		
-		Rudder* getRudder(){return (Rudder*)actuators[ACTUATOR_RUDDER];}
-		Sail* getSail(){return (Sail*)actuators[ACTUATOR_SAIL];}
+public:
+	Sailboat(){}
+	~Sailboat();
+	
+	void init();
+	void updateSensors();
+	
+	WindSensor* getWindSensor(){return (WindSensor*)sensors[SENSOR_WINDSENSOR];}
+	GPS* getGPS(){return (GPS*)sensors[SENSOR_GPS];}
+	IMU* getIMU(){return (IMU*)sensors[SENSOR_IMU];}
+	
+	Rudder* getRudder(){return (Rudder*)actuators[ACTUATOR_RUDDER];}
+	Sail* getSail(){return (Sail*)actuators[ACTUATOR_SAIL];}
+	
+	void setController(ControllerInterface* control){if(controller != NULL)delete controller; controller = control; controller->init();}
+	void Control(){if(controller != NULL)controller->Control();}
 
-    ControllerInterface* controller;
-		
-		static Sailboat* Instance(){if(sailboat == NULL) sailboat = new Sailboat(); return sailboat;}
-	private:
-		static Sailboat* sailboat;
-		
-		Sensor* sensors[NB_SENSORS];
-		Actuator* actuators[NB_ACTUATORS];
+	
+	static Sailboat* Instance(){if(sailboat == NULL) sailboat = new Sailboat(); return sailboat;}
+private:
+	static Sailboat* sailboat;
+	
+	ControllerInterface* controller;
+	Sensor* sensors[NB_SENSORS];
+	Actuator* actuators[NB_ACTUATORS];
 };
 
 #endif
