@@ -1,12 +1,32 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#include <Arduino.h>
-
-#define NB_SENSORS		2
+#define NB_SENSORS		3
 
 #define SENSOR_WINDSENSOR	0
 #define SENSOR_GPS			1
+#define SENSOR_IMU			2
+
+#define NB_ACTUATORS		2
+
+#define ACTUATOR_RUDDER		0
+#define ACTUATOR_SAIL		0
+
+
+// Serial: To use it, let it uncommented, otherwise comment it
+#define SERIAL_ACTIVATED
+
+// LCD: To use it, let it uncommented, otherwise comment it
+#define LCD_SCREEN_ACTIVATED
+
+// SD card: To use it, let it uncommented, otherwise comment it
+#define SD_ACTIVATED
+
+// LED: To use it, let it uncommented, otherwise comment it
+#define LED_ACTIVATED
+
+// RTC: To use it, let it uncommented, otherwise comment it
+//#define RTC_ACTIVATED
 
 // ####################################################
 // #                                                  #
@@ -39,6 +59,16 @@
 #define RC_PIN_1 10   // Pin 10 Connected to Channel-1 of Transmitter
 #define RC_PIN_2 11   // Pin 11 Connected to Channel-3 of Transmitter
 #define RC_PIN_3 12   // Pin 12 Connected to Channel-5 of Transmitter
+
+
+// ####################################################
+// #                                                  #
+// #                  REGISTER VALUES                 #
+// #                                                  #
+// ####################################################
+// I2C addresses of Accelerometer/Gyro and Compass
+#define I2CACCGYROADD 0x68 
+#define I2CCOMPADD 0x0C
 
 
 // IMU:
@@ -74,8 +104,6 @@
 //  GND  =====   GND
 #define GPS_RX 18
 #define GPS_TX 19
-#define GPS_BAUD_RATE	9600
-#define EARTH_RADIUS	6371000  // Earth radius in metres
 
 // RTC Module: I2C bus
 // SDA pin 20
@@ -129,6 +157,7 @@
 //    GND    =====    GND
 //    VCC    =====    3.3V !!!!!!!!!!! Be careful, it is supposed to be 
 //                    5V, but it does not work with 5V, due to overpowering
+
 
 
 #endif

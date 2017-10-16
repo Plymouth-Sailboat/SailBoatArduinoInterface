@@ -1,6 +1,9 @@
 #ifndef GPS_SENSOR_H
 #define GPS_SENSOR_H
 
+#define GPS_BAUD_RATE	9600
+#define EARTH_RADIUS	6371000  // Earth radius in metres
+
 #include <SensorsInterface.h>
 #include <TinyGPS++.h>
 
@@ -13,6 +16,8 @@ class GPS : public Sensor{
 		
 	double getLat(){return GPS_lat;}
 	double getLong(){return GPS_long;}
+	double getLatInit(){return GPS_latInit;}
+	double getLongInit(){return GPS_longInit;}
 	double getX(){return GPS_PosX;}
 	double getY(){return GPS_PosY;}
 	

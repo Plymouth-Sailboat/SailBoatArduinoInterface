@@ -1,6 +1,26 @@
 #ifndef SAIL_H
 #define SAIL_H
 
+#define D_MAST_MAINSAIL_SHEET  390 // between 170 and 710  // Place where the sheet is attached
+#define D_MAST_RING 310
+#define D_RING_ROPE 20
+#define D_WINCH_BOOM 70
+#define ROPE_MAX 554
+#define ROPE_MIN 0
+//#define                  //WINCH_NO_LOAD_SPEED_4_8V = 1600,  // To make an estimation of the delay required after command when power supply is 4.8V - For function WinchSecure()
+//#define                  //WINCH_NO_LOAD_SPEED_6V = 1400,  // To make an estimation of the delay required after command when power supply is 6V - For function WinchSecure()
+#define SERVO_PRECISION 100  // To compute with a best precision (x 100 before operations 
+                                           //  with integer, then /100 to have a float / double)
+
+// Limits of the angles between the sail / boom and the boat:
+#define SAIL_MIN 0
+#define SAIL_NEUTRAL SAIL_MIN
+#define SAIL_MAX 90
+#define WINCH_ANGLE_MIN 0 // Physical limit of the servomotor
+#define WINCH_ANGLE_MAX 2826  // Physical limit of the servomotor
+#define WINCH_PWM_MIN 600  // according to the seller
+#define WINCH_PWM_MAX 2400  // according to the seller
+
 #include <ActuatorInterface.h>
 #include <Servo.h>
 

@@ -2,6 +2,10 @@
 #define SENSOR_H
 
 #include <config.h>
+#include <Arduino.h>
+#include <Helper.h>
+#include <Log.h>
+
 
 class Sensor{
 	public:

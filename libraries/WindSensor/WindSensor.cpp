@@ -22,4 +22,15 @@ void WindSensor::updateMeasures(){
 		// Feedback initialization:
     //Message(F("##\t"), F("Wind Sensor seems to be OK"), F(""), 1);
 	}
+	
+	//Log(0, F("Wind sensor corrected value :"), String(value));
+
+	// returns the angle, with reference to the boat:
+	angle = mapf(value, WIND_SENSOR_MIN, WIND_SENSOR_MAX, ANGLE_MIN, ANGLE_MAX);  // The angle is now in the [0;+360] interval
+
+   // To set the angle in the [-180;+180] interval
+   if (angle > 180) {
+      angle -= ANGLE_MAX;
+  }
+  angle = -angle;
 }

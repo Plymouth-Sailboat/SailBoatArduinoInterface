@@ -1,11 +1,18 @@
 #include <Sailboat.h>
+#include <Log.h>
 
-Sailboat boat;
+#include "Controller.h"
 
 void setup() {
-  boat.init();
+  Logger::MessagesSetup();
+  
+  Sailboat::Instance()->init();
+
+  Sailboat::Instance()->controller = new Controller(3);
+  Sailboat::Instance()->controller->init();
 }
 
 void loop() {
-  boat.updateSensors();
+  Sailboat::Instance()->updateSensors();
+  Sailboat::Instance()->controller->Control();
 }
