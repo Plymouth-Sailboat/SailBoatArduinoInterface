@@ -96,7 +96,7 @@ int IMU::Read_Compass(byte axis) {
 }
 
 void IMU::Trigger_Compass(void) {
-	// Log(1, F("Trigger_Compass()"), F(""));
+	Logger::Log(1, F("Trigger_Compass()"), F(""));
 
 	// Trigger a measurement
 	Wire.beginTransmission(I2CCOMPADD); 
