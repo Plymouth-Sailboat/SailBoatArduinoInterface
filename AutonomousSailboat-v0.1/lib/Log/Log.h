@@ -32,7 +32,7 @@ class Logger{
 public:
 	Logger(){}
 	
-	static void MessagesSetup();
+	static void MessagesSetup(){}
 	/**
 * Logging Function
 * Prints out message on the SD card and the serial port - this function is made for debug
@@ -50,7 +50,7 @@ public:
 *
 * @return LED: Nothing
 */
-	static void Log(int level, String field1, String field2);
+	static void Log(int level, String field1, String field2){}
 
 
 	/**
@@ -72,7 +72,7 @@ public:
 * @return LED: 0 if led = 0
 *              1 if led = 1
 */
-	static void Message(String type, String field1, String field2, int led);
+	static void Message(String type, String field1, String field2, int led){}
 
 
 	/**
@@ -91,7 +91,7 @@ public:
 *
 * @return  LED: Nothing
 */
-	static void Warning(String function, String message);
+	static void Warning(String function, String message){}
 
 
 	/**
@@ -111,7 +111,7 @@ public:
 *
 * @return  LED: 10 x fast blink
 */
-	static void Error(String function, String message);
+	static void Error(String function, String message){}
 	
 private:
 // LCD screen:
