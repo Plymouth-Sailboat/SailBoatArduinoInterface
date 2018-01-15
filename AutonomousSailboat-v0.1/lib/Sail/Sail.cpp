@@ -22,7 +22,7 @@ void Sail::applyCommand(double command){
 	temp3 = 0,
 	temp4 = 0;
 
-	Logger::Log(1, F("SailApplyCommand()"), F(""));
+//	Logger::Log(1, F("SailApplyCommand()"), F(""));
 
 	/* Old way to do it - could be interesting
 // Vectorial formula to find the desired length of the rope:
@@ -37,21 +37,21 @@ Log(0, F("SheetCommand:"), String(sheetCommand));*/
 
 
 	command = command*DEG_TO_RAD;  //cosinus has to be working with radians
-	Logger::Log(0, F("sailCommandRad:"), String(sailCommand));
+//	Logger::Log(0, F("sailCommandRad:"), String(sailCommand));
 
 	temp1 = square2(D_MAST_MAINSAIL_SHEET);
-	Logger::Log(0, F("SheetCommand1:"), String(temp1));
+//	Logger::Log(0, F("SheetCommand1:"), String(temp1));
 	temp2 = square2(D_MAST_RING) + square2(D_WINCH_BOOM);
-	Logger::Log(0, F("SheetCommand2:"), String(temp2));
+//	Logger::Log(0, F("SheetCommand2:"), String(temp2));
 	temp3 = 2*cos(command)*D_MAST_MAINSAIL_SHEET*D_MAST_RING;
-	Logger::Log(0, F("SheetCommand3:"), String(temp3));
+//	Logger::Log(0, F("SheetCommand3:"), String(temp3));
 	temp3 = constrain(temp3, 0, 241800);  // Security - raw values because the computation is costly, but it is the 
 	//            expression above with sailCommand at its min and max
-	Logger::Log(0, F("SheetCommand3corr:"), String(temp3));
+//	Logger::Log(0, F("SheetCommand3corr:"), String(temp3));
 	temp4 = temp1 + temp2 - temp3;
-	Logger::Log(0, F("SheetCommand4:"), String(temp4));
+//	Logger::Log(0, F("SheetCommand4:"), String(temp4));
 	sheetCommand = sqrt(temp4);  // length of the rope
-	Logger::Log(0, F("SheetCommand:"), String(sheetCommand));
+//	Logger::Log(0, F("SheetCommand:"), String(sheetCommand));
 
 
 	// TODO: find why the 90° is not reached!
@@ -59,30 +59,30 @@ Log(0, F("SheetCommand:"), String(sheetCommand));*/
 	// Pythagore's formula to find the desired angle of the winch to reach the desired length of the rope:
 	ropeCommand = sqrt(abs(square2(ROPE_RING_MAX - sheetCommand) - square2(D_RING_ROPE)));
 	ropeCommand = ROPE_MAX - ropeCommand;
-	Logger::Log(0, F("RopeCommand:"), String(ropeCommand));
+//	Logger::Log(0, F("RopeCommand:"), String(ropeCommand));
 
 	// Safety limits: rope
 	ropeCommand = constrain(ropeCommand, ROPE_MIN, ROPE_MAX);
 
-	Logger::Log(0, F("RopeCommandSafe:"), String(ropeCommand));
+//	Logger::Log(0, F("RopeCommandSafe:"), String(ropeCommand));
 
 
 	// Formula to find the link between the winch angle and the length of rope wound or unwound:
 	winchCommand = 2*ropeCommand/WINCH_DIAMETER;
 	winchCommand = winchCommand*RAD_TO_DEG - WINCH_OFFSET;
-	Logger::Log(0, F("WinchCommand:"), String(winchCommand));
+//	Logger::Log(0, F("WinchCommand:"), String(winchCommand));
 
 	// Safety limits: winch
 	winchCommand = constrain(winchCommand, max(WINCH_MIN_CONFIG, WINCH_ANGLE_MIN), min(WINCH_MAX_CONFIG, WINCH_ANGLE_MAX));
 
-	Logger::Log(0, F("WinchCommandSafe:"), String(winchCommand));
+//	Logger::Log(0, F("WinchCommandSafe:"), String(winchCommand));
 
 	// Set the servo at the wanted position:
 	Winch((unsigned int) winchCommand);
 }
 
 void Sail::Winch(unsigned int angle) {
-  Logger::Log(1, F("Winch()"), F(""));  // To have a clean Boot menu
+  //Logger::Log(1, F("Winch()"), F(""));  // To have a clean Boot menu
 
   int pwmLengh;
   

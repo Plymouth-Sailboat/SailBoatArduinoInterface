@@ -4,7 +4,7 @@ void WindSensor::init(){
 }
 
 void WindSensor::updateMeasures(){
-	Logger::Log(1, F("SetupWindSensor()"), F(""));  // Done in the Setup
+//	Logger::Log(1, F("SetupWindSensor()"), F(""));  // Done in the Setup
 	// Safety:
 #ifndef WIND_SENSOR_PIN
 	// Generation of a compiler error:
@@ -16,14 +16,14 @@ void WindSensor::updateMeasures(){
 	if ((value < 49) || (value > 1000)){
 		// This test might not detect if the signal wire is not linked but if it is activated, 
 		//   there is 100% chances that it's true !
-		Logger::Warning(F("WindAngle"), F("No Wind Sensor/Value read or sensor in bad state!"));
+//		Logger::Warning(F("WindAngle"), F("No Wind Sensor/Value read or sensor in bad state!"));
 	}
 	else {
 		// Feedback initialization:
-		Logger::Message(F("##\t"), F("Wind Sensor seems to be OK"), F(""), 1);
+//		Logger::Message(F("##\t"), F("Wind Sensor seems to be OK"), F(""), 1);
 	}
 	
-	Logger::Log(0, F("Wind sensor corrected value :"), String(value));
+//	Logger::Log(0, F("Wind sensor corrected value :"), String(value));
 
 	// returns the angle, with reference to the boat:
 	angle = mapf(value, WIND_SENSOR_MIN, WIND_SENSOR_MAX, ANGLE_MIN, ANGLE_MAX);  // The angle is now in the [0;+360] interval
