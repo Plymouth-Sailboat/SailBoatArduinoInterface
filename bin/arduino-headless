@@ -1,0 +1,8 @@
+#!/bin/bash
+
+SCREEN=3
+Xvfb :$SCREEN -nolisten tcp -screen :$SCREEN 640x480x8 &
+
+xvfb="$!"
+DISPLAY=:$SCREEN arduino $@
+kill -9 $xvfb
