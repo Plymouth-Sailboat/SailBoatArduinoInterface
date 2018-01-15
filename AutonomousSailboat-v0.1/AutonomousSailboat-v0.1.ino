@@ -12,11 +12,17 @@ void setup() {
   nh.initNode();
   Sailboat::Instance()->init(nh);
 
-  Sailboat::Instance()->setController(new Controller(3));
+  ControllerInterface* controllers[1];
+  controllers[0] = new Controller(3);
+  
+  Sailboat::Instance()->setControllers(controllers,1);
 }
 
 void loop() {
   Sailboat::Instance()->updateSensors();
   Sailboat::Instance()->communicateData();
   Sailboat::Instance()->Control();
+
+  nh.spinOnce();
+  delay(50);
 }

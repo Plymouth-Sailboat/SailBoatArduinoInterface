@@ -12,10 +12,11 @@
 
 #include <ControllerInterface.h>
 #include <ros.h>
+#include <std_msgs/String.h>
 
 class Sailboat{
 public:
-	Sailboat(){}
+	Sailboat() : sub("sailboat_msg",&Sailboat::msgCallback, this){}
 	~Sailboat();
 	
 	void init(ros::NodeHandle& n);
@@ -29,17 +30,25 @@ public:
 	Rudder* getRudder(){return (Rudder*)actuators[ACTUATOR_RUDDER];}
 	Sail* getSail(){return (Sail*)actuators[ACTUATOR_SAIL];}
 	
-	void setController(ControllerInterface* control){if(controller != NULL)delete controller; controller = control; controller->init();}
-	void Control(){if(controller != NULL)controller->Control();}
+	void setController(ControllerInterface* control){controller = control; controller->init();}
+	void setControllers(ControllerInterface** control, int nb){controllers = control; nbControllers = nb;}
+	void Control();
 
+	void msgCallback(const std_msgs::String& msg);
 	
 	static Sailboat* Instance(){if(sailboat == NULL) sailboat = new Sailboat(); return sailboat;}
 private:
 	static Sailboat* sailboat;
 	
+	ControllerInterface** controllers;
+	int nbControllers;
 	ControllerInterface* controller;
 	Sensor* sensors[NB_SENSORS];
 	Actuator* actuators[NB_ACTUATORS];
+	
+	ros::Subscriber<std_msgs::String, Sailboat> sub;
+	
+	int watchdog;
 };
 
 #endif
