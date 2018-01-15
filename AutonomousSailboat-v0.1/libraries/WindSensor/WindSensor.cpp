@@ -1,8 +1,5 @@
 #include <WindSensor.h>
 
-void WindSensor::init(){
-}
-
 void WindSensor::updateMeasures(){
 //	Logger::Log(1, F("SetupWindSensor()"), F(""));  // Done in the Setup
 	// Safety:
@@ -33,4 +30,12 @@ void WindSensor::updateMeasures(){
 		angle -= ANGLE_MAX;
 	}
 	angle = -angle;
+}
+
+void WindSensor::communicateData(){
+	msg.x = 0;
+	msg.y = 0;
+	msg.theta = angle;
+	
+	pub.publish(&msg);
 }

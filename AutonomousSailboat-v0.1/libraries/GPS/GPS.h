@@ -6,14 +6,16 @@
 
 #include <SensorsInterface.h>
 #include <TinyGPS++.h>
+#include <sensor_msgs/NavSatFix.h>
 
 class GPS : public Sensor{
-	public:
-		GPS(){}
-		
-		void init();
-		void updateMeasures();
-		
+public:
+	GPS() : Sensor("GPS", &msg){}
+	
+	void init(ros::NodeHandle& n);
+	void updateMeasures();
+	void communicateData();
+	
 	double getLat(){return GPS_lat;}
 	double getLong(){return GPS_long;}
 	double getLatInit(){return GPS_latInit;}
@@ -21,11 +23,13 @@ class GPS : public Sensor{
 	double getX(){return GPS_PosX;}
 	double getY(){return GPS_PosY;}
 	
-	private:
-		TinyGPSPlus gps;
-		double GPS_latInit, GPS_longInit;
-		double GPS_lat, GPS_long;
-		double GPS_PosX, GPS_PosY;  // Cartesian location of the boat
+private:
+	TinyGPSPlus gps;
+	double GPS_latInit, GPS_longInit;
+	double GPS_lat, GPS_long;
+	double GPS_PosX, GPS_PosY;  // Cartesian location of the boat
+	
+	sensor_msgs::NavSatFix msg;
 };
 
 #endif

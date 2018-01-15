@@ -12,7 +12,8 @@ Sailboat::~Sailboat(){
 			delete actuators[i];
 	}
 }
-void Sailboat::init(){
+
+void Sailboat::init(ros::NodeHandle& n){
 	sensors[SENSOR_WINDSENSOR] = new WindSensor();
 	sensors[SENSOR_GPS] = new GPS();
 	sensors[SENSOR_IMU] = new IMU();
@@ -21,7 +22,7 @@ void Sailboat::init(){
 	actuators[ACTUATOR_SAIL] = new Sail();
 	
 	for(int i = 0; i < NB_SENSORS; ++i)
-		sensors[i]->init();
+		sensors[i]->init(n);
 	
 	for(int i = 0; i < NB_ACTUATORS; ++i)
 		actuators[i]->init();
@@ -30,4 +31,9 @@ void Sailboat::init(){
 void Sailboat::updateSensors(){
 	for(int i = 0; i < NB_SENSORS; ++i)
 		sensors[i]->updateMeasures();
+}
+
+void Sailboat::communicateData(){
+	for(int i = 0; i < NB_SENSORS; ++i)
+		sensors[i]->communicateData();
 }

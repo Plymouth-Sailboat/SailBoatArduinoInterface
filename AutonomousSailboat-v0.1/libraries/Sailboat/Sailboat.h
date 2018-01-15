@@ -11,14 +11,16 @@
 #include <Sail.h>
 
 #include <ControllerInterface.h>
+#include <ros.h>
 
 class Sailboat{
 public:
 	Sailboat(){}
 	~Sailboat();
 	
-	void init();
+	void init(ros::NodeHandle& n);
 	void updateSensors();
+	void communicateData();
 	
 	WindSensor* getWindSensor(){return (WindSensor*)sensors[SENSOR_WINDSENSOR];}
 	GPS* getGPS(){return (GPS*)sensors[SENSOR_GPS];}

@@ -1,7 +1,7 @@
 #include <IMU.h>
 #include <Wire.h>
 
-void IMU::init(){
+void IMU::init(ros::NodeHandle& n){
 	Wire.begin();
 	
 	Wire.beginTransmission(I2CACCGYROADD);
@@ -32,10 +32,13 @@ void IMU::init(){
 	Wire.write(0x37); 
 	Wire.write(0x02); 
 	Wire.endTransmission(true); 
+	
+
+	Sensor::init(n);
 }
 
 void IMU::updateMeasures(){
-//	Logger::Log(1, F("IMULoop()"), F(""));
+	//	Logger::Log(1, F("IMULoop()"), F(""));
 
 	// Temporary variables:
 	int Mx = 0,
@@ -77,7 +80,7 @@ void IMU::updateMeasures(){
 }
 
 int IMU::Read_Compass(byte axis) {
-//	Logger::Log(1, F("Read_Compass()"), F(""));
+	//	Logger::Log(1, F("Read_Compass()"), F(""));
 
 	int Data;
 
@@ -96,7 +99,7 @@ int IMU::Read_Compass(byte axis) {
 }
 
 void IMU::Trigger_Compass(void) {
-//	Logger::Log(1, F("Trigger_Compass()"), F(""));
+	//	Logger::Log(1, F("Trigger_Compass()"), F(""));
 
 	// Trigger a measurement
 	Wire.beginTransmission(I2CCOMPADD); 
@@ -115,7 +118,7 @@ void IMU::Trigger_Compass(void) {
 }
 
 double IMU::findHeading(int compass_x, int compass_y) {
-//	Logger::Log(1, F("findHeading()"), F(""));
+	//	Logger::Log(1, F("findHeading()"), F(""));
 	// TODO: Implement a tilt compensated compass
 
 	double angle,
@@ -141,4 +144,8 @@ double IMU::findHeading(int compass_x, int compass_y) {
 		angle = (C2*heading2 + C1*heading1 + C0*angle)/(C0 + C1 + C2);
 	}
 	return (angle);
+}
+
+void IMU::communicateData(){
+	
 }

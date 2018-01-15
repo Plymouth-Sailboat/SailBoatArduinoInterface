@@ -49,6 +49,7 @@
 #define C2 1.0
 			 
 #include <SensorsInterface.h>
+#include <sensor_msgs/Imu.h>
 
 typedef struct IMUdata {
   float x,  // coordinate x
@@ -66,10 +67,11 @@ typedef struct IMUstruct {
 
 class IMU : public Sensor{
 	public:
-		IMU(){}
+		IMU() : Sensor("IMU", &msg){}
 		
-		void init();
+		void init(ros::NodeHandle& n);
 		void updateMeasures();
+		void communicateData();
 		
 		double getHeading(){return heading;}
 	private:
@@ -81,6 +83,8 @@ class IMU : public Sensor{
 		int Read_Compass(byte axis);
 		void Trigger_Compass();
 		double findHeading(int compass_x, int compass_y);
+		
+		sensor_msgs::Imu msg;
 };
 
 #endif

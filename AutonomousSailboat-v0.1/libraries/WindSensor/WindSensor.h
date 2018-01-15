@@ -2,6 +2,7 @@
 #define WIND_SENSOR_H
 
 #include <SensorsInterface.h>
+#include <geometry_msgs/Pose2D.h>
 
 #define WIND_SENSOR_MIN 51  // Corresponds approximately at 5% of the maximum readable (1023) 
 #define WIND_SENSOR_MAX 972  // Corresponds approximately at 95% of the minimum readable (1023)
@@ -17,15 +18,16 @@
 			 
 class WindSensor : public Sensor{
 	public:
-		WindSensor(){}
-		
-		void init();
+		WindSensor() : Sensor("Wind", &msg){}
 		void updateMeasures();
+		void communicateData();
 		
 		double getMeasure(){return angle;}
 		
 	private:
 		double angle;
+		geometry_msgs::Pose2D msg;
+		
 };
 
 #endif
