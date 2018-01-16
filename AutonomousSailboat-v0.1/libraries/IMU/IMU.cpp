@@ -78,6 +78,9 @@ void IMU::updateMeasures(){
 	// Finding the heading:
 	heading = findHeading(IMUs.Magneto.x, IMUs.Magneto.y);
 }
+void IMU::updateTest(){
+	heading = 1;
+}
 
 int IMU::Read_Compass(byte axis) {
 	//	Logger::Log(1, F("Read_Compass()"), F(""));
@@ -147,5 +150,11 @@ double IMU::findHeading(int compass_x, int compass_y) {
 }
 
 void IMU::communicateData(){
+	msg.orientation.x = 0.980;
+	msg.orientation.y = 0.001;
+	msg.orientation.z = 0.189;
+	msg.orientation.w = -0.063;
 	
+	msg.header = Logger::buildHeader();
+	pub.publish(&msg);
 }

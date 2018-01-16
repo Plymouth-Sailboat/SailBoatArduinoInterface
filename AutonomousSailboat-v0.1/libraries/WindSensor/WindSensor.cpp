@@ -32,6 +32,10 @@ void WindSensor::updateMeasures(){
 	angle = -angle;
 }
 
+void WindSensor::updateTest(){
+	angle = 120;
+}
+
 void WindSensor::communicateData(){
 	msg.x = 0;
 	msg.y = 0;

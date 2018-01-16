@@ -12,15 +12,17 @@
 
 #include <ControllerInterface.h>
 #include <ros.h>
+#include <geometry_msgs/Twist.h>
 #include <std_msgs/String.h>
 
 class Sailboat{
 public:
-	Sailboat() : sub("sailboat_msg",&Sailboat::msgCallback, this){}
+	Sailboat() : controller(NULL){}
 	~Sailboat();
 	
 	void init(ros::NodeHandle& n);
 	void updateSensors();
+	void updateTestSensors();
 	void communicateData();
 	
 	WindSensor* getWindSensor(){return (WindSensor*)sensors[SENSOR_WINDSENSOR];}
@@ -31,9 +33,11 @@ public:
 	Sail* getSail(){return (Sail*)actuators[ACTUATOR_SAIL];}
 	
 	void setController(ControllerInterface* control){controller = control; controller->init();}
-	void setControllers(ControllerInterface** control, int nb){controllers = control; nbControllers = nb;}
+    void setController(unsigned int index){if(index < nbControllers){controller = controllers[index]; controller->init();}}
+	void setControllers(ControllerInterface** control, unsigned int nb){controllers = control; nbControllers = nb;}
 	void Control();
 
+	void cmdCallback(const geometry_msgs::Twist& msg);
 	void msgCallback(const std_msgs::String& msg);
 	
 	static Sailboat* Instance(){if(sailboat == NULL) sailboat = new Sailboat(); return sailboat;}
@@ -41,12 +45,12 @@ private:
 	static Sailboat* sailboat;
 	
 	ControllerInterface** controllers;
-	int nbControllers;
+	unsigned int nbControllers;
 	ControllerInterface* controller;
 	Sensor* sensors[NB_SENSORS];
 	Actuator* actuators[NB_ACTUATORS];
 	
-	ros::Subscriber<std_msgs::String, Sailboat> sub;
+	geometry_msgs::Twist cmd;
 	
 	int watchdog;
 };

@@ -7,10 +7,10 @@
 #define SENSOR_GPS			1
 #define SENSOR_IMU			2
 
-#define NB_ACTUATORS		2
+#define NB_ACTUATORS		0
 
 #define ACTUATOR_RUDDER		0
-#define ACTUATOR_SAIL		0
+#define ACTUATOR_SAIL		1
 
 
 // Serial: To use it, let it uncommented, otherwise comment it

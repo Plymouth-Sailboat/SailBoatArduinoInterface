@@ -18,8 +18,9 @@
 			 
 class WindSensor : public Sensor{
 	public:
-		WindSensor() : Sensor("Wind", &msg){}
+		WindSensor() : Sensor("wind", &msg){}
 		void updateMeasures();
+		void updateTest();
 		void communicateData();
 		
 		double getMeasure(){return angle;}

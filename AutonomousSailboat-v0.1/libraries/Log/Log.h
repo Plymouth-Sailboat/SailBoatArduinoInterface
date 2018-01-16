@@ -6,6 +6,9 @@
 #include <Helper.h>
 #include <config.h>
 
+#include <ros.h>
+#include <std_msgs/Header.h>
+
 //Real Time Clock:
 #ifdef RTC_ACTIVATED
 #include "ds3231.h"
@@ -112,6 +115,8 @@ public:
 * @return  LED: 10 x fast blink
 */
 	static void Error(String function, String message){}
+	
+	static std_msgs::Header buildHeader();
 	
 private:
 // LCD screen:

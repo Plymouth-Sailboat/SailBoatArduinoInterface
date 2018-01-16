@@ -71,6 +71,7 @@ class IMU : public Sensor{
 		
 		void init(ros::NodeHandle& n);
 		void updateMeasures();
+		void updateTest();
 		void communicateData();
 		
 		double getHeading(){return heading;}

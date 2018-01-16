@@ -74,6 +74,17 @@ void GPS::updateMeasures(){
 	//}
 }
 
+void GPS::updateTest(){
+	GPS_lat = 50.365595;
+	GPS_long = -4.143274;
+}
+
 void GPS::communicateData(){
+	msg.latitude = GPS_lat;
+	msg.longitude = GPS_long;
 	
+	msg.position_covariance_type = 0;
+	
+	msg.header = Logger::buildHeader();
+	pub.publish(&msg);
 }

@@ -1,4 +1,5 @@
-// #include <Log.h>
+ #include <Log.h>
+ #include <Time.h>
 // * 
  // * @file
  // * @brief Feedback Source file
@@ -598,3 +599,11 @@
   // delay(5*TIME_TO_READ_MESSAGE);  // Time to read because it is important
   // ResetArduino();
 // }
+
+
+	std_msgs::Header Logger::buildHeader(){
+		std_msgs::Header header;
+		header.stamp.sec = now();
+		
+		return header;
+	}

@@ -39,7 +39,7 @@ class Controller : public ControllerInterface {
        @param rudder: Pointer to give the rudder's command
        @param sail: Pointer to give the sail's command
     */
-    void Control();
+    void Control(const geometry_msgs::Twist& cmd);
 
 
   private:

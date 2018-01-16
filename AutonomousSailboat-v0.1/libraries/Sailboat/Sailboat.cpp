@@ -18,18 +18,19 @@ Sailboat::~Sailboat(){
 		if(controllers[i] != NULL)
 			delete controllers[i];
 	}
+	
+	//delete sub;
+}
+
+void Sailboat::cmdCallback(const geometry_msgs::Twist& msg){
+	cmd = msg;
 }
 
 void Sailboat::msgCallback(const std_msgs::String& msg){
-	int msgNB= atoi(msg.data);
-	if(msgNB < 1){
-		setController(controllers[msgNB]);
-	}
+	
 }
 
 void Sailboat::init(ros::NodeHandle& n){
-	n.subscribe(sub);
-	
 	sensors[SENSOR_WINDSENSOR] = new WindSensor();
 	sensors[SENSOR_GPS] = new GPS();
 	sensors[SENSOR_IMU] = new IMU();
@@ -53,6 +54,11 @@ void Sailboat::updateSensors(){
 		sensors[i]->updateMeasures();
 }
 
+void Sailboat::updateTestSensors(){
+	for(int i = 0; i < NB_SENSORS; ++i)
+		sensors[i]->updateTest();
+}
+
 void Sailboat::communicateData(){
 	for(int i = 0; i < NB_SENSORS; ++i)
 		sensors[i]->communicateData();
@@ -61,7 +67,7 @@ void Sailboat::communicateData(){
 
 void Sailboat::Control(){
 	if(controller != NULL){
-		controller->Control();
+		controller->Control(cmd);
 		
 		watchdog = minute();
 	}else{

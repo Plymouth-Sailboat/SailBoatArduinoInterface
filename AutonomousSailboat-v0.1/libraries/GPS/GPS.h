@@ -14,6 +14,7 @@ public:
 	
 	void init(ros::NodeHandle& n);
 	void updateMeasures();
+	void updateTest();
 	void communicateData();
 	
 	double getLat(){return GPS_lat;}

@@ -110,7 +110,7 @@ void Controller::init() {  // TODO
 //  =                   CONTROLLER                     =
 //  =                                                  =
 //  ====================================================
-void Controller::Control() {
+void Controller::Control(const geometry_msgs::Twist& cmd) {
   double posActual[2] = {Sailboat::Instance()->getGPS()->getX(), Sailboat::Instance()->getGPS()->getY()};
   pathFollowing();
 
