@@ -26,6 +26,7 @@ void Sailboat::cmdCallback(const geometry_msgs::Twist& msg){
 }
 
 void Sailboat::msgCallback(const std_msgs::String& msg){
+	Logger::Instance()->Log(0, "Received", msg.data);
 	switch(msg.data[0]){
 	case 'C':
 		setController(msg.data[1] - '0');
