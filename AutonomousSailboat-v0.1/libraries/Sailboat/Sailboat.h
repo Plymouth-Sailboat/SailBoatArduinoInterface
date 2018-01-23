@@ -33,8 +33,9 @@ public:
 	Sail* getSail(){return (Sail*)actuators[ACTUATOR_SAIL];}
 	
 	void setController(ControllerInterface* control){controller = control; controller->init();}
-    void setController(unsigned int index){if(index < nbControllers){controller = controllers[index]; controller->init();}}
+    void setController(int index){if(index < nbControllers){controller = controllers[index]; controller->init();}}
 	void setControllers(ControllerInterface** control, unsigned int nb){controllers = control; nbControllers = nb;}
+	
 	void Control();
 
 	void cmdCallback(const geometry_msgs::Twist& msg);

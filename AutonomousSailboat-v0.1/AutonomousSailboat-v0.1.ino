@@ -2,6 +2,9 @@
 #include <Log.h>
 
 #include "Controller.h"
+#include "ReturnHome.h"
+#include "Standby.h"
+#include "RudderSailControl.h"
 
 ros::NodeHandle nh;
  
@@ -20,10 +23,14 @@ void setup() {
   
   Sailboat::Instance()->init(nh);
 
-  ControllerInterface* controllers[1];
-  controllers[0] = new Controller(3);
+  ControllerInterface* controllers[4];
+  controllers[0] = new Standby();
+  controllers[1] = new RudderSail();
+  controllers[2] = new ReturnHome();
+  controllers[3] = new Controller(3);
   
-  Sailboat::Instance()->setControllers(controllers,1);
+  Sailboat::Instance()->setControllers(controllers,4);
+  Sailboat::Instance()->setController(0);
 
   delay(10);
 }

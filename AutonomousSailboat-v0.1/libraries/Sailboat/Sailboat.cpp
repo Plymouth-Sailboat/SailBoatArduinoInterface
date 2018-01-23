@@ -30,7 +30,7 @@ void Sailboat::cmdCallback(const geometry_msgs::Twist& msg){
 void Sailboat::msgCallback(const std_msgs::String& msg){
 	switch(msg.data[0]){
 		case 'C':
-			controller = controllers[msg.data[1] - '0'];
+			setController(msg.data[1] - '0');
 		break;
 	} 
 }
