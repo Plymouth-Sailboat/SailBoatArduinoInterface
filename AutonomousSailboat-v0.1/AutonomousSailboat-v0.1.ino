@@ -11,8 +11,6 @@ ros::NodeHandle nh;
 ros::Subscriber<geometry_msgs::Twist, Sailboat> sub("sailboat_cmd",&Sailboat::cmdCallback, Sailboat::Instance());
 ros::Subscriber<std_msgs::String, Sailboat> sub2("sailboat_msg",&Sailboat::msgCallback, Sailboat::Instance());
 
-unsigned long timerMillis = 0;
-
 void setup() {
   Logger::Instance()->MessagesSetup();
   
@@ -39,11 +37,8 @@ void loop() {
   Sailboat::Instance()->updateSensors();
   //Sailboat::Instance()->updateTestSensors();
   Logger::Instance()->Update();
-  if(millis() - timerMillis > 200){
-    Sailboat::Instance()->communicateData();
-    Sailboat::Instance()->Control();
-    //timerMillis = millis();
-  }
+  Sailboat::Instance()->communicateData();
+  Sailboat::Instance()->Control();
 
   nh.spinOnce();
   delay(1);

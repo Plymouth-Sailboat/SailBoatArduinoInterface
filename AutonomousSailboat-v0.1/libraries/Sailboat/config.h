@@ -7,7 +7,7 @@
 #define SENSOR_GPS			1
 #define SENSOR_IMU			2
 
-#define NB_ACTUATORS		0
+#define NB_ACTUATORS		2
 
 #define ACTUATOR_RUDDER		0
 #define ACTUATOR_SAIL		1

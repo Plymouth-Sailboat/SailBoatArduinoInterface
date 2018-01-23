@@ -19,8 +19,6 @@ Sailboat::~Sailboat(){
 		if(controllers[i] != NULL)
 			delete controllers[i];
 	}
-	
-	//delete sub;
 }
 
 void Sailboat::cmdCallback(const geometry_msgs::Twist& msg){
@@ -29,10 +27,13 @@ void Sailboat::cmdCallback(const geometry_msgs::Twist& msg){
 
 void Sailboat::msgCallback(const std_msgs::String& msg){
 	switch(msg.data[0]){
-		case 'C':
-			setController(msg.data[1] - '0');
+	case 'C':
+		setController(msg.data[1] - '0');
+		break;
+	case 'M':
 		break;
 	} 
+	watchdogROS = minute();
 }
 
 void Sailboat::init(ros::NodeHandle& n){
@@ -52,33 +53,43 @@ void Sailboat::init(ros::NodeHandle& n){
 		actuators[i]->init();
 	
 	watchdog = minute();
+	watchdogROS = minute();
 	if(watchdog > 58)
 		watchdog = -1;
+	if(watchdogROS > 58)
+		watchdogROS = -1;
 }
 
 void Sailboat::updateSensors(){
 	for(int i = 0; i < NB_SENSORS; ++i)
-		sensors[i]->update();
+	sensors[i]->update();
 }
 
 void Sailboat::updateTestSensors(){
 	for(int i = 0; i < NB_SENSORS; ++i)
-		sensors[i]->updateT();
+	sensors[i]->updateT();
 }
 
 void Sailboat::communicateData(){
-	for(int i = 0; i < NB_SENSORS; ++i)
-		sensors[i]->communicateData();
+	if(millis() - timerMillisCOM > 20){
+		for(int i = 0; i < NB_SENSORS; ++i)
+			sensors[i]->communicateData();
+	}
 }
 
 
 void Sailboat::Control(){
-	if(controller != NULL){
-		controller->Control(cmd);
+	if(millis() - timerMillis > 100){
+		if(controller != NULL){
+			controller->Control(cmd);
+			watchdog = minute();
+		}else{
+			if(minute() - watchdog > 1)
+				setController(0);
+		}
 		
-		watchdog = minute();
-	}else{
-		if(minute() - watchdog > 1)
-			controller = controllers[0];
+		if(minute() - watchdogROS > 5){
+			setController(2);
+		}
 	}
 }

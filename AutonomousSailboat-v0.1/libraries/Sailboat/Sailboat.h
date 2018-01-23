@@ -17,7 +17,7 @@
 
 class Sailboat{
 public:
-	Sailboat() : controller(NULL){}
+	Sailboat() : controller(NULL), watchdog(0), watchdogROS(0), timerMillis(0), timerMillisCOM(0){}
 	~Sailboat();
 	
 	void init(ros::NodeHandle& n);
@@ -54,6 +54,10 @@ private:
 	geometry_msgs::Twist cmd;
 	
 	int watchdog;
+	int watchdogROS;
+	
+	unsigned long timerMillis;
+	unsigned long timerMillisCOM;
 };
 
 #endif
