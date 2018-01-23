@@ -32,8 +32,8 @@ public:
 	Rudder* getRudder(){return (Rudder*)actuators[ACTUATOR_RUDDER];}
 	Sail* getSail(){return (Sail*)actuators[ACTUATOR_SAIL];}
 	
-	void setController(ControllerInterface* control){controller = control; controller->init();}
-    void setController(int index){if(index < nbControllers){controller = controllers[index]; controller->init();}}
+	void setController(ControllerInterface* control);
+    void setController(int index);
 	void setControllers(ControllerInterface** control, unsigned int nb){controllers = control; nbControllers = nb;}
 	
 	void Control();

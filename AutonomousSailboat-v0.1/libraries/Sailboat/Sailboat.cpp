@@ -21,12 +21,23 @@ Sailboat::~Sailboat(){
 	}
 }
 
+void Sailboat::setController(ControllerInterface* control){
+	controller = control;
+	controller->init();
+}
+void Sailboat::setController(int index){
+	if(index < nbControllers){
+		controller = controllers[index];
+		controller->init();
+		Logger::Instance()->Log(0, "Changed Controller to :", String(index));
+	}
+}
+
 void Sailboat::cmdCallback(const geometry_msgs::Twist& msg){
 	cmd = msg;
 }
 
 void Sailboat::msgCallback(const std_msgs::String& msg){
-	Logger::Instance()->Log(0, "Received", msg.data);
 	switch(msg.data[0]){
 	case 'C':
 		setController(msg.data[1] - '0');
@@ -90,6 +101,7 @@ void Sailboat::Control(){
 		}
 		
 		if(minute() - watchdogROS > 5){
+			Logger::Instance()->Log(0, "ROS DEAD??", "ROS DEAD??");
 			setController(2);
 		}
 	}

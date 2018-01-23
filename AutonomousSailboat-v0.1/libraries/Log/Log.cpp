@@ -602,6 +602,7 @@ Logger* Logger::instance = 0;
 // }
 void Logger::MessagesSetup(){
 	lcd.begin(16,2);
+	lcd.clear();
 	lcd.home();
 }
 

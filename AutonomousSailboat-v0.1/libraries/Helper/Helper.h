@@ -1,6 +1,8 @@
 #ifndef HELPER_H
 #define HELPER_H
 
+#define RESET_PIN 42
+
 #include <config.h>
 
 // ####################################################
