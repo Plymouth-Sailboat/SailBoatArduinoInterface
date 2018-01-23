@@ -5,7 +5,7 @@
 
 #include <WindSensor.h>
 #include <GPS.h>
-#include <IMU.h>
+#include <Xsens.h>
 
 #include <Rudder.h>
 #include <Sail.h>
@@ -27,7 +27,7 @@ public:
 	
 	WindSensor* getWindSensor(){return (WindSensor*)sensors[SENSOR_WINDSENSOR];}
 	GPS* getGPS(){return (GPS*)sensors[SENSOR_GPS];}
-	IMU* getIMU(){return (IMU*)sensors[SENSOR_IMU];}
+	XSens* getIMU(){return (XSens*)sensors[SENSOR_IMU];}
 	
 	Rudder* getRudder(){return (Rudder*)actuators[ACTUATOR_RUDDER];}
 	Sail* getSail(){return (Sail*)actuators[ACTUATOR_SAIL];}

@@ -1,63 +1,24 @@
 #include <GPS.h>
 
 void GPS::init(ros::NodeHandle& n){
-	//Log(1, F("GPSSetup()"), F(""));  // Done in the setup of AutonomousSailBoat.ino
-	bool GPSFix = false;
-
-	// Initialization:
-#ifndef GPS_RX
-#error "GPS_RX" NOT DECLARED! see file "config.h"
-#endif
-	pinMode(GPS_RX, OUTPUT);
-
-#ifndef GPS_TX
-#error "GPS_TX" NOT DECLARED! see file "config.h"
-#endif
-	pinMode(GPS_TX, INPUT);
-
-	//Serial1.begin(GPS_BAUD_RATE);
-
-	// Waiting for GPS fix:
-	while(!GPSFix) {  // Wait for signal
-		//if (Serial1.available() > 0) {
-		//      Logger::Message(F("##\t\tGPS:\twaiting"), F(""), F(""), 1);
-		//      if (gps.encode(Serial1.read()) && gps.location.isValid()) {
-		// Initialization of the GPS location:
-		GPS_latInit = gps.location.lat();
-		GPS_longInit = gps.location.lng();
-
-		// Feedback:
-		//      Logger::Message(F("##\t\tGPS:\tFix"), F(""), F(""), 1);
-		//      Logger::Message(F("##\t"), F("GPS Initial Latitude:"), String(*p_GPS_latInit), 1);
-		//      Logger::Message(F("##\t"), F("GPS Initial Longitude:"), String(*p_GPS_longInit), 1);
-
-		// End of the loop / the initialization
-		GPSFix = true;  // Indicates success of the initialization
-		//}
-		//  }
-		if (millis() > 5000 && gps.charsProcessed() < 10) {
-			// Feedback:
-			//  Logger::Message(F("##\t\tGPS:\tNo Signal!"), F(""), F(""), 1);
-		}
-	}
-
+	ss.begin(GPS_BAUD_RATE);
+	
+	msg.header = Logger::buildHeader();
 	Sensor::init(n);
 }
 
 void GPS::updateMeasures(){
-	//  Logger::Log(1, F("GPSLoop()"), F(""));
-
-	//if (Serial1.available() > 0) {
-	//if (gps.encode(Serial1.read())) {
+	while (ss.available() > 0)
+		gps.encode(ss.read());
+	
 	if (gps.location.isValid()) {
 		// Catching location:
 		GPS_lat = gps.location.lat();  // In degrees
 		GPS_long = gps.location.lng();  // In degrees
-		
-		// Feedback:
-		//      Logger::Message("\t", "GPS:", "Fix", 1);
-		//      Logger::Log(0, F("GPS lat:"), String(latActual));
-		//      Logger::Log(0, F("GPS longNext:"), String(longActual));
+		if(GPS_latInit == 0)
+			GPS_latInit = GPS_lat;
+		if(GPS_longInit == 0)
+			GPS_longInit = GPS_long;
 		
 		// Changing the reference:
 		GPS_PosX = (double)(EARTH_RADIUS*(GPS_lat - GPS_latInit)*(DEG_TO_RAD)*cos(GPS_longInit)); // x = EARTH_RADIUS*(a2-a1)*(pi/180)*cos(b1)
@@ -67,6 +28,32 @@ void GPS::updateMeasures(){
 		//    Logger::Log(2, F("GPS X:"), String(*p_GPS_PosX));
 		//    Logger::Log(2, F("GPS Y:"), String(*p_GPS_PosY));
 	}
+	if (gps.altitude.isValid()) {
+		GPS_alt = gps.altitude.meters();
+		if(GPS_altInit == 0)
+			GPS_altInit = GPS_alt;
+	}
+	
+	if(gps.location.age() > 1500)
+		status = -1;
+	else
+		status = 0;
+	
+	if (gps.time.isValid())
+		time = gps.time.value();
+	
+	if (gps.course.isValid())
+		GPS_track = gps.course.deg();
+	
+	if (gps.hdop.isValid())
+		hdop = gps.hdop.value();
+	
+	if (gps.speed.isValid())
+		GPS_speed = gps.speed.mps();
+	
+	if (gps.satellites.isValid())
+		nbSatellites = gps.satellites.value();
+	
 	//}
 	//else {
 	//  Logger::Message(F("\t"), F("GPS:"), F("Lost!"), 1);
@@ -82,6 +69,20 @@ void GPS::updateTest(){
 void GPS::communicateData(){
 	msg.latitude = GPS_lat;
 	msg.longitude = GPS_long;
+	msg.altitude = GPS_alt;
+	
+	msg.track = GPS_track;
+	msg.speed = GPS_speed;
+	msg.time = time;
+	msg.hdop = hdop;
+	
+	msg.status.satellites_used = nbSatellites;
+	msg.status.satellites_visible = nbSatellites;
+	/////********COULD BUILD SATELLITES INFO******////
+	msg.status.status = status;
+	msg.status.motion_source = 1;
+	msg.status.orientation_source = 1;
+	msg.status.position_source = 1;
 	
 	msg.position_covariance_type = 0;
 	

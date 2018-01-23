@@ -118,7 +118,7 @@ void Controller::Control(const geometry_msgs::Twist& cmd) {
   double posB[2] = {newPath[token][0], newPath[token][1]};
 
   double windAngle = Sailboat::Instance()->getWindSensor()->getMeasure();
-  double heading = Sailboat::Instance()->getIMU()->getHeading();
+  double heading = Sailboat::Instance()->getIMU()->getHeadingYaw();
   double rudder = 0;
   double sail = 0;
   

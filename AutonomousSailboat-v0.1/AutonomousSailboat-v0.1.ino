@@ -11,10 +11,9 @@ ros::Subscriber<std_msgs::String, Sailboat> sub2("sailboat_msg",&Sailboat::msgCa
 unsigned long timerMillis = 0;
 
 void setup() {
+  Logger::Instance()->MessagesSetup();
   
-  Logger::MessagesSetup();
-  
-  nh.getHardware()->setBaud(57600);
+  nh.getHardware()->setBaud(115200);
   nh.initNode();
   nh.subscribe(sub);
   nh.subscribe(sub2);
@@ -30,14 +29,15 @@ void setup() {
 }
 
 void loop() {
+  Sailboat::Instance()->updateSensors();
+  //Sailboat::Instance()->updateTestSensors();
+  Logger::Instance()->Update();
   if(millis() - timerMillis > 200){
-    //Sailboat::Instance()->updateSensors();
-    Sailboat::Instance()->updateTestSensors();
     Sailboat::Instance()->communicateData();
     Sailboat::Instance()->Control();
-    timerMillis = millis();
+    //timerMillis = millis();
   }
 
   nh.spinOnce();
-  delay(20);
+  delay(1);
 }

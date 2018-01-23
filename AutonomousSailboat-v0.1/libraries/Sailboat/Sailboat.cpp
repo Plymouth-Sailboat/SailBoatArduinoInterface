@@ -1,5 +1,6 @@
 #include <Sailboat.h>
 #include <TimeLib.h>
+#include <Wire.h>
 
 Sailboat* Sailboat::sailboat = NULL;
 
@@ -27,13 +28,19 @@ void Sailboat::cmdCallback(const geometry_msgs::Twist& msg){
 }
 
 void Sailboat::msgCallback(const std_msgs::String& msg){
-	
+	switch(msg.data[0]){
+		case 'C':
+			controller = controllers[msg.data[1] - '0'];
+		break;
+	} 
 }
 
 void Sailboat::init(ros::NodeHandle& n){
+	Wire.begin();
+	
 	sensors[SENSOR_WINDSENSOR] = new WindSensor();
 	sensors[SENSOR_GPS] = new GPS();
-	sensors[SENSOR_IMU] = new IMU();
+	sensors[SENSOR_IMU] = new XSens();
 	
 	actuators[ACTUATOR_RUDDER] = new Rudder();
 	actuators[ACTUATOR_SAIL] = new Sail();
@@ -51,12 +58,12 @@ void Sailboat::init(ros::NodeHandle& n){
 
 void Sailboat::updateSensors(){
 	for(int i = 0; i < NB_SENSORS; ++i)
-		sensors[i]->updateMeasures();
+		sensors[i]->update();
 }
 
 void Sailboat::updateTestSensors(){
 	for(int i = 0; i < NB_SENSORS; ++i)
-		sensors[i]->updateTest();
+		sensors[i]->updateT();
 }
 
 void Sailboat::communicateData(){

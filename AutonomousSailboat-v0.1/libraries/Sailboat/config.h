@@ -14,16 +14,15 @@
 
 
 // Serial: To use it, let it uncommented, otherwise comment it
-#define SERIAL_ACTIVATED
+//#define SERIAL_ACTIVATED
 
-// LCD: To use it, let it uncommented, otherwise comment it
-#define LCD_SCREEN_ACTIVATED
+#define LCD_SCREEN_ADDRESS	0x3f
 
 // SD card: To use it, let it uncommented, otherwise comment it
-#define SD_ACTIVATED
+//#define SD_ACTIVATED
 
 // LED: To use it, let it uncommented, otherwise comment it
-#define LED_ACTIVATED
+//#define LED_ACTIVATED
 
 // RTC: To use it, let it uncommented, otherwise comment it
 //#define RTC_ACTIVATED
@@ -102,9 +101,11 @@
 //   TX  =====   RX1 (19)
 //  VCC  =====   3.3V
 //  GND  =====   GND
-#define GPS_RX 18
-#define GPS_TX 19
+#define GPS_RX 10
+#define GPS_TX 11
 
+#define GPS_BAUD_RATE	9600
+#define EARTH_RADIUS	6371000  // Earth radius in metres
 // RTC Module: I2C bus
 // SDA pin 20
 // SCL pin 21

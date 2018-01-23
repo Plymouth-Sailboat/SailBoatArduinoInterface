@@ -20,10 +20,8 @@
 #include <SD.h>
 #endif
 
-// LCD Screen:
-#ifdef LCD_SCREEN_ACTIVATED
-#include <LiquidCrystal_I2C.h>  // inclusion only if the variable is set at 1
-#endif
+#include <LiquidCrystal_I2C.h> 
+
 #ifdef SERIAL_ACTIVATED
 #define SERIAL_BAUD_LOG 9600
 #endif
@@ -33,9 +31,9 @@
 
 class Logger{
 public:
-	Logger(){}
+	Logger() : lcd(LCD_SCREEN_ADDRESS, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE), scrollSizeActual(0), scrollSize(0), timer(0){}
 	
-	static void MessagesSetup(){}
+	void MessagesSetup();
 	/**
 * Logging Function
 * Prints out message on the SD card and the serial port - this function is made for debug
@@ -53,7 +51,7 @@ public:
 *
 * @return LED: Nothing
 */
-	static void Log(int level, String field1, String field2){}
+	void Log(int level, String field1, String field2);
 
 
 	/**
@@ -75,7 +73,7 @@ public:
 * @return LED: 0 if led = 0
 *              1 if led = 1
 */
-	static void Message(String type, String field1, String field2, int led){}
+	void Message(String type, String field1, String field2, int led);
 
 
 	/**
@@ -94,7 +92,7 @@ public:
 *
 * @return  LED: Nothing
 */
-	static void Warning(String function, String message){}
+	void Warning(String function, String message);
 
 
 	/**
@@ -114,15 +112,21 @@ public:
 *
 * @return  LED: 10 x fast blink
 */
-	static void Error(String function, String message){}
+	void Error(String function, String message);
 	
 	static std_msgs::Header buildHeader();
 	
+	void Update();
+	
+	int scrollSize;
+	int scrollSizeActual;
+	unsigned long timer;
+	static Logger* Instance(){if(!instance)instance = new Logger(); return instance;}
 private:
-// LCD screen:
-#ifdef LCD_SCREEN_ACTIVATED
-  static LiquidCrystal_I2C lcd;  // Set the LCD address to 0x27 for a 16 chars and 2 line display
-#endif
+	static Logger* instance;
+	
+	LiquidCrystal_I2C lcd;
+	void printLCD(String s1, String s2);
 
 
 #ifdef SD_ACTIVATED
