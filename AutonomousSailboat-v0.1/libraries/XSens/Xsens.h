@@ -5,11 +5,10 @@
 #include <sensor_msgs/Imu.h>
 #include <XBus.h>
 
-class XSens : public Sensor{
+class XSens : public SensorROS{
 	public:
-		XSens(uint8_t address = 0x1d) : Sensor("IMU", &msg, 1), address(address), xbus(address), wokeUp(false){}
+		XSens(uint8_t address = 0x1d) : SensorROS("IMU", &msg, 1), address(address), xbus(address), wokeUp(false){}
 		
-		void init();
 		void init(ros::NodeHandle& n);
 		void updateMeasures();
 		void updateTest();

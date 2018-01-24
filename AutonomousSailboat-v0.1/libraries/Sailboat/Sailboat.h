@@ -7,6 +7,8 @@
 #include <GPS.h>
 #include <Xsens.h>
 
+#include <fs-r6b.h>
+
 #include <Rudder.h>
 #include <Sail.h>
 
@@ -29,6 +31,8 @@ public:
 	GPS* getGPS(){return (GPS*)sensors[SENSOR_GPS];}
 	XSens* getIMU(){return (XSens*)sensors[SENSOR_IMU];}
 	
+	RC* getRC(){return (RC*)sens[SENSOR_RC];}
+	
 	Rudder* getRudder(){return (Rudder*)actuators[ACTUATOR_RUDDER];}
 	Sail* getSail(){return (Sail*)actuators[ACTUATOR_SAIL];}
 	
@@ -48,7 +52,8 @@ private:
 	ControllerInterface** controllers;
 	unsigned int nbControllers;
 	ControllerInterface* controller;
-	Sensor* sensors[NB_SENSORS];
+	SensorROS* sensors[NB_SENSORS];
+	Sensor* sens[NB_SENSORS_NOT_ROS];
 	Actuator* actuators[NB_ACTUATORS];
 	
 	geometry_msgs::Twist cmd;

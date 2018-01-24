@@ -16,9 +16,9 @@
 #define ANGLE_MAX 360
 #define ANGLE_MIN 0
 			 
-class WindSensor : public Sensor{
+class WindSensor : public SensorROS{
 	public:
-		WindSensor() : Sensor("wind", &msg){}
+		WindSensor() : SensorROS("wind", &msg){}
 		void updateMeasures();
 		void updateTest();
 		void communicateData();

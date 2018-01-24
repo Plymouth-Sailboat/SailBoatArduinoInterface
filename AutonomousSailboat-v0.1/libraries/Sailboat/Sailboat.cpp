@@ -55,6 +55,8 @@ void Sailboat::init(ros::NodeHandle& n){
 	sensors[SENSOR_GPS] = new GPS();
 	sensors[SENSOR_IMU] = new XSens();
 	
+	sens[SENSOR_RC] = new RC();
+	
 	actuators[ACTUATOR_RUDDER] = new Rudder();
 	actuators[ACTUATOR_SAIL] = new Sail();
 	

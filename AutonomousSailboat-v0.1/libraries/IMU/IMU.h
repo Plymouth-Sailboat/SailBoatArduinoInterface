@@ -65,9 +65,9 @@ typedef struct IMUstruct {
 } IMUStruct;
 
 
-class IMU : public Sensor{
+class IMU : public SensorROS{
 	public:
-		IMU() : Sensor("IMU", &msg){}
+		IMU() : SensorROS("IMU", &msg){}
 		
 		void init(ros::NodeHandle& n);
 		void updateMeasures();

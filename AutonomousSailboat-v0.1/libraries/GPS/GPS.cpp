@@ -4,7 +4,7 @@ void GPS::init(ros::NodeHandle& n){
 	ss.begin(GPS_BAUD_RATE);
 	
 	msg.header = Logger::buildHeader();
-	Sensor::init(n);
+	SensorROS::init(n);
 }
 
 void GPS::updateMeasures(){

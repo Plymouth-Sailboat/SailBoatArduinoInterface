@@ -4,11 +4,13 @@
 /**SENSORS**/
 /***********/
 #define NB_SENSORS		3
+#define NB_SENSORS_NOT_ROS		1
 
 #define SENSOR_WINDSENSOR	0
 #define SENSOR_GPS			1
 #define SENSOR_IMU			2
 
+#define SENSOR_RC			0
 //PIN//
 //////
 //WIND

@@ -34,7 +34,7 @@ void IMU::init(ros::NodeHandle& n){
 	Wire.endTransmission(true); 
 	
 
-	Sensor::init(n);
+	SensorROS::init(n);
 }
 
 void IMU::updateMeasures(){
