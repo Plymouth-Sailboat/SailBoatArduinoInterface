@@ -18,7 +18,7 @@ class Sensor{
 		void updateT(){if(millis() - timer > period){ updateTest(); timer = millis();}}
 		virtual void updateMeasures() = 0;
 		virtual void updateTest() = 0;
-		unsigned int getRawValue(){return value;}
+		unsigned int getRaw(){return value;}
 	protected:
 		unsigned int value;
 		
