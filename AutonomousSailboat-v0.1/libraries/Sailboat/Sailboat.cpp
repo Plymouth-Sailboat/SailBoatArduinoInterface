@@ -22,14 +22,22 @@ Sailboat::~Sailboat(){
 }
 
 void Sailboat::setController(ControllerInterface* control){
+	if(controller != NULL)
+		controller->setActivated(false);
 	controller = control;
 	controller->init();
+	controller->setActivated(true);
+	actualControllerI = -1;
 }
 void Sailboat::setController(int index){
+	if(controller != NULL)
+		controller->setActivated(false);
 	if(index < nbControllers){
+		actualControllerI = index;
 		controller = controllers[index];
 		controller->init();
-		Logger::Instance()->Log(0, "Changed Controller to :", String(index));
+		controller->setActivated(true);
+		Logger::Instance()->Log(0, "Changed Controller to :", String(controllerNames[index]));
 	}
 }
 
@@ -75,13 +83,18 @@ void Sailboat::init(ros::NodeHandle& n){
 }
 
 void Sailboat::updateSensors(){
-	for(int i = 0; i < NB_SENSORS; ++i)
-	sensors[i]->update();
+	for(int i = 0; i < NB_SENSORS; ++i){
+		sensors[i]->update();
+	}
+	
+	for(int i = 0; i < NB_SENSORS_NOT_ROS; ++i){
+		sens[i]->update();
+	}
 }
 
 void Sailboat::updateTestSensors(){
 	for(int i = 0; i < NB_SENSORS; ++i)
-	sensors[i]->updateT();
+		sensors[i]->updateT();
 }
 
 void Sailboat::communicateData(){
@@ -99,12 +112,18 @@ void Sailboat::Control(){
 			watchdog = minute();
 		}else{
 			if(minute() - watchdog > 1)
-				setController(0);
+				setController(RETURNHOME_CONTROLLER);
 		}
 		
 		if(minute() - watchdogROS > 5){
 			Logger::Instance()->Log(0, "ROS DEAD??", "ROS DEAD??");
-			setController(2);
+			setController(RETURNHOME_CONTROLLER);
+		}
+		
+		for(int i =0; i < nbControllers; ++i){
+			if(controllers[i] != NULL && !controllers[i]->isActivated()){
+				controllers[i]->updateBackground();
+			}
 		}
 	}
 }

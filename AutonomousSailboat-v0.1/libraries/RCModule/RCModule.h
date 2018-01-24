@@ -5,10 +5,10 @@
 
 class RC : public Sensor{
 public:
-	RC(){for(int i = 0; i < RC_NUM_CHANNELS; ++i){rc_values[i] = 0; rc_start[i] = 0;}}
+	RC() : controlling(false), step(0), timer(0), previousController(RETURNHOME_CONTROLLER){for(int i = 0; i < RC_NUM_CHANNELS; ++i){rc_values[i] = 0; rc_start[i] = 0;}}
 	
 	void init(){}
-	void updateMeasures(){}
+	void updateMeasures();
 	void updateTest(){}
 	void communicateData(){}
 	
@@ -19,6 +19,16 @@ public:
 private:
 	uint16_t rc_values[RC_NUM_CHANNELS];
 	uint32_t rc_start[RC_NUM_CHANNELS];
+	
+	bool controlling;
+	
+	unsigned int step;
+	unsigned long timer;
+	unsigned long watchdog;
+	
+	int previousController;
+	
+	void testActivationStep();
 };
 
 #endif

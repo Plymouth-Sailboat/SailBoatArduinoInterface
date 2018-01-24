@@ -1,15 +1,26 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
+/**CONTROLLERS**/
+/***********/
+#define NB_CONTROLLERS 6
+
+#define STANDBY_CONTROLLER 0
+#define RUDDERSAIL_CONTROLLER 1
+#define RETURNHOME_CONTROLLER 2
+#define HEADER_CONTROLLER 3
+#define RC_CONTROLLER 4
+#define C_CONTROLLER 5
+
 /**SENSORS**/
 /***********/
 #define NB_SENSORS		3
-#define NB_SENSORS_NOT_ROS		1
 
 #define SENSOR_WINDSENSOR	0
 #define SENSOR_GPS			1
 #define SENSOR_IMU			2
 
+#define NB_SENSORS_NOT_ROS		1
 #define SENSOR_RC			0
 //PIN//
 //////

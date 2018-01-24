@@ -14,16 +14,16 @@ ros::Subscriber<geometry_msgs::Twist, Sailboat> sub("sailboat_cmd",&Sailboat::cm
 ros::Subscriber<std_msgs::String, Sailboat> sub2("sailboat_msg",&Sailboat::msgCallback, Sailboat::Instance());
 
 void setControllers(){
-  ControllerInterface* controllers[6];
-  controllers[0] = new Standby();
-  controllers[1] = new RudderSail();
-  controllers[2] = new ReturnHome();
-  controllers[3] = new Header();
-  controllers[4] = new RCControl();
-  controllers[5] = new Controller(3);
+  ControllerInterface* controllers[NB_CONTROLLERS];
+  controllers[STANDBY_CONTROLLER] = new Standby();
+  controllers[RUDDERSAIL_CONTROLLER] = new RudderSail();
+  controllers[RETURNHOME_CONTROLLER] = new ReturnHome();
+  controllers[HEADER_CONTROLLER] = new Header();
+  controllers[RC_CONTROLLER] = new RCControl();
+  controllers[C_CONTROLLER] = new Controller(3);
   
-  Sailboat::Instance()->setControllers(controllers,6);
-  Sailboat::Instance()->setController(0);
+  Sailboat::Instance()->setControllers(controllers,NB_CONTROLLERS);
+  Sailboat::Instance()->setController(STANDBY_CONTROLLER);
 }
 
 void intCH1(){
