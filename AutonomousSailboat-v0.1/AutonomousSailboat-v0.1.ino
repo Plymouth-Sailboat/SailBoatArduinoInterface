@@ -39,6 +39,9 @@ void intCH5(){
 }
 
 void setRCInterrupts(){
+  pinMode(RC_PIN_1, INPUT);
+  pinMode(RC_PIN_3, INPUT);
+  pinMode(RC_PIN_5, INPUT);
   attachInterrupt(RC_PIN_1, intCH1, CHANGE);
   attachInterrupt(RC_PIN_3, intCH3, CHANGE);
   attachInterrupt(RC_PIN_5, intCH5, CHANGE);
@@ -53,6 +56,8 @@ void setup() {
   nh.subscribe(sub2);
   
   Sailboat::Instance()->init(&nh);
+
+  delay(100);
   
   setControllers();
   setRCInterrupts();

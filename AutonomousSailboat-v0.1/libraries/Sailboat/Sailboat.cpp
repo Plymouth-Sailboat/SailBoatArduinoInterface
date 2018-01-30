@@ -37,7 +37,7 @@ void Sailboat::setController(int index){
 		controller = controllers[index];
 		controller->init();
 		controller->setActivated(true);
-		Logger::Instance()->Log(0, "Changed Controller to :", String(controllerNames[index]));
+		Logger::Instance()->Toast("Changed to :", String(controllerNames[index]), 5000);
 	}
 }
 
@@ -51,6 +51,9 @@ void Sailboat::msgCallback(const std_msgs::String& msg){
 		setController(msg.data[1] - '0');
 		break;
 	case 'M':
+		break;
+	case 'P':
+		Logger::Instance()->Toast("From PC :", String(msg.data+1), 5000);
 		break;
 	} 
 	watchdogROS = minute();
@@ -80,6 +83,8 @@ void Sailboat::init(ros::NodeHandle* n){
 		watchdog = -1;
 	if(watchdogROS > 58)
 		watchdogROS = -1;
+	
+	Logger::Instance()->Toast("Sailboat is", "Ready!!", 0);
 }
 
 void Sailboat::updateSensors(){
@@ -116,7 +121,7 @@ void Sailboat::Control(){
 		}
 		
 		if(minute() - watchdogROS > 5){
-			Logger::Instance()->Log(0, "ROS DEAD??", "ROS DEAD??");
+			Logger::Instance()->Toast("ROS DEAD??", "ROS DEAD??", 0);
 			setController(RETURNHOME_CONTROLLER);
 		}
 		

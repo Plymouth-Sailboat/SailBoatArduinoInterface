@@ -31,7 +31,7 @@
 
 class Logger{
 public:
-	Logger() : lcd(LCD_SCREEN_ADDRESS, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE), scrollSizeActual(0), scrollSize(0), timer(0){}
+	Logger() : lcd(LCD_SCREEN_ADDRESS, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE), scrollSizeActual(0), scrollSize(0), timer(0), printing(false), prevM1(" "), prevM2(" "){}
 	
 	void MessagesSetup();
 	/**
@@ -114,11 +114,9 @@ public:
 */
 	void Error(String function, String message);
 	
-	void Update();
+	void Toast(String field1, String field2, unsigned long ms);
 	
-	int scrollSize;
-	int scrollSizeActual;
-	unsigned long timer;
+	void Update();
 	static Logger* Instance(){if(!instance)instance = new Logger(); return instance;}
 private:
 	static Logger* instance;
@@ -126,6 +124,15 @@ private:
 	LiquidCrystal_I2C lcd;
 	void printLCD(String s1, String s2);
 
+	
+	int scrollSize;
+	int scrollSizeActual;
+	unsigned long timer;
+	unsigned long timerToast;
+	unsigned long ToastMS;
+	bool printing;
+	String prevM1;
+	String prevM2;
 
 #ifdef SD_ACTIVATED
 	static void SDSetup();

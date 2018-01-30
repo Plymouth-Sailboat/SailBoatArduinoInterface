@@ -20,12 +20,12 @@
 class Sailboat{
 public:
 	Sailboat() : controller(NULL), watchdog(0), watchdogROS(0), timerMillis(0), timerMillisCOM(0){
-		controllerNames[STANDBY_CONTROLLER] = "Standby Controller";
-		controllerNames[RUDDERSAIL_CONTROLLER] = "Rudder-Sail Controller";
-		controllerNames[RETURNHOME_CONTROLLER] = "Return-Home Controller";
-		controllerNames[HEADER_CONTROLLER] = "Heading Controller";
-		controllerNames[RC_CONTROLLER] = "RC Controller";
-		controllerNames[C_CONTROLLER] = "C Controller";
+		controllerNames[STANDBY_CONTROLLER] = "Standby";
+		controllerNames[RUDDERSAIL_CONTROLLER] = "Rudder-Sail";
+		controllerNames[RETURNHOME_CONTROLLER] = "Return-Home";
+		controllerNames[HEADER_CONTROLLER] = "Heading";
+		controllerNames[RC_CONTROLLER] = "RC";
+		controllerNames[C_CONTROLLER] = "C";
 	}
 	~Sailboat();
 	

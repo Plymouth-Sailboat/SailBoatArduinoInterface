@@ -121,7 +121,7 @@ void Controller::Control(const geometry_msgs::Twist& cmd) {
   double heading = Sailboat::Instance()->getIMU()->getHeadingYaw();
   double rudder = 0;
   double sail = 0;
-  
+
   //Log(1, F("Controller()"), F(""));
 
   // tack indicator (its sign indicates the side of the tack):

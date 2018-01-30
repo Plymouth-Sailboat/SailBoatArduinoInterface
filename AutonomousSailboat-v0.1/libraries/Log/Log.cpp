@@ -625,7 +625,7 @@ void Logger::printLCD(String s1, String s2){
 		scrollSize = max-16;
 		timer = millis();
 	}
-	lcd.home();
+	//lcd.home();
 }
 void Logger::Log(int level, String field1, String field2){
 	printLCD(field1, field2);
@@ -641,6 +641,17 @@ void Logger::Warning(String function, String message){
 
 void Logger::Error(String function, String message){
 	printLCD(function, message);
+}
+
+void Logger::Toast(String field1, String field2, unsigned long ms){
+	if(ms == 0){
+		prevM1 = field1;
+		prevM2 = field2;
+	}
+	printLCD(field1, field2);
+	timerToast = millis();
+	ToastMS = ms;
+	printing = true;
 }
 
 void Logger::Update(){
@@ -659,6 +670,12 @@ void Logger::Update(){
 			scrollSizeActual = 0;
 			lcd.home();
 			timer = millis();
+		}
+	}
+	if(printing){
+		if(millis() - timerToast > ToastMS){
+			printLCD(prevM1, prevM2);
+			printing = false;
 		}
 	}
 }
