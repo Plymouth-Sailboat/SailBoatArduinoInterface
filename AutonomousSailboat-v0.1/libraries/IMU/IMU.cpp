@@ -1,7 +1,7 @@
 #include <IMU.h>
 #include <Wire.h>
 
-void IMU::init(ros::NodeHandle& n){
+void IMU::init(ros::NodeHandle* n){
 	Wire.begin();
 	
 	Wire.beginTransmission(I2CACCGYROADD);
@@ -155,6 +155,6 @@ void IMU::communicateData(){
 	msg.orientation.z = 0.189;
 	msg.orientation.w = -0.063;
 	
-	msg.header = Logger::buildHeader();
+	msg.header.stamp = nh->now();
 	pub.publish(&msg);
 }

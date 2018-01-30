@@ -114,8 +114,6 @@ public:
 */
 	void Error(String function, String message);
 	
-	static std_msgs::Header buildHeader();
-	
 	void Update();
 	
 	int scrollSize;

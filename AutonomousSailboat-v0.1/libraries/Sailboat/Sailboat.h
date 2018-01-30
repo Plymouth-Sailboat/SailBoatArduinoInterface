@@ -29,7 +29,7 @@ public:
 	}
 	~Sailboat();
 	
-	void init(ros::NodeHandle& n);
+	void init(ros::NodeHandle* n);
 	void updateSensors();
 	void updateTestSensors();
 	void communicateData();

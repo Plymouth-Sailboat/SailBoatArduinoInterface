@@ -1,7 +1,7 @@
 #include <Xsens.h>
 #include <Wire.h>
 
-void XSens::init(ros::NodeHandle& n){
+void XSens::init(ros::NodeHandle* n){
 	Wire.beginTransmission(address);
 	Wire.write(PIPE_STATUS);
 	Wire.endTransmission();
@@ -51,6 +51,6 @@ void XSens::communicateData(){
 	msg.linear_acceleration.y = xbus.accel[1];
 	msg.linear_acceleration.z = xbus.accel[2];
 	
-	msg.header = Logger::buildHeader();
+	msg.header.stamp = nh->now();
 	pub.publish(&msg);
 }

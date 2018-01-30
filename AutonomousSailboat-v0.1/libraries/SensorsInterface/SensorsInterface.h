@@ -28,13 +28,14 @@ class Sensor{
 
 class SensorROS : public Sensor{
 	public:
-		SensorROS(const char* name, ros::Msg* msg, unsigned int period = 100) : Sensor(period), pub(name, msg){}
+		SensorROS(const char* name, ros::Msg* msg, unsigned int period = 100) : Sensor(period), pub(name, msg), nh(NULL){}
 		
 		void init(){}
-		virtual void init(ros::NodeHandle& n){n.advertise(pub);}
+		virtual void init(ros::NodeHandle* n){n->advertise(pub); nh = n;}
 		virtual void communicateData() = 0;
 	protected:
 		ros::Publisher pub;
+		ros::NodeHandle* nh;
 };
 
 #endif

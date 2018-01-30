@@ -11,7 +11,7 @@ class GPS : public SensorROS{
 public:
 	GPS() : SensorROS("GPS", &msg), ss(GPS_RX, GPS_TX),GPS_latInit(0), GPS_longInit(0), GPS_altInit(0), status(-1), GPS_track(0), GPS_speed(0), time(0), hdop(0), nbSatellites(0){}
 	
-	void init(ros::NodeHandle& n);
+	void init(ros::NodeHandle* n);
 	void updateMeasures();
 	void updateTest();
 	void communicateData();

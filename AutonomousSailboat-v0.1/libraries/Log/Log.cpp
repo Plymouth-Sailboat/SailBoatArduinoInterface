@@ -623,11 +623,6 @@ void Logger::printLCD(String s1, String s2){
 	
 	if(max > 16){
 		scrollSize = max-16;
-		
-		/*lcd.setCursor(scrollSize,0);
-		lcd.print(s1);
-		lcd.setCursor(scrollSize,1);
-		lcd.print(s2);*/
 		timer = millis();
 	}
 	lcd.home();
@@ -666,11 +661,4 @@ void Logger::Update(){
 			timer = millis();
 		}
 	}
-}
-
-std_msgs::Header Logger::buildHeader(){
-	std_msgs::Header header;
-	header.stamp.sec = now();
-	
-	return header;
 }

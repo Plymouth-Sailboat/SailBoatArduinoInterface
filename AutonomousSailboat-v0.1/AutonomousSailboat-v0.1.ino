@@ -52,7 +52,7 @@ void setup() {
   nh.subscribe(sub);
   nh.subscribe(sub2);
   
-  Sailboat::Instance()->init(nh);
+  Sailboat::Instance()->init(&nh);
   
   setControllers();
   setRCInterrupts();

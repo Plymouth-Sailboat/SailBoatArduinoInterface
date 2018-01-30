@@ -56,7 +56,7 @@ void Sailboat::msgCallback(const std_msgs::String& msg){
 	watchdogROS = minute();
 }
 
-void Sailboat::init(ros::NodeHandle& n){
+void Sailboat::init(ros::NodeHandle* n){
 	Wire.begin();
 	
 	sensors[SENSOR_WINDSENSOR] = new WindSensor();

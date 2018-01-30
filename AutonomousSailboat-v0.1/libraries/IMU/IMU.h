@@ -69,7 +69,7 @@ class IMU : public SensorROS{
 	public:
 		IMU() : SensorROS("IMU", &msg){}
 		
-		void init(ros::NodeHandle& n);
+		void init(ros::NodeHandle* n);
 		void updateMeasures();
 		void updateTest();
 		void communicateData();

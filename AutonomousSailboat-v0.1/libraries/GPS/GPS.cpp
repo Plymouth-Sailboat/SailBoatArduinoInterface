@@ -1,9 +1,8 @@
 #include <GPS.h>
 
-void GPS::init(ros::NodeHandle& n){
+void GPS::init(ros::NodeHandle* n){
 	ss.begin(GPS_BAUD_RATE);
 	
-	msg.header = Logger::buildHeader();
 	SensorROS::init(n);
 }
 
@@ -86,6 +85,6 @@ void GPS::communicateData(){
 	
 	msg.position_covariance_type = 0;
 	
-	msg.header = Logger::buildHeader();
+	msg.header.stamp = nh->now();
 	pub.publish(&msg);
 }
