@@ -3,7 +3,7 @@
 
 #include <SensorsInterface.h>
 #include <sensor_msgs/Imu.h>
-#include <XBus.h>
+#include "bus/XBus.h"
 
 class XSens : public SensorROS{
 	public:

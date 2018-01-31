@@ -5,7 +5,7 @@
 
 #include <WindSensor.h>
 #include <GPS.h>
-#include <Xsens.h>
+#include <XSens.h>
 
 #include <RCModule.h>
 

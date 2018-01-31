@@ -1,9 +1,9 @@
-#include <Xsens.h>
+#include <XSens.h>
 #include <Wire.h>
 
 void XSens::init(ros::NodeHandle* n){
 	Wire.beginTransmission(address);
-	Wire.write(PIPE_STATUS);
+	Wire.write(XSENS_PIPE_STATUS);
 	Wire.endTransmission();
 	
 	uint8_t data[4];

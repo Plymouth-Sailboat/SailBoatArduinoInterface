@@ -1,23 +1,16 @@
 #ifndef XBUS_SENSOR_H
 #define XBUS_SENSOR_H
 
-#define CONTROLPIPE 0x03
-#define PIPE_STATUS 0x04
-#define NOTIF_PIPE 0x05
-#define MEAS_PIPE 0x06
+#include <Arduino.h>
+
+#define XSENS_CONTROL_PIPE 0x03
+#define XSENS_PIPE_STATUS 0x04
+#define XSENS_NOTIF_PIPE 0x05
+#define XSENS_MEAS_PIPE 0x06
 
 class XBus{
 	public:
-		XBus(uint8_t address) : address(address){
-			for(int i = 0; i < 4; ++i){
-				if(i < 3){
-					accel[i] =0;
-					rot[i] =0;
-					mag[i] =0;
-				}
-				quat[i] = 0;
-			}
-		}
+		XBus(uint8_t address = 0x1d);
 		
 		enum MesID{WAKEUP = 0x3E, GOTOCONFIG = 0x30, GOTOMEAS = 0x10, RESET = 0x40, 
 		REQDID = 0x00, DEVID = 0x01, INITMT = 0x02, INITMTRES = 0x03, REQPRODUCT = 0x1C, 
@@ -45,6 +38,8 @@ class XBus{
 		void readPipeMeas();
 		void quatToHeading();
 		
+		void dataswapendian(uint8_t* data, uint8_t length);
+		
 		uint8_t data[4];
 		uint8_t datanotif[4];
 		uint8_t datameas[256];
@@ -52,8 +47,6 @@ class XBus{
 		uint16_t notificationSize;
 		uint16_t measurementSize;
 		uint8_t address;
-		
-		uint8_t actualMID;
 };
 
 #endif
