@@ -14,6 +14,6 @@ void RCControl::Control(const geometry_msgs::Twist& cmd) {
   float rudder = Sailboat::Instance()->getRC()->getValue(RC_3);
   float ch5 = Sailboat::Instance()->getRC()->getRawValue(RC_5);
 
-  Sailboat::Instance()->getRudder()->applyCommand(rudder*45);
-  Sailboat::Instance()->getSail()->applyCommand(sail*90);
+  Sailboat::Instance()->getRudder()->applyCommand(rudder*RUDDER_MAX);
+  Sailboat::Instance()->getSail()->applyCommand(sail*SAIL_MAX);
 }
