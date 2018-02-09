@@ -7,13 +7,14 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-Arduino IDE : https://www.arduino.cc/en/Main/Software
-Arduino Mega 2560 : (tested and working)
-Arduino Uno : 
+- Arduino IDE : https://www.arduino.cc/en/Main/Software
+- Arduino Mega 2560 : (tested and working)
+- Arduino Uno : 
 
 ### Installing
 
-First copy the folder librarie and put it in Documents/Arduino/
+First copy the folder librarie and put it in Documents/Arduino/.
+
 You should be able to launch the .ino, compile and upload to the arduino.
 
 ## Authors
