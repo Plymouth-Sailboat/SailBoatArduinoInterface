@@ -1,3 +1,5 @@
+[![Current version on Arduino](https://img.shields.io/badge/Arduino-v1.8.5-blue.svg)(https://www.arduino.cc/en/Main/Software)
+
 # SailBoatArduinoInterface
 Arduino code for Plymouth's Autonomous Sailboat. This contains the libraries, controllers and architecture of our arduino low-level controller for our sailboats. This arduino acquires all the data from the different sensors and send them to the main PC. It has also security features in case the PC shuts down.
 
