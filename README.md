@@ -1,7 +1,7 @@
 [![Current version on Arduino](https://img.shields.io/badge/Arduino-v1.8.5-blue.svg)](https://www.arduino.cc/en/Main/Software)
 
 # SailBoatArduinoInterface
-Arduino code for Plymouth's Autonomous Sailboat. This contains the libraries, controllers and architecture of our arduino low-level controller for our sailboats. This arduino acquires all the data from the different sensors and send them to the main PC. It has also security features in case the PC shuts down.
+Arduino code for [Plymouth's Autonomous Sailboat](http://165.227.238.42/). This contains the libraries, controllers and architecture of our arduino low-level controller for our sailboats. This arduino acquires all the data from the different sensors and send them to the main PC. It has also security features in case the PC shuts down.
 
 ## Getting Started
 
@@ -28,3 +28,6 @@ You should be able to launch the .ino, compile and upload to the arduino.
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
 ## Acknowledgments
+
+## Look at the Wiki!
+If you want more information about the arduino and the boat, please look at [the wiki](https://github.com/Plymouth-Sailboat/SailBoatArduinoInterface/wiki)
