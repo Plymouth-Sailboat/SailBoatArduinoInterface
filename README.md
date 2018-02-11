@@ -15,13 +15,16 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Installing
 
-First copy the folder librarie and put it in Documents/Arduino/.
+First copy the folder `libraries` and put it in `~/Documents/Arduino/` on your PC.
 
-You should be able to launch the .ino, compile and upload to the arduino.
+You should now be able to launch the .ino, compile and upload to the arduino.
+This will launch the Arduino into Stanby Mode, just receiving data from the sensors and sending them to the PC. It won't and shouldn't nove the rudder or the sail.
 
 ## Authors
 
 * **Ulysse VAUTIER** - *Initial work* - [UlysseVautier](https://github.com/UlysseVautier)
+* **Jian WAN** - [Jian Wan](https://www.plymouth.ac.uk/staff/jian-wan)
+* **Christophe Viel** - [Christophe Viel](https://www.researchgate.net/profile/Christophe_Viel)
 
 ## License
 
