@@ -1,5 +1,9 @@
 #include <WindSensor.h>
 
+void WindSensor::init(){
+	pinMode(WIND_SENSOR_PIN, INPUT);
+}
+
 void WindSensor::updateMeasures(){
 //	Logger::Log(1, F("SetupWindSensor()"), F(""));  // Done in the Setup
 	// Safety:

@@ -19,6 +19,7 @@
 class WindSensor : public SensorROS{
 	public:
 		WindSensor() : SensorROS("wind", &msg){}
+		void init();
 		void updateMeasures();
 		void updateTest();
 		void communicateData();
