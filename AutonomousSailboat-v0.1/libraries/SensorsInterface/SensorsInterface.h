@@ -19,6 +19,8 @@ class Sensor{
 		virtual void updateMeasures() = 0;
 		virtual void updateTest() = 0;
 		unsigned int getRaw(){return value;}
+		
+		unsigned int getPeriod(){return period;}
 	protected:
 		unsigned int value;
 		
@@ -28,14 +30,17 @@ class Sensor{
 
 class SensorROS : public Sensor{
 	public:
-		SensorROS(const char* name, ros::Msg* msg, unsigned int period = 100) : Sensor(period), pub(name, msg), nh(NULL){}
+		SensorROS(const char* name, ros::Msg* msg, unsigned int period = 100) : Sensor(period), pub(name, msg), nh(NULL), comTimer(0){}
 		
 		void init(){}
 		virtual void init(ros::NodeHandle* n){n->advertise(pub); nh = n;}
+		void communicate(){if(millis() - comTimer > period){communicateData(); comTimer = millis();}}
 		virtual void communicateData() = 0;
 	protected:
 		ros::Publisher pub;
 		ros::NodeHandle* nh;
+	private:
+		unsigned long comTimer;
 };
 
 #endif

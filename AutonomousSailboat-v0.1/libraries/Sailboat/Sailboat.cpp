@@ -103,9 +103,9 @@ void Sailboat::updateTestSensors(){
 }
 
 void Sailboat::communicateData(){
-	if(millis() - timerMillisCOM > 10){
+	if(millis() - timerMillisCOM > 2){
 		for(int i = 0; i < NB_SENSORS; ++i)
-			sensors[i]->communicateData();
+			sensors[i]->communicate();
 		timerMillisCOM = millis();
 	}
 	if(millis() - timerMillisCOMAct > 10){
