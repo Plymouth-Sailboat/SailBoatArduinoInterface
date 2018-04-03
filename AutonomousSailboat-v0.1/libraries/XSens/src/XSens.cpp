@@ -15,7 +15,9 @@ void XSens::init(ros::NodeHandle* n){
 	}
 	if(data[0] == 0x3e)
 		wokeUp = true;
+	
 	SensorROS::init(n);
+	n->advertise(pubV);
 }
 
 void XSens::updateMeasures(){
@@ -51,6 +53,12 @@ void XSens::communicateData(){
 	msg.linear_acceleration.y = xbus.accel[1];
 	msg.linear_acceleration.z = xbus.accel[2];
 	
+	velMsg.linear.x = xbus.dv[0];
+	velMsg.linear.y = xbus.dv[1];
+	velMsg.linear.z = xbus.dv[2];
+	
 	msg.header.stamp = nh->now();
+	velMsg.header.stamp = nh->now();
 	pub.publish(&msg);
+	pubV.publish(&velMsg);
 }

@@ -30,6 +30,7 @@ class XBus{
 		float headingYaw;
 		float mag[3];
 		float rot[3];
+		float dv[3];
 		
 		uint8_t* buildMessage(MesID MID, uint8_t* data, uint8_t length);
 	private:

@@ -3,11 +3,12 @@
 
 #include <SensorsInterface.h>
 #include <sensor_msgs/Imu.h>
+#include <geometry_msgs/Twist.h>
 #include "bus/XBus.h"
 
 class XSens : public SensorROS{
 	public:
-		XSens(uint8_t address = 0x1d) : SensorROS("IMU", &msg, 3), address(address), xbus(address), wokeUp(false){}
+		XSens(uint8_t address = 0x1d) : SensorROS("IMU", &msg, 3), address(address), xbus(address), wokeUp(false), pubV("IMU_Dv", &velMsg){}
 		
 		void init(ros::NodeHandle* n);
 		void updateMeasures();
@@ -27,7 +28,10 @@ class XSens : public SensorROS{
 		
 		bool wokeUp;
 		
+		ros::Publisher pubV;
+		
 		sensor_msgs::Imu msg;
+		geometry_msgs::Twist velMsg;
 		XBus xbus;
 };
 

@@ -46,6 +46,10 @@ void XBus::parseData(uint8_t* data, uint8_t datalength){
 			dataswapendian(data+3, 3*sizeof(float));
 			memcpy(rot, data+3, sizeof(float)*3);
 			break;
+		case (uint16_t)DataID::DV:
+			dataswapendian(data+3, 3*sizeof(float));
+			memcpy(dv, data+3, sizeof(float)*3);
+			break;
 		}
 		parseData(data+3+length, datalength - length - 3);
 	}else{
