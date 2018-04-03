@@ -23,6 +23,7 @@
 
 #include <ActuatorInterface.h>
 #include <Servo.h>
+#include <std_msgs/Float32.h>
 
 const double ROPE_RING_MAX = sqrt(square(D_RING_ROPE) + square(ROPE_MAX)),
              WINCH_DIAMETER = 1.456*25.4,  // The datasheet value is in inches - this one is in millimetres
@@ -34,15 +35,17 @@ const double ROPE_RING_MAX = sqrt(square(D_RING_ROPE) + square(ROPE_MAX)),
                                  + (D_MAST_MAINSAIL_SHEET*sin(SAIL_MAX*DEG_TO_RAD))*(D_MAST_MAINSAIL_SHEET*sin(SAIL_MAX*DEG_TO_RAD)) + D_WINCH_BOOM*D_WINCH_BOOM)) - D_RING_ROPE*D_RING_ROPE)))/WINCH_DIAMETER)*RAD_TO_DEG - WINCH_OFFSET;
 
 								 
-class Sail : public Actuator{
+class Sail : public ActuatorROS{
 	public:
-		Sail(){}
+		Sail() : ActuatorROS("sail", &msg){}
 		
-		void init();
+		void init(ros::NodeHandle* n);
 		void applyCommand(double command);
+		void communicateData();
 	private:
-	void Winch(unsigned int angle);
-	Servo winch;
+		std_msgs::Float32 msg;
+		Servo winch;
+		void Winch(unsigned int angle);
 };
 
 #endif

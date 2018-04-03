@@ -1,6 +1,6 @@
 #include <Rudder.h>
 
-void Rudder::init(){
+void Rudder::init(ros::NodeHandle* n){
 	//Log(1, F("RudderSetup()"), F(""));  // Done in the setup of AutonomousSailBoat.ino
 	// Safety:
 	#ifndef RUDDER_PIN
@@ -12,6 +12,8 @@ void Rudder::init(){
 
 	// Set the rudder at the Neutral position
 	rudder.write(RUDDER_POS_NEUTRAL);
+	
+	ActuatorROS::init(n);
 }
 
 void Rudder::applyCommand(double command){
@@ -25,4 +27,9 @@ void Rudder::applyCommand(double command){
 
 	// Set the servo at the wanted position:
 	rudder.write(rudderCommandExact);
+}
+
+void Rudder::communicateData(){
+	msg.data = rudder.read();
+	pub.publish(&msg);
 }

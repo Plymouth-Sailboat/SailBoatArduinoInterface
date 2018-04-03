@@ -7,7 +7,7 @@
 
 class XSens : public SensorROS{
 	public:
-		XSens(uint8_t address = 0x1d) : SensorROS("IMU", &msg, 1), address(address), xbus(address), wokeUp(false){}
+		XSens(uint8_t address = 0x1d) : SensorROS("IMU", &msg, 3), address(address), xbus(address), wokeUp(false){}
 		
 		void init(ros::NodeHandle* n);
 		void updateMeasures();

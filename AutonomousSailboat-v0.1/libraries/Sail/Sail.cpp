@@ -1,6 +1,6 @@
 #include <Sail.h>
 
-void Sail::init(){
+void Sail::init(ros::NodeHandle* n){
 	//Log(1, F("SailSetup()"), F(""));  // Done in the setup of AutonomousSailBoat.ino
 	// Safety:
 #ifndef WINCH_PIN
@@ -10,6 +10,8 @@ void Sail::init(){
 
 	winch.attach(WINCH_PIN, WINCH_PWM_MIN, WINCH_PWM_MAX);
 	Winch(WINCH_MIN_CONFIG);
+	
+	ActuatorROS::init(n);
 }
 
 void Sail::applyCommand(double command){
@@ -88,4 +90,9 @@ void Sail::Winch(unsigned int angle) {
   
   pwmLengh = map(angle, WINCH_ANGLE_MIN, WINCH_ANGLE_MAX, WINCH_PWM_MIN, WINCH_PWM_MAX); 
   winch.writeMicroseconds(pwmLengh);
+}
+
+void Sail::communicateData(){
+	msg.data = winch.read();
+	pub.publish(&msg);
 }

@@ -75,7 +75,7 @@ void Sailboat::init(ros::NodeHandle* n){
 		sensors[i]->init(n);
 	
 	for(int i = 0; i < NB_ACTUATORS; ++i)
-		actuators[i]->init();
+		actuators[i]->init(n);
 	
 	watchdog = minute();
 	watchdogROS = minute();
@@ -103,9 +103,15 @@ void Sailboat::updateTestSensors(){
 }
 
 void Sailboat::communicateData(){
-	if(millis() - timerMillisCOM > 20){
+	if(millis() - timerMillisCOM > 10){
 		for(int i = 0; i < NB_SENSORS; ++i)
 			sensors[i]->communicateData();
+		timerMillisCOM = millis();
+	}
+	if(millis() - timerMillisCOMAct > 10){
+		for(int i = 0; i < NB_ACTUATORS; ++i)
+			actuators[i]->communicateData();
+		timerMillisCOMAct = millis();
 	}
 }
 

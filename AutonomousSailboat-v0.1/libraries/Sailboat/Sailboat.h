@@ -19,7 +19,7 @@
 
 class Sailboat{
 public:
-	Sailboat() : controller(NULL), watchdog(0), watchdogROS(0), timerMillis(0), timerMillisCOM(0){
+	Sailboat() : controller(NULL), watchdog(0), watchdogROS(0), timerMillis(0), timerMillisCOM(0), timerMillisCOMAct(0){
 		controllerNames[STANDBY_CONTROLLER] = "Standby";
 		controllerNames[RUDDERSAIL_CONTROLLER] = "Rudder-Sail";
 		controllerNames[RETURNHOME_CONTROLLER] = "Return-Home";
@@ -64,7 +64,7 @@ private:
 	ControllerInterface* controller;
 	SensorROS* sensors[NB_SENSORS];
 	Sensor* sens[NB_SENSORS_NOT_ROS];
-	Actuator* actuators[NB_ACTUATORS];
+	ActuatorROS* actuators[NB_ACTUATORS];
 	
 	geometry_msgs::Twist cmd;
 	
@@ -73,6 +73,7 @@ private:
 	
 	unsigned long timerMillis;
 	unsigned long timerMillisCOM;
+	unsigned long timerMillisCOMAct;
 	
 	const char* controllerNames[NB_CONTROLLERS];
 };
