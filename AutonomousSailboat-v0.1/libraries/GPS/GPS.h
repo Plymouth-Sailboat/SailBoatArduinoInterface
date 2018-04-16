@@ -9,7 +9,7 @@
 
 class GPS : public SensorROS{
 public:
-	GPS() : SensorROS("GPS", &msg), ss(GPS_RX, GPS_TX),GPS_latInit(0), GPS_longInit(0), GPS_altInit(0), status(-1), GPS_track(0), GPS_speed(0), time(0), hdop(0), nbSatellites(0){}
+	GPS(HardwareSerial& serial) : SensorROS("GPS", &msg), serial(serial),GPS_latInit(0), GPS_longInit(0), GPS_altInit(0), status(-1), GPS_track(0), GPS_speed(0), time(0), hdop(0), nbSatellites(0){}
 	
 	void init(ros::NodeHandle* n);
 	void updateMeasures();
@@ -25,7 +25,7 @@ public:
 	
 private:
 	TinyGPSPlus gps;
-	SoftwareSerial ss;
+	HardwareSerial& serial;
 	double GPS_latInit, GPS_longInit, GPS_altInit;
 	double GPS_lat, GPS_long, GPS_alt;
 	double GPS_PosX, GPS_PosY;  // Cartesian location of the boat

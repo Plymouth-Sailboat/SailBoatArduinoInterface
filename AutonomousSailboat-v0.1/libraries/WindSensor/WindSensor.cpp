@@ -7,14 +7,10 @@ void WindSensor::init(){
 void WindSensor::updateMeasures(){
 //	Logger::Log(1, F("SetupWindSensor()"), F(""));  // Done in the Setup
 	// Safety:
-#ifndef WIND_SENSOR_PIN
-	// Generation of a compiler error:
-#error "WIND_SENSOR_PIN" NOT DECLARED! see file "Wiring.h"
-#endif
 
 	value = analogRead(WIND_SENSOR_PIN);
 	// If no value / no sensor:
-	if ((value < 49) || (value > 1000)){
+	if ((value < WIND_SENSOR_MIN) || (value > WIND_SENSOR_MAX)){
 		// This test might not detect if the signal wire is not linked but if it is activated, 
 		//   there is 100% chances that it's true !
 //		Logger::Warning(F("WindAngle"), F("No Wind Sensor/Value read or sensor in bad state!"));
@@ -43,7 +39,7 @@ void WindSensor::updateTest(){
 void WindSensor::communicateData(){
 	msg.x = 0;
 	msg.y = 0;
-	msg.theta = angle;
+	msg.theta = angle*DEG_TO_RAD;
 	
 	pub.publish(&msg);
 }

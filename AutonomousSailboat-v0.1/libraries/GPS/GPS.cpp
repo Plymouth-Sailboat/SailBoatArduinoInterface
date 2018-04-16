@@ -1,14 +1,14 @@
 #include <GPS.h>
 
 void GPS::init(ros::NodeHandle* n){
-	ss.begin(GPS_BAUD_RATE);
+	serial.begin(GPS_BAUD_RATE);
 	
 	SensorROS::init(n);
 }
 
 void GPS::updateMeasures(){
-	while (ss.available() > 0)
-		gps.encode(ss.read());
+	while (serial.available() > 0)
+		gps.encode(serial.read());
 	
 	if (gps.location.isValid()) {
 		// Catching location:

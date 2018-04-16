@@ -4,8 +4,8 @@
 #include <SensorsInterface.h>
 #include <geometry_msgs/Pose2D.h>
 
-#define WIND_SENSOR_MIN 51  // Corresponds approximately at 5% of the maximum readable (1023) 
-#define WIND_SENSOR_MAX 972  // Corresponds approximately at 95% of the minimum readable (1023)
+#define WIND_SENSOR_MIN 49  // Corresponds approximately at 5% of the maximum readable (1023) 
+#define WIND_SENSOR_MAX 1010  // Corresponds approximately at 95% of the minimum readable (1023)
 
 #ifndef HARDWARE_TUNING
 #define WIND_SENSOR_OFFSET 198  // May need to be tuned!
