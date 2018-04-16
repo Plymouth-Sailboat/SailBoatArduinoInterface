@@ -1,5 +1,5 @@
 [![Current version on Arduino](https://img.shields.io/badge/Arduino-v1.8.5-blue.svg)](https://www.arduino.cc/en/Main/Software)
-[![Current version of release](https://img.shields.io/badge/Release-v0.9-green.svg)](https://github.com/Plymouth-Sailboat/SailBoatArduinoInterface/tree/release/AutonomousSailboat-v0.1/binaries)
+[![Current version of release](https://img.shields.io/badge/Release-v0.9-green.svg)](https://github.com/Plymouth-Sailboat/SailBoatArduinoInterface/tree/release/AutonomousSailboat/binaries)
 
 # SailBoatArduinoInterface
 Arduino code for [Plymouth's Autonomous Sailboat](http://165.227.238.42/). This contains the libraries, controllers and architecture of our arduino low-level controller for our sailboats. This arduino acquires all the data from the different sensors and send them to the main PC. It has also security features in case the PC shuts down.
