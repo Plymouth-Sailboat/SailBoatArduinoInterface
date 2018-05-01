@@ -15,7 +15,7 @@ Sailboat::~Sailboat(){
 			delete actuators[i];
 	}
 	
-	for(int i = 0; i < nbControllers; ++i){
+	for(int i = 0; i < NB_CONTROLLERS; ++i){
 		if(controllers[i] != NULL)
 			delete controllers[i];
 	}
@@ -32,12 +32,13 @@ void Sailboat::setController(ControllerInterface* control){
 void Sailboat::setController(int index){
 	if(controller != NULL)
 		controller->setActivated(false);
-	if(index < nbControllers){
+	if(index < NB_CONTROLLERS){
 		actualControllerI = index;
 		controller = controllers[index];
 		controller->init();
 		controller->setActivated(true);
-		Logger::Instance()->Toast("Changed to :", String(controllerNames[index]), 5000);
+		if(LOGGER)
+			Logger::Instance()->Toast("Changed to :", String(controllerNames[index]), 5000);
 	}
 }
 
@@ -53,7 +54,8 @@ void Sailboat::msgCallback(const std_msgs::String& msg){
 	case 'M':
 		break;
 	case 'P':
-		Logger::Instance()->Toast("From PC :", String(msg.data+1), 5000);
+		if(LOGGER)
+			Logger::Instance()->Toast("From PC :", String(msg.data+1), 5000);
 		break;
 	} 
 	watchdogROS = minute();
@@ -84,7 +86,8 @@ void Sailboat::init(ros::NodeHandle* n){
 	if(watchdogROS > 58)
 		watchdogROS = -1;
 	
-	Logger::Instance()->Toast("Sailboat is", "Ready!!", 0);
+	if(LOGGER)
+		Logger::Instance()->Toast("Sailboat is", "Ready!!", 0);
 }
 
 void Sailboat::updateSensors(){
@@ -127,11 +130,12 @@ void Sailboat::Control(){
 		}
 		
 		if(minute() - watchdogROS > 5){
-			Logger::Instance()->Toast("ROS DEAD??", "ROS DEAD??", 0);
+			if(LOGGER)
+				Logger::Instance()->Toast("ROS DEAD??", "ROS DEAD??", 0);
 			setController(RETURNHOME_CONTROLLER);
 		}
 		
-		for(int i =0; i < nbControllers; ++i){
+		for(int i =0; i < NB_CONTROLLERS; ++i){
 			if(controllers[i] != NULL && !controllers[i]->isActivated()){
 				controllers[i]->updateBackground();
 			}

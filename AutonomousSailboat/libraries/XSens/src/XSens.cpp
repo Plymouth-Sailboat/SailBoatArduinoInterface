@@ -58,7 +58,6 @@ void XSens::communicateData(){
 	velMsg.linear.z = xbus.dv[2];
 	
 	msg.header.stamp = nh->now();
-	velMsg.header.stamp = nh->now();
 	pub.publish(&msg);
 	pubV.publish(&velMsg);
 }

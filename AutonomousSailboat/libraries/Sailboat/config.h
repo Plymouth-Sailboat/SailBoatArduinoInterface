@@ -92,6 +92,7 @@
 //PIN//
 //////
 //LCD I2C
+#define LOGGER 0
 #define LCD_SCREEN_ADDRESS	0x3f
 //RC
 #define RC_PIN_1 8   // Pin 10 Connected to Channel-1 of Transmitter
