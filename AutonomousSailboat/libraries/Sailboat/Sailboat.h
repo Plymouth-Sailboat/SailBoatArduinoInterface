@@ -45,7 +45,7 @@ public:
 	
 	void setController(ControllerInterface* control);
     void setController(int index);
-	void setControllers(ControllerInterface** control, unsigned int nb){controllers = control; nbControllers = nb;}
+	void setControllers(ControllerInterface** control){controllers = control;}
 	int actualControllerIndex(){return actualControllerI;}
 	ControllerInterface* actualController(){return controller;}
 	
@@ -59,7 +59,6 @@ private:
 	static Sailboat* sailboat;
 	
 	ControllerInterface** controllers;
-	unsigned int nbControllers;
 	int actualControllerI;
 	ControllerInterface* controller;
 	SensorROS* sensors[NB_SENSORS];

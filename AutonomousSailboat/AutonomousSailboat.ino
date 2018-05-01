@@ -22,7 +22,7 @@ void setControllers(){
   controllers[RC_CONTROLLER] = new RCControl();
   controllers[C_CONTROLLER] = new Controller(3);
   
-  Sailboat::Instance()->setControllers(controllers,NB_CONTROLLERS);
+  Sailboat::Instance()->setControllers(controllers);
   Sailboat::Instance()->setController(STANDBY_CONTROLLER);
 }
 
