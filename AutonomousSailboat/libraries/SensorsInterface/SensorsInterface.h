@@ -1,7 +1,7 @@
 #ifndef SENSOR_H
 #define SENSOR_H
 
-#include <config.h>
+#include <config-Sailboat.h>
 #include <Arduino.h>
 #include <Helper.h>
 #include <Log.h>

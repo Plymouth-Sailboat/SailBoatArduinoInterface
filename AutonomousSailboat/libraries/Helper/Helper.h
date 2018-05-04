@@ -3,8 +3,6 @@
 
 #define RESET_PIN 42
 
-#include <config.h>
-
 // ####################################################
 // #                                                  #
 // #                    FUNCTIONS                     #

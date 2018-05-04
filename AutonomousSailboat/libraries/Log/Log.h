@@ -4,7 +4,7 @@
 #include <string.h>
 #include <Wire.h>
 #include <Helper.h>
-#include <config.h>
+#include <config-Sailboat.h>
 
 #include <ros.h>
 #include <std_msgs/Header.h>
