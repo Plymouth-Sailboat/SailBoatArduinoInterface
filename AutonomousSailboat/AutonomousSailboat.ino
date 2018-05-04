@@ -8,6 +8,11 @@
 #include "RudderSailControl.h"
 #include "RCControl.h"
 
+#define EI_NOTPORTJ 
+#define EI_NOTPORTK
+#define EI_NOTEXTERNAL
+#include <EnableInterrupt.h>
+
 ros::NodeHandle nh;
  
 ros::Subscriber<geometry_msgs::Twist, Sailboat> sub("sailboat_cmd",&Sailboat::cmdCallback, Sailboat::Instance());
@@ -26,25 +31,31 @@ void setControllers(){
   Sailboat::Instance()->setController(STANDBY_CONTROLLER);
 }
 
-void intCH1(){
-  Sailboat::Instance()->getRC()->interruptCH(RC_1, RC_PIN_1);
-}
-
-void intCH3(){
-  Sailboat::Instance()->getRC()->interruptCH(RC_3, RC_PIN_3);
+void intCH4(){
+  Sailboat::Instance()->getRC()->interruptCH(RC_1, RC_PIN_4); //Trick because Hardware wrong
 }
 
 void intCH5(){
-  Sailboat::Instance()->getRC()->interruptCH(RC_5, RC_PIN_5);
+  Sailboat::Instance()->getRC()->interruptCH(RC_2, RC_PIN_5); //Trick because Hardware wrong
+}
+
+void intCH6(){
+  Sailboat::Instance()->getRC()->interruptCH(RC_3, RC_PIN_6); //Trick because Hardware wrong
 }
 
 void setRCInterrupts(){
-  pinMode(RC_PIN_1, INPUT);
-  pinMode(RC_PIN_3, INPUT);
+  //pinMode(RC_PIN_1, INPUT); //unused
+  //pinMode(RC_PIN_2, INPUT); //unused
+  //pinMode(RC_PIN_3, INPUT); //unused
+  pinMode(RC_PIN_4, INPUT);
   pinMode(RC_PIN_5, INPUT);
-  attachInterrupt(RC_PIN_1, intCH1, CHANGE);
-  attachInterrupt(RC_PIN_3, intCH3, CHANGE);
-  attachInterrupt(RC_PIN_5, intCH5, CHANGE);
+  pinMode(RC_PIN_6, INPUT);
+  //enableInterrupt(RC_PIN_1, intCH1, CHANGE); //unused
+  //enableInterrupt(RC_PIN_2, intCH2, CHANGE); //unused
+  //enableInterrupt(RC_PIN_3, intCH3, CHANGE); //unused
+  enableInterrupt(RC_PIN_4, intCH4, CHANGE);
+  enableInterrupt(RC_PIN_5, intCH5, CHANGE);
+  enableInterrupt(RC_PIN_6, intCH6, CHANGE);
 }
 
 void setup() {

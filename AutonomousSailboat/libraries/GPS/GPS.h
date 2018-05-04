@@ -3,7 +3,6 @@
 
 #include <SensorsInterface.h>
 #include <TinyGPS++.h>
-#include <SoftwareSerial.h>
 #include <sensor_msgs/NavSatFix.h>
 #include <gps_common/GPSFix.h>
 

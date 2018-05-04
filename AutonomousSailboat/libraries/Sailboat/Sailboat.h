@@ -1,7 +1,7 @@
 #ifndef SAILBOAT_H
 #define SAILBOAT_H
 
-#include <config.h>
+#include <config-Sailboat.h>
 
 #include <WindSensor.h>
 #include <GPS.h>
