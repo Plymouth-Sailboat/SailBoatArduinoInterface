@@ -8,8 +8,9 @@ void Rudder::init(ros::NodeHandle* n){
 	#error "RUDDER_PIN" NOT DECLARED! see file "Wiring.h"
 #endif
 
-	rudder.attach(RUDDER_PIN, RUDDER_PWM_MIN, RUDDER_PWM_MAX);  // attaches the servo on pin 9 to the servo object
-
+	//rudder.attach(RUDDER_PIN, RUDDER_PWM_MIN, RUDDER_PWM_MAX);  // attaches the servo on pin 9 to the servo object
+	rudder.attach(RUDDER_PIN);
+	
 	// Set the rudder at the Neutral position
 	rudder.write(RUDDER_POS_NEUTRAL);
 	

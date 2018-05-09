@@ -55,9 +55,9 @@
 /////////
 
 //RUDDER
-#define RUDDER_POS_MIN  56//47,
-#define RUDDER_POS_NEUTRAL  103//94,
-#define RUDDER_POS_MAX  150//147,
+#define RUDDER_POS_MIN  40//47,
+#define RUDDER_POS_NEUTRAL  82//94,
+#define RUDDER_POS_MAX  124//147,
 //#define RUDDER_PWM_MIN  553  // according to the seller
 //#define RUDDER_PWM_MAX  2450  // according to the seller
 
@@ -66,14 +66,26 @@
 #define RUDDER_NEUTRAL  0
 #define RUDDER_MAX  45
 
+//RUDDER2
+#define RUDDER2_POS_MIN  40//47,
+#define RUDDER2_POS_NEUTRAL  86//94,
+#define RUDDER2_POS_MAX  133//147,
+//#define RUDDER_PWM_MIN  553  // according to the seller
+//#define RUDDER_PWM_MAX  2450  // according to the seller
+
+// these values are inverted on purpose:
+#define RUDDER2_MIN  -10
+#define RUDDER2_NEUTRAL  0
+#define RUDDER2_MAX  10
+
 //SAIL
 #define SAIL_MIN 0
 #define SAIL_NEUTRAL SAIL_MIN
 #define SAIL_MAX 90
 
-#define WINCH_ANGLE_MIN 24 // Physical limit of the servomotor
+#define WINCH_ANGLE_MIN 74 // Physical limit of the servomotor
 #define WINCH_ANGLE_NEUTRAL WINCH_ANGLE_MIN // Physical limit of the servomotor
-#define WINCH_ANGLE_MAX 124  // Physical limit of the servomotor
+#define WINCH_ANGLE_MAX 138  // Physical limit of the servomotor
 //#define WINCH_PWM_MIN 24  // according to the seller
 //#define WINCH_PWM_MAX 2173  // according to the seller
 #define WINCH_DIAMETER 23 // in mm
