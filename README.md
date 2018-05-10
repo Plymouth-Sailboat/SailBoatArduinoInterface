@@ -35,6 +35,8 @@ This project is licensed under the GNU General Public License v3.0 - see the [LI
 This project uses well-known libraries from :
 * [TinyGPS++](http://arduiniana.org/libraries/tinygpsplus/)
 * [LiquidCrystal](https://bitbucket.org/fmalpartida/new-liquidcrystal/wiki/Home)
+We are also using EnableInterrupt librarie due to some hardware error on our boards :
+* [EnableInterrupt](https://github.com/GreyGnome/EnableInterrupt)
 
 ## Look at the Wiki!
 If you want more information about the arduino and the boat, please look at [the wiki](https://github.com/Plymouth-Sailboat/SailBoatArduinoInterface/wiki)
