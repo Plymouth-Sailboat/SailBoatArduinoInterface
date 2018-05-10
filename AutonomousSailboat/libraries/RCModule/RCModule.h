@@ -33,13 +33,12 @@ public:
 	void interruptCH(uint8_t channel, uint8_t pin);
 	uint16_t getRawValue(uint8_t channel){if(channel < RC_NUM_CHANNELS) return rc_values[channel];}
 	float getValue(uint8_t channel){if(channel < RC_NUM_CHANNELS) return mapf(rc_values[channel], offsetmin[channel], offsetmax[channel], 0.0, 1.0);}
+	bool controlling;
 	
 private:
 	uint16_t rc_values[RC_NUM_CHANNELS];
 	uint32_t rc_start[RC_NUM_CHANNELS];
-	
-	bool controlling;
-	
+		
 	unsigned long timer;
 	unsigned long watchdog;
 	unsigned int offsetmin[RC_NUM_CHANNELS];

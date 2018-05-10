@@ -27,6 +27,9 @@ void Sailboat::setController(ControllerInterface* control){
 	controller = control;
 	controller->init();
 	controller->setActivated(true);
+	
+	((RC*)sens[SENSOR_RC])->controlling = false;
+	
 	actualControllerI = -1;
 }
 void Sailboat::setController(int index){
@@ -37,6 +40,9 @@ void Sailboat::setController(int index){
 		controller = controllers[index];
 		controller->init();
 		controller->setActivated(true);
+		
+		((RC*)sens[SENSOR_RC])->controlling = false;
+		
 		if(LOGGER)
 			Logger::Instance()->Toast("Changed to :", String(controllerNames[index]), 5000);
 	}
