@@ -2,6 +2,21 @@
 
 void WindSensor::init(){
 	pinMode(WIND_SENSOR_PIN, INPUT);
+#ifdef WIND_ANEMOMETER_PIN
+	pinMode(WIND_ANEMOMETER_PIN, INPUT); 
+#endif
+}
+
+void WindSensor::updateAnemometer(){
+	if ((millis() - contactBounceTime) > 15 ) { // debounce the switch contact. 
+		anemometerRevolution++; 
+		contactBounceTime = millis(); 
+	}
+	if(millis() - timeAnemometer > 3000){
+		windSpeed = anemometerRevolution * 0.3354;
+		anemometerRevolution = 0;
+		timeAnemometer = millis();
+	}
 }
 
 void WindSensor::updateMeasures(){
@@ -37,8 +52,8 @@ void WindSensor::updateTest(){
 }
 
 void WindSensor::communicateData(){
-	msg.x = 0;
-	msg.y = 0;
+	msg.x = windSpeed*cos(angle*DEG_TO_RAD);
+	msg.y = windSpeed*sin(angle*DEG_TO_RAD);
 	msg.theta = angle*DEG_TO_RAD;
 	
 	pub.publish(&msg);

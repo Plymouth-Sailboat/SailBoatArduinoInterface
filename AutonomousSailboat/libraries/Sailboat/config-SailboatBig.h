@@ -26,6 +26,7 @@
 //////
 //WIND
 #define WIND_SENSOR_PIN A2
+#define WIND_ANEMOMETER_PIN 2
 //GPS
 #define GPS_RX 10
 #define GPS_TX 11

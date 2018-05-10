@@ -24,11 +24,17 @@ class WindSensor : public SensorROS{
 		void updateTest();
 		void communicateData();
 		
+		void updateAnemometer();
+		
 		double getMeasure(){return angle;}
 		
 	private:
 		double angle;
 		geometry_msgs::Pose2D msg;
+		double windSpeed;
+		unsigned int anemometerRevolution;
+		unsigned long contactBounceTime;
+		unsigned long timeAnemometer;
 		
 };
 

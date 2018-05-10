@@ -43,6 +43,12 @@ void intCH6(){
   Sailboat::Instance()->getRC()->interruptCH(RC_3, RC_PIN_6); //Trick because Hardware wrong
 }
 
+#ifdef WIND_ANEMOMETER_PIN
+void AnemometerReading(){
+  Sailboat::Instance()->getWindSensor()->updateAnemometer();
+}
+#endif
+
 void setRCInterrupts(){
   //pinMode(RC_PIN_1, INPUT); //unused
   //pinMode(RC_PIN_2, INPUT); //unused
@@ -72,6 +78,10 @@ void setup() {
   
   setControllers();
   setRCInterrupts();
+
+#ifdef WIND_ANEMOMETER_PIN
+  attachInterrupt(digitalPinToInterrupt(WIND_ANEMOMETER_PIN), AnemometerReading, FALLING);
+#endif
   
   delay(10);
 }
