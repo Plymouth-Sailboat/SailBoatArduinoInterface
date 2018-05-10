@@ -23,4 +23,7 @@ void RCControl::Control(const geometry_msgs::Twist& cmd) {
     float sail = SAIL_MAX * (cos(wind->getMeasure()) + 1) / 2;
     Sailboat::Instance()->getSail()->applyCommand(sail);
   }
+#ifdef ACTUATOR_RUDDER2
+  Sailboat::Instance()->getRudder2()->applyCommand((rudder-0.5)*2.0*RUDDER_MAX/4.5);
+#endif
 }

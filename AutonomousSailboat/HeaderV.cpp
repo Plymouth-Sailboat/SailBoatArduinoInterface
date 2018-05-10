@@ -27,4 +27,7 @@ void Header::Control(const geometry_msgs::Twist& cmd) {
 
   Sailboat::Instance()->getRudder()->applyCommand(rudder);
   Sailboat::Instance()->getSail()->applyCommand(sail);
+#ifdef ACTUATOR_RUDDER2
+  Sailboat::Instance()->getRudder2()->applyCommand(rudder/4.5);
+#endif
 }
