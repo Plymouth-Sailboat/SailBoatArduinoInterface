@@ -9,10 +9,10 @@ void Rudder::init(ros::NodeHandle* n){
 #endif
 
 	//rudder.attach(RUDDER_PIN, RUDDER_PWM_MIN, RUDDER_PWM_MAX);  // attaches the servo on pin 9 to the servo object
-	rudder.attach(RUDDER_PIN);
+	rudder.attach(pin);
 	
 	// Set the rudder at the Neutral position
-	rudder.write(RUDDER_POS_NEUTRAL);
+	rudder.write(posNeutral);
 	
 	ActuatorROS::init(n);
 }
@@ -20,10 +20,10 @@ void Rudder::init(ros::NodeHandle* n){
 void Rudder::applyCommand(double command){
 //	Logger::Log(1, F("RudderApplyCommand()"), F(""));
 
-	unsigned int rudderCommandExact = RUDDER_POS_NEUTRAL;
+	unsigned int rudderCommandExact = posNeutral;
 
 	// Generates the exact command:
-	rudderCommandExact = mapf(command, RUDDER_MIN, RUDDER_MAX, RUDDER_POS_MAX, RUDDER_POS_MIN);
+	rudderCommandExact = mapf(command, anglemin, anglemax, posMin, posMax);
 //	Logger::Log(0, F("RudderCommandExact"), String(rudderCommandExact));
 
 	// Set the servo at the wanted position:

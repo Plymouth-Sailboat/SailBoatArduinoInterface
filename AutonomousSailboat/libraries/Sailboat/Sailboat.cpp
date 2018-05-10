@@ -78,6 +78,9 @@ void Sailboat::init(ros::NodeHandle* n){
 	
 	actuators[ACTUATOR_RUDDER] = new Rudder();
 	actuators[ACTUATOR_SAIL] = new Sail();
+#ifdef ACTUATOR_RUDDER2
+	actuators[ACTUATOR_RUDDER2] = new Rudder("rudder2", RUDDER2_PIN, RUDDER2_POS_NEUTRAL, RUDDER2_POS_MIN, RUDDER2_POS_MAX, RUDDER2_MIN, RUDDER2_MAX);
+#endif
 	
 	for(int i = 0; i < NB_SENSORS; ++i)
 		sensors[i]->init(n);

@@ -42,6 +42,9 @@ public:
 	
 	Rudder* getRudder(){return (Rudder*)actuators[ACTUATOR_RUDDER];}
 	Sail* getSail(){return (Sail*)actuators[ACTUATOR_SAIL];}
+#ifdef ACTUATOR_RUDDER2
+	Rudder* getRudder2(){return (Rudder*)actuators[ACTUATOR_RUDDER2];}
+#endif
 	
 	void setController(ControllerInterface* control);
     void setController(int index);

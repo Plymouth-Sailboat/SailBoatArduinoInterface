@@ -39,17 +39,20 @@
 
 /**ACTUATORS**/
 /***********/
-#define NB_ACTUATORS		2
+#define NB_ACTUATORS		3
 
 #define ACTUATOR_RUDDER		0
 #define ACTUATOR_SAIL		1
+#define ACTUATOR_RUDDER2	2
 
 //PIN//
 //////
 //RUDDER
-#define RUDDER_PIN 6
+#define RUDDER_PIN 4
+//RUDDER2
+#define RUDDER2_PIN 5
 //SAIL
-#define WINCH_PIN 7
+#define WINCH_PIN 6
 
 //CONFIG//
 /////////
