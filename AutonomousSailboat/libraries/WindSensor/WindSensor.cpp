@@ -52,8 +52,12 @@ void WindSensor::updateTest(){
 }
 
 void WindSensor::communicateData(){
+    msg.x = 0;
+    msg.y = 0;
+#ifdef WIND_ANEMOMETER_PIN
 	msg.x = windSpeed*cos(angle*DEG_TO_RAD);
 	msg.y = windSpeed*sin(angle*DEG_TO_RAD);
+#endif
 	msg.theta = angle*DEG_TO_RAD;
 	
 	pub.publish(&msg);

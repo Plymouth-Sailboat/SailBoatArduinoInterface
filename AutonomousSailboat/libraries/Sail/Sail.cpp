@@ -105,6 +105,6 @@ void Sail::applyCommand(double command){
 }
 
 void Sail::communicateData(){
-	msg.data = winch.read();
+	msg.data = mapf(winch.read(), WINCH_ANGLE_MIN, WINCH_ANGLE_MAX, SAIL_MIN, SAIL_MAX);
 	pub.publish(&msg);
 }

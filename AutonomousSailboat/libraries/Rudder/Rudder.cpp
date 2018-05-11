@@ -31,6 +31,6 @@ void Rudder::applyCommand(double command){
 }
 
 void Rudder::communicateData(){
-	msg.data = rudder.read();
+	msg.data = mapf(rudder.read(), posMin, posMax, anglemin, anglemax);
 	pub.publish(&msg);
 }
