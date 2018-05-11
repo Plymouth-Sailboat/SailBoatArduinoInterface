@@ -45,6 +45,7 @@ void Sailboat::setController(int index){
 		
 		if(LOGGER)
 			Logger::Instance()->Toast("Changed to :", String(controllerNames[index]), 5000);
+        publishMsg(controllerNames[index]);
 	}
 }
 
@@ -94,9 +95,16 @@ void Sailboat::init(ros::NodeHandle* n){
 		watchdog = -1;
 	if(watchdogROS > 58)
 		watchdogROS = -1;
+    
+    n->advertise(pubMsg);
 	
 	if(LOGGER)
 		Logger::Instance()->Toast("Sailboat is", "Ready!!", 0);
+}
+
+void Sailboat::publishMsg(const char* msg){
+    sailboatmsgs.data = msg;
+    pubMsg.publish(&sailboatmsgs);
 }
 
 void Sailboat::updateSensors(){

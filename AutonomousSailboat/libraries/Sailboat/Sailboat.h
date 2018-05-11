@@ -19,7 +19,7 @@
 
 class Sailboat{
 public:
-	Sailboat() : controller(NULL), watchdog(0), watchdogROS(0), timerMillis(0), timerMillisCOM(0), timerMillisCOMAct(0){
+	Sailboat() : controller(NULL), pubMsg("sailboat-log", &sailboatmsgs), watchdog(0), watchdogROS(0), timerMillis(0), timerMillisCOM(0), timerMillisCOMAct(0){
 		controllerNames[STANDBY_CONTROLLER] = "Standby";
 		controllerNames[RUDDERSAIL_CONTROLLER] = "Rudder-Sail";
 		controllerNames[RETURNHOME_CONTROLLER] = "Return-Home";
@@ -56,6 +56,8 @@ public:
 
 	void cmdCallback(const geometry_msgs::Twist& msg);
 	void msgCallback(const std_msgs::String& msg);
+    
+    void publishMsg(const char* msg);
 	
 	static Sailboat* Instance(){if(sailboat == NULL) sailboat = new Sailboat(); return sailboat;}
 private:
@@ -69,6 +71,9 @@ private:
 	ActuatorROS* actuators[NB_ACTUATORS];
 	
 	geometry_msgs::Twist cmd;
+    
+    ros::Publisher pubMsg;
+    std_msgs::String sailboatmsgs;
 	
 	int watchdog;
 	int watchdogROS;
