@@ -25,6 +25,9 @@
 //PIN//
 //////
 //WIND
+#define WIND_SENSOR_MIN 0  // Corresponds approximately at 5% of the maximum readable (1023)
+#define WIND_SENSOR_MAX 1024  // Corresponds approximately at 95% of the minimum readable (1023)
+//WIND
 #define WIND_SENSOR_PIN A2
 #define WIND_ANEMOMETER_PIN 2
 //GPS

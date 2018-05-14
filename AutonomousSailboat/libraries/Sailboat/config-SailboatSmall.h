@@ -32,6 +32,9 @@
 
 //CONFIG//
 /////////
+//WIND
+#define WIND_SENSOR_MIN 48  // Corresponds approximately at 5% of the maximum readable (1023)
+#define WIND_SENSOR_MAX 990  // Corresponds approximately at 95% of the minimum readable (1023)
 //GPS
 #define GPS_BAUD_RATE	9600
 #define EARTH_RADIUS	6371000  // Earth radius in metres

@@ -12,8 +12,8 @@ void WindSensor::updateAnemometer(){
 		anemometerRevolution++; 
 		contactBounceTime = millis(); 
 	}
-	if(millis() - timeAnemometer > 3000){
-		windSpeed = anemometerRevolution * 0.3354;
+	if(millis() - timeAnemometer > 1000){
+		windSpeed = anemometerRevolution * 1.061;
 		anemometerRevolution = 0;
 		timeAnemometer = millis();
 	}
@@ -59,6 +59,7 @@ void WindSensor::communicateData(){
 	msg.y = windSpeed*sin(angle*DEG_TO_RAD);
 #endif
 	msg.theta = angle*DEG_TO_RAD;
+    windSpeed = 0;
 	
 	pub.publish(&msg);
 }
