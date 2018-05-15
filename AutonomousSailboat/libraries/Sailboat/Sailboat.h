@@ -25,6 +25,8 @@ public:
 		controllerNames[RETURNHOME_CONTROLLER] = "Return-Home";
 		controllerNames[HEADER_CONTROLLER] = "Heading";
 		controllerNames[RC_CONTROLLER] = "RC";
+		controllerNames[SAILCAP_CONTROLLER] = "Sail-Cap";
+		controllerNames[RUDDER_CONTROLLER] = "Rudder";
 		controllerNames[C_CONTROLLER] = "C";
 	}
 	~Sailboat();

@@ -1,17 +1,6 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-/**CONTROLLERS**/
-/***********/
-#define NB_CONTROLLERS 6
-
-#define STANDBY_CONTROLLER 0
-#define RUDDERSAIL_CONTROLLER 1
-#define RETURNHOME_CONTROLLER 2
-#define HEADER_CONTROLLER 3
-#define RC_CONTROLLER 4
-#define C_CONTROLLER 5
-
 /**SENSORS**/
 /***********/
 #define NB_SENSORS		3

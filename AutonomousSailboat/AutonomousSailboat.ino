@@ -6,6 +6,8 @@
 #include "Standby.h"
 #include "HeaderV.h"
 #include "RudderSailControl.h"
+#include "SailCapControl.h"
+#include "RudderControl.h"
 #include "RCControl.h"
 
 #define EI_NOTPORTJ 
@@ -25,6 +27,8 @@ void setControllers(){
   controllers[RETURNHOME_CONTROLLER] = new ReturnHome();
   controllers[HEADER_CONTROLLER] = new Header();
   controllers[RC_CONTROLLER] = new RCControl();
+  controllers[SAILCAP_CONTROLLER] = new SailCap();
+  controllers[RUDDER_CONTROLLER] = new RudderControl();
   controllers[C_CONTROLLER] = new Controller(3);
   
   Sailboat::Instance()->setControllers(controllers);
