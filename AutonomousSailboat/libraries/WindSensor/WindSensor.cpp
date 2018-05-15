@@ -39,11 +39,7 @@ void WindSensor::updateMeasures(){
 
 	// returns the angle, with reference to the boat:
 	angle = mapf(value, WIND_SENSOR_MIN, WIND_SENSOR_MAX, ANGLE_MIN, ANGLE_MAX);  // The angle is now in the [0;+360] interval
-
-	// To set the angle in the [-180;+180] interval
-	if (angle > 180) {
-		angle -= ANGLE_MAX;
-	}
+	angle -= 180;
 	angle = -angle;
 }
 
