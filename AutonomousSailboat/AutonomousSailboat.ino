@@ -98,5 +98,5 @@ void loop() {
   Sailboat::Instance()->Control();
 
   nh.spinOnce();
-  delay(1);
+  delay(5);
 }

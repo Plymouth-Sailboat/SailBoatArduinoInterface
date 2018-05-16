@@ -10,9 +10,12 @@ void RudderSail::init() {
 }
 
 void RudderSail::Control(const geometry_msgs::Twist& cmd) {
-  Sailboat::Instance()->getRudder()->applyCommand(cmd.angular.x);
-  Sailboat::Instance()->getSail()->applyCommand(cmd.angular.y);
+  double rudder = cmd.angular.x * DEG_TO_RAD;
+  double sail = cmd.angular.y * DEG_TO_RAD;
+  double rudder2 = cmd.angular.z * DEG_TO_RAD;
+  Sailboat::Instance()->getRudder()->applyCommand(rudder);
+  Sailboat::Instance()->getSail()->applyCommand(sail);
 #ifdef ACTUATOR_RUDDER2
-  Sailboat::Instance()->getRudder2()->applyCommand(cmd.angular.z);
+  Sailboat::Instance()->getRudder2()->applyCommand(rudder2);
 #endif
 }
