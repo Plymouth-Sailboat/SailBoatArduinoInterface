@@ -97,7 +97,7 @@ void Sail::init(ros::NodeHandle* n){
 void Sail::applyCommand(double command){
 	unsigned int winchCommandExact = WINCH_ANGLE_NEUTRAL;
 	// Generates the exact command:
-	winchCommandExact = mapf(command, SAIL_MIN, SAIL_MAX, WINCH_ANGLE_MIN, WINCH_ANGLE_MAX);
+	winchCommandExact = mapf(command, SAIL_MIN, SAIL_MAX, WINCH_ANGLE_MAX, WINCH_ANGLE_MIN);
 //	Logger::Log(0, F("RudderCommandExact"), String(rudderCommandExact));
 
 	// Set the servo at the wanted position:
@@ -105,6 +105,6 @@ void Sail::applyCommand(double command){
 }
 
 void Sail::communicateData(){
-	msg.data = mapf(winch.read(), WINCH_ANGLE_MIN, WINCH_ANGLE_MAX, SAIL_MIN, SAIL_MAX);
+	msg.data = mapf(winch.read(), WINCH_ANGLE_MIN, WINCH_ANGLE_MAX, SAIL_MAX, SAIL_MIN);
 	pub.publish(&msg);
 }

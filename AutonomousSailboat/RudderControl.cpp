@@ -10,8 +10,8 @@ void RudderControl::init() {
 }
 
 void RudderControl::Control(const geometry_msgs::Twist& cmd) {
-  double rudder = cmd.angular.x * DEG_TO_RAD;
-  double rudder2 = cmd.angular.z * DEG_TO_RAD;
+  double rudder = cmd.angular.x * RAD_TO_DEG;
+  double rudder2 = cmd.angular.z * RAD_TO_DEG;
   
   Sailboat::Instance()->getRudder()->applyCommand(rudder);
 #ifdef ACTUATOR_RUDDER2
