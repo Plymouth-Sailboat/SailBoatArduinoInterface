@@ -23,7 +23,7 @@ void Rudder::applyCommand(double command){
 	unsigned int rudderCommandExact = posNeutral;
 
 	// Generates the exact command:
-	rudderCommandExact = mapf(command, anglemin, anglemax, posMin, posMax);
+	rudderCommandExact = mapf(command, anglemin, anglemax, posMax, posMin);
 //	Logger::Log(0, F("RudderCommandExact"), String(rudderCommandExact));
 
 	// Set the servo at the wanted position:
@@ -31,6 +31,6 @@ void Rudder::applyCommand(double command){
 }
 
 void Rudder::communicateData(){
-	msg.data = mapf(rudder.read(), posMin, posMax, anglemin, anglemax);
+	msg.data = mapf(rudder.read(), posMax, posMin, anglemin, anglemax);
 	pub.publish(&msg);
 }
