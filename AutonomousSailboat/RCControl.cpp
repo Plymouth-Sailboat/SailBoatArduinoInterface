@@ -26,4 +26,5 @@ void RCControl::Control(const geometry_msgs::Twist& cmd) {
 #ifdef ACTUATOR_RUDDER2
   Sailboat::Instance()->getRudder2()->applyCommand((rudder-0.5)*2.0*RUDDER_MAX/4.5);
 #endif
+  Sailboat::Instance()->resetWatchdogROS();
 }
