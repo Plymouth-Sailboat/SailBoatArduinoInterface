@@ -14,8 +14,10 @@
 #define C_CONTROLLER 7
 
 #ifdef SMALLBOAT
+#define FLYSKY
 #include <config-SailboatSmall.h>
 #endif
 #ifdef SMALLBOAT_BIG
+#define J5C01R
 #include <config-SailboatBig.h>
 #endif
