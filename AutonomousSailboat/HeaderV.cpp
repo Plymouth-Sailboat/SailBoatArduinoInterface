@@ -6,14 +6,19 @@ Header::Header() {
 void Header::init() {
 }
 void Header::Control(const geometry_msgs::Twist& cmd) {
-  double x = cmd.linear.x;
-  double y = cmd.linear.y;
-
-  double norm = sqrt(x * x + y * y);
-  double theta = atan2(y / norm, x / norm);
-
+  double theta = 0;
   double rudder = 0;
   double sail = 0;
+  
+  if(cmd.linear.x == 0 && cmd.linear.y == 0){
+    theta = cmd.angular.z;
+  }else{
+    double x = cmd.linear.x;
+    double y = cmd.linear.y;
+
+    double norm = sqrt(x * x + y * y);
+    theta = atan2(y / norm, x / norm);
+  }
 
   XSens* xsens = Sailboat::Instance()->getIMU();
   WindSensor* wind = Sailboat::Instance()->getWindSensor();
