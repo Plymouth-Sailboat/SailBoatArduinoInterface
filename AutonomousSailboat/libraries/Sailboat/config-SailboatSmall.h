@@ -80,38 +80,11 @@
 
 /*MISC*/
 /******/
-#define RC_1 0   // Pin 10 Connected to Channel-1 of Transmitter
-#define RC_2 1   // Pin 11 Connected to Channel-3 of Transmitter
-#define RC_3 2   // Pin 11 Connected to Channel-3 of Transmitter
-#define RC_4 3   // Pin 11 Connected to Channel-3 of Transmitter
-#define RC_5 4   // Pin 12 Connected to Channel-5 of Transmitter
-#define RC_6 5   // Pin 12 Connected to Channel-5 of Transmitter
 //PIN//
 //////
 //LCD I2C
 #define LOGGER 0
 #define LCD_SCREEN_ADDRESS	0x3f
-//RC
-#define RC_PIN_1 8   // Pin 10 Connected to Channel-1 of Transmitter
-#define RC_PIN_2 9   // Pin 11 Connected to Channel-3 of Transmitter
-#define RC_PIN_3 10   // Pin 11 Connected to Channel-3 of Transmitter
-#define RC_PIN_4 11   // Pin 11 Connected to Channel-3 of Transmitter
-#define RC_PIN_5 12   // Pin 12 Connected to Channel-5 of Transmitter
-#define RC_PIN_6 13   // Pin 11 Connected to Channel-3 of Transmitter
-#define RC_NUM_CHANNELS 6
-//RC Config
-#define RC_1_MIN	1012
-#define RC_1_MAX	1924
-#define RC_2_MIN	1008
-#define RC_2_MAX	1916
-#define RC_3_MIN	1332
-#define RC_3_MAX	1902
-#define RC_4_MIN	912
-#define RC_4_MAX	2050
-#define RC_5_MIN	0
-#define RC_5_MAX	0
-#define RC_6_MIN	0
-#define RC_6_MAX	0
 // RTC Module: I2C bus
 // SDA pin 20
 // SCL pin 21

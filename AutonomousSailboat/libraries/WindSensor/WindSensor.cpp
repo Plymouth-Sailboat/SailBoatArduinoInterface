@@ -55,7 +55,6 @@ void WindSensor::communicateData(){
 	msg.y = windSpeed*sin(angle*DEG_TO_RAD);
 #endif
 	msg.theta = angle*DEG_TO_RAD;
-    windSpeed = 0;
 	
 	pub.publish(&msg);
 }

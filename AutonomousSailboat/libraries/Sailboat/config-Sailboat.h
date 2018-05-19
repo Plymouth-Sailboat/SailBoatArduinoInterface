@@ -21,3 +21,5 @@
 #define J5C01R
 #include <config-SailboatBig.h>
 #endif
+
+#include <config-RC.h>
