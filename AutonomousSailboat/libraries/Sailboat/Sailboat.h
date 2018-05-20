@@ -20,7 +20,7 @@
 
 class Sailboat{
 public:
-	Sailboat() : controller(NULL), pubMsg("sailboat-log", &sailboatmsgs), watchdog(0), watchdogROS(0), timerMillis(0), timerMillisCOM(0), timerMillisCOMAct(0){
+	Sailboat() : controller(NULL), pubMsg("sailboat_log", &sailboatmsgs), watchdog(0), watchdogROS(0), timerMillis(0), timerMillisCOM(0), timerMillisCOMAct(0){
 		controllerNames[STANDBY_CONTROLLER] = "Standby";
 		controllerNames[RUDDERSAIL_CONTROLLER] = "Rudder-Sail";
 		controllerNames[RETURNHOME_CONTROLLER] = "Return-Home";
