@@ -60,6 +60,7 @@ public:
 	void cmdCallback(const geometry_msgs::Twist& msg);
 	void msgCallback(const std_msgs::String& msg);
     
+    void publishMsg(String msg);
     void publishMsg(const char* msg);
     
     void resetWatchdogROS(){watchdogROS = minute();}
