@@ -10,17 +10,17 @@
 #include "RudderControl.h"
 #include "RCControl.h"
 
-#define EI_NOTPORTJ 
+#define EI_NOTPORTJ
 #define EI_NOTPORTK
 #define EI_NOTEXTERNAL
 #include <EnableInterrupt.h>
 
 ros::NodeHandle nh;
- 
-ros::Subscriber<geometry_msgs::Twist, Sailboat> sub("sailboat_cmd",&Sailboat::cmdCallback, Sailboat::Instance());
-ros::Subscriber<std_msgs::String, Sailboat> sub2("sailboat_msg",&Sailboat::msgCallback, Sailboat::Instance());
 
-void setControllers(){
+ros::Subscriber<geometry_msgs::Twist, Sailboat> sub("sailboat_cmd", &Sailboat::cmdCallback, Sailboat::Instance());
+ros::Subscriber<std_msgs::String, Sailboat> sub2("sailboat_msg", &Sailboat::msgCallback, Sailboat::Instance());
+
+void setControllers() {
   ControllerInterface* controllers[NB_CONTROLLERS];
   controllers[STANDBY_CONTROLLER] = new Standby();
   controllers[RUDDERSAIL_CONTROLLER] = new RudderSail();
@@ -30,30 +30,30 @@ void setControllers(){
   controllers[SAILCAP_CONTROLLER] = new SailCap();
   controllers[RUDDER_CONTROLLER] = new RudderControl();
   controllers[C_CONTROLLER] = new Controller(3);
-  
+
   Sailboat::Instance()->setControllers(controllers);
   Sailboat::Instance()->setController(STANDBY_CONTROLLER);
 }
 
-void intCH4(){
+void intCH4() {
   Sailboat::Instance()->getRC()->interruptCH(RC_1, RC_PIN_4); //Trick because Hardware wrong
 }
 
-void intCH5(){
+void intCH5() {
   Sailboat::Instance()->getRC()->interruptCH(RC_2, RC_PIN_5); //Trick because Hardware wrong
 }
 
-void intCH6(){
+void intCH6() {
   Sailboat::Instance()->getRC()->interruptCH(RC_3, RC_PIN_6); //Trick because Hardware wrong
 }
 
 #ifdef WIND_ANEMOMETER_PIN
-void AnemometerReading(){
+void AnemometerReading() {
   Sailboat::Instance()->getWindSensor()->updateAnemometer();
 }
 #endif
 
-void setRCInterrupts(){
+void setRCInterrupts() {
   //pinMode(RC_PIN_1, INPUT); //unused
   //pinMode(RC_PIN_2, INPUT); //unused
   //pinMode(RC_PIN_3, INPUT); //unused
@@ -70,24 +70,29 @@ void setRCInterrupts(){
 
 void setup() {
   Logger::Instance()->MessagesSetup();
-  
+
   nh.getHardware()->setBaud(115200);
   nh.initNode();
   nh.subscribe(sub);
   nh.subscribe(sub2);
-  
+
   Sailboat::Instance()->init(&nh);
 
   delay(100);
-  
+
   setControllers();
   setRCInterrupts();
 
 #ifdef WIND_ANEMOMETER_PIN
   attachInterrupt(digitalPinToInterrupt(WIND_ANEMOMETER_PIN), AnemometerReading, FALLING);
 #endif
-  
+
   delay(10);
+
+
+  if (LOGGER)
+    Logger::Instance()->Toast("Sailboat is", "Ready!!", 0);
+  Sailboat::Instance()->publishMsg(String("Sailboat is Ready! Version : ") + String(VERSION_ARDUINO));
 }
 
 void loop() {

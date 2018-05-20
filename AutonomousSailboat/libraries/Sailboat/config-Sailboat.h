@@ -1,4 +1,5 @@
 #define SMALLBOAT
+#define VERSION_ARDUINO "1.01"
 
 /**CONTROLLERS**/
 /***********/

@@ -98,10 +98,6 @@ void Sailboat::init(ros::NodeHandle* n){
         watchdogROS = -1;
     
     n->advertise(pubMsg);
-    
-    if(LOGGER)
-        Logger::Instance()->Toast("Sailboat is", "Ready!!", 0);
-    publishMsg("Sailboat is Ready!");
 }
 
 void Sailboat::publishMsg(String msg){
