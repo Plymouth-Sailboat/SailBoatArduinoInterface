@@ -8,7 +8,7 @@
 
 class GPS : public SensorROS{
 public:
-	GPS(HardwareSerial& serial) : SensorROS("GPS", &msg), serial(serial),GPS_latInit(0), GPS_longInit(0), GPS_altInit(0), status(-1), GPS_track(0), GPS_speed(0), time(0), hdop(0), nbSatellites(0){}
+	GPS(HardwareSerial& serial) : SensorROS("GPS", &msg, 1000), serial(serial),GPS_latInit(0), GPS_longInit(0), GPS_altInit(0), status(-1), GPS_track(0), GPS_speed(0), time(0), hdop(0), nbSatellites(0){}
 	
 	void init(ros::NodeHandle* n);
 	void updateMeasures();
