@@ -1,4 +1,4 @@
-#define SMALLBOAT
+#define SAILBOAT
 #define VERSION_ARDUINO "1.01"
 
 /**CONTROLLERS**/
@@ -14,11 +14,11 @@
 #define RUDDER_CONTROLLER 6
 #define C_CONTROLLER 7
 
-#ifdef SMALLBOAT
+#ifdef SAILBOAT
 #define FLYSKY
 #include <config-SailboatSmall.h>
 #endif
-#ifdef SMALLBOAT_BIG
+#ifdef SAILBOAT_BIG
 #define J5C01R
 #include <config-SailboatBig.h>
 #endif
