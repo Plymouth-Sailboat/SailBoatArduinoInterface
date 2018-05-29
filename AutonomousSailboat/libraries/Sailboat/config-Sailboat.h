@@ -1,5 +1,5 @@
 #define SAILBOAT
-#define VERSION_ARDUINO "1.01"
+#define VERSION_ARDUINO "1.1"
 
 /**CONTROLLERS**/
 /***********/
