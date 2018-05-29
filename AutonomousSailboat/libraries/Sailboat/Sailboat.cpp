@@ -73,7 +73,12 @@ void Sailboat::init(ros::NodeHandle* n){
     Wire.begin();
     
     sensors[SENSOR_WINDSENSOR] = new WindSensor();
-    sensors[SENSOR_GPS] = new GPS(Serial1);
+	if(GPS_SERIAL == 1)
+		sensors[SENSOR_GPS] = new GPS(Serial1);
+	if(GPS_SERIAL == 2)
+		sensors[SENSOR_GPS] = new GPS(Serial2);
+	if(GPS_SERIAL == 3)
+		sensors[SENSOR_GPS] = new GPS(Serial3);
     sensors[SENSOR_IMU] = new XSens();
     
     sens[SENSOR_RC] = new RC();

@@ -1,6 +1,17 @@
 #define SAILBOAT
 #define VERSION_ARDUINO "1.01"
 
+#ifdef SAILBOAT
+#define FLYSKY
+#include <config-SailboatSmall.h>
+#endif
+#ifdef SAILBOAT_BIG
+#define J5C01R
+#include <config-SailboatBig.h>
+#endif
+
+#include <config-RC.h>
+
 /**CONTROLLERS**/
 /***********/
 #define NB_CONTROLLERS 8
@@ -14,13 +25,42 @@
 #define RUDDER_CONTROLLER 6
 #define C_CONTROLLER 7
 
-#ifdef SAILBOAT
-#define FLYSKY
-#include <config-SailboatSmall.h>
-#endif
-#ifdef SAILBOAT_BIG
-#define J5C01R
-#include <config-SailboatBig.h>
-#endif
 
-#include <config-RC.h>
+/*******COMMON CONFIG********/
+
+#define EARTH_RADIUS	6371000  // Earth radius in metres
+
+/**PIN**/
+/********/
+//RUDDER
+#define RUDDER_PIN 6
+//SAIL
+#define WINCH_PIN 7
+//WIND DIRECTION SENSOR
+#define WIND_SENSOR_PIN A2
+
+//GPS
+#define GPS_SERIAL 1
+#define GPS_BAUD_RATE	9600
+
+
+/*MISC*/
+/******/
+//PIN//
+//////
+//LCD I2C
+#define LOGGER 0
+#define LCD_SCREEN_ADDRESS    0x3f
+// RTC Module: I2C bus
+// SDA pin 20
+// SCL pin 21
+
+
+// SD card: SD card attached to SPI bus as follows:
+#ifdef SD_ACTIVATED
+  // SD module:   |    Arduino:
+  //    MISO    =====    PIN 50 / ICSP 1
+  //    MOSI    =====    PIN 51 / ICSP 4
+  //    CLK     =====    PIN 52 / ICSP 3
+#define SD_PIN_CHIP_SELECT 53  // CS
+#endif

@@ -35,16 +35,28 @@ void setControllers() {
   Sailboat::Instance()->setController(STANDBY_CONTROLLER);
 }
 
+void intCH1() {
+  Sailboat::Instance()->getRC()->interruptCH(RC_1, RC_PIN_1);
+}
+
+void intCH2() {
+  Sailboat::Instance()->getRC()->interruptCH(RC_2, RC_PIN_2);
+}
+
+void intCH3() {
+  Sailboat::Instance()->getRC()->interruptCH(RC_3, RC_PIN_3);
+}
+
 void intCH4() {
-  Sailboat::Instance()->getRC()->interruptCH(RC_1, RC_PIN_4); //Trick because Hardware wrong
+  Sailboat::Instance()->getRC()->interruptCH(RC_4, RC_PIN_4);
 }
 
 void intCH5() {
-  Sailboat::Instance()->getRC()->interruptCH(RC_2, RC_PIN_5); //Trick because Hardware wrong
+  Sailboat::Instance()->getRC()->interruptCH(RC_5, RC_PIN_5);
 }
 
 void intCH6() {
-  Sailboat::Instance()->getRC()->interruptCH(RC_3, RC_PIN_6); //Trick because Hardware wrong
+  Sailboat::Instance()->getRC()->interruptCH(RC_6, RC_PIN_6);
 }
 
 #ifdef WIND_ANEMOMETER_PIN
@@ -54,15 +66,15 @@ void AnemometerReading() {
 #endif
 
 void setRCInterrupts() {
-  //pinMode(RC_PIN_1, INPUT); //unused
-  //pinMode(RC_PIN_2, INPUT); //unused
-  //pinMode(RC_PIN_3, INPUT); //unused
+  pinMode(RC_PIN_1, INPUT);
+  pinMode(RC_PIN_2, INPUT);
+  pinMode(RC_PIN_3, INPUT);
   pinMode(RC_PIN_4, INPUT);
   pinMode(RC_PIN_5, INPUT);
   pinMode(RC_PIN_6, INPUT);
-  //enableInterrupt(RC_PIN_1, intCH1, CHANGE); //unused
-  //enableInterrupt(RC_PIN_2, intCH2, CHANGE); //unused
-  //enableInterrupt(RC_PIN_3, intCH3, CHANGE); //unused
+  enableInterrupt(RC_PIN_1, intCH1, CHANGE);
+  enableInterrupt(RC_PIN_2, intCH2, CHANGE);
+  enableInterrupt(RC_PIN_3, intCH3, CHANGE);
   enableInterrupt(RC_PIN_4, intCH4, CHANGE);
   enableInterrupt(RC_PIN_5, intCH5, CHANGE);
   enableInterrupt(RC_PIN_6, intCH6, CHANGE);
