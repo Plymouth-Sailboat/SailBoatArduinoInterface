@@ -22,10 +22,12 @@ void SailCap::Control(const geometry_msgs::Twist& cmd) {
   XSens* xsens = Sailboat::Instance()->getIMU();
   WindSensor* wind = Sailboat::Instance()->getWindSensor();
 
-  if (cos(xsens->getHeadingYaw() - theta) >= 0)
-    rudder = RUDDER_MAX * sin(xsens->getHeadingYaw() - theta);
+  float yaw = xsens->getHeadingYaw();
+
+  if (cos(yaw - theta) >= 0)
+    rudder = RUDDER_MAX * sin(yaw - theta);
   else
-    rudder = RUDDER_MAX * sign(sin(xsens->getHeadingYaw() - theta));
+    rudder = RUDDER_MAX * sign(sin(yaw - theta));
 
   Sailboat::Instance()->getRudder()->applyCommand(rudder);
   Sailboat::Instance()->getSail()->applyCommand(sail);
