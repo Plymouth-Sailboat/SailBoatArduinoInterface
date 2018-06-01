@@ -2,7 +2,7 @@
 [![Current version of release](https://img.shields.io/badge/Release-v1.01-green.svg)](https://github.com/Plymouth-Sailboat/SailBoatArduinoInterface/releases/tag/v1.01)
 
 # SailBoatArduinoInterface
-Arduino code for [Plymouth's Autonomous Sailboat](http://165.227.238.42/). This contains the libraries, controllers and architecture of our arduino low-level controller for our sailboats. This arduino acquires all the data from the different sensors and send them to the main PC. It has also security features in case the PC shuts down.
+Arduino code for [Plymouth's Autonomous Sailboat](https://plymouth-sailboat.github.io/). This contains the libraries, controllers and architecture of our arduino low-level controller for our sailboats. This arduino acquires all the data from the different sensors and send them to the main PC. It has also security features in case the PC shuts down.
 
 ## Getting Started
 
@@ -12,7 +12,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 - Arduino IDE : https://www.arduino.cc/en/Main/Software
 - Arduino Mega 2560 : (tested and working)
-- Arduino Uno : 
+- Connected to a Raspberry Pi 3 containing our [ROS packages](https://github.com/Plymouth-Sailboat/SailBoatROS)
 
 ### Installing
 
@@ -23,7 +23,7 @@ This will launch the Arduino into Stanby Mode, just receiving data from the sens
 
 ## Authors
 
-* **Ulysse VAUTIER** - *Initial work* - [UlysseVautier](https://github.com/UlysseVautier)
+* **Ulysse VAUTIER** - *Initial work* - [UlysseVautier](https://ulyssevautier.github.io/)
 * **Jian WAN** - [Jian Wan](https://www.plymouth.ac.uk/staff/jian-wan)
 * **Christophe Viel** - [Christophe Viel](https://www.researchgate.net/profile/Christophe_Viel)
 
