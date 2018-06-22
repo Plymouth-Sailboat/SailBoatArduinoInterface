@@ -17,7 +17,7 @@ void Header::Control(const geometry_msgs::Twist& cmd) {
     double y = cmd.linear.y;
 
     double norm = sqrt(x * x + y * y);
-    theta = atan2(y / norm, x / norm);
+    theta = atan2(y / norm, x / norm) + M_PI/2.0;
   }
 
   XSens* xsens = Sailboat::Instance()->getIMU();
