@@ -8,6 +8,7 @@ void WindSensor::init(){
 }
 
 void WindSensor::updateAnemometer(){
+#ifdef WIND_ANEMOMETER_PIN
 	if ((millis() - contactBounceTime) > 15 ) { // debounce the switch contact. 
 		anemometerRevolution++; 
 		contactBounceTime = millis(); 
@@ -17,6 +18,7 @@ void WindSensor::updateAnemometer(){
 		anemometerRevolution = 0;
 		timeAnemometer = millis();
 	}
+#endif
 }
 
 void WindSensor::updateMeasures(){
