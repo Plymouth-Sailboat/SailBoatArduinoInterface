@@ -21,6 +21,10 @@ void Rudder::applyCommand(double command){
 //	Logger::Log(1, F("RudderApplyCommand()"), F(""));
 
 	unsigned int rudderCommandExact = posNeutral;
+    if(command > anglemax)
+        command = anglemax;
+    if(command < anglemin)
+        command = anglemin;
 
 	// Generates the exact command:
 	rudderCommandExact = mapf(command, anglemin, anglemax, posMax, posMin);

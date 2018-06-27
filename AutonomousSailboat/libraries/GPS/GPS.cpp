@@ -9,7 +9,10 @@ void GPS::init(ros::NodeHandle* n){
 void GPS::updateMeasures(){
 	while (serial.available() > 0)
 		gps.encode(serial.read());
-	
+    
+    GPS_lat = 0;
+    GPS_long = 0;
+    
 	if (gps.location.isValid()) {
 		// Catching location:
 		GPS_lat = gps.location.lat();  // In degrees

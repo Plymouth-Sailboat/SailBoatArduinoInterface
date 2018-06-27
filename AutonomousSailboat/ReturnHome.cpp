@@ -45,7 +45,7 @@ void ReturnHome::Control(const geometry_msgs::Twist& cmd) {
   else
     rudder = RUDDER_MAX * sign(sin(yaw - bearing));
 
-  sail = HALF_PI * RAD_TO_DEG * (cos(wind->getMeasure()) + 1) / 2;
+  sail = SAIL_MAX * (cos(wind->getMeasure()) + 1) / 2;
 
   Sailboat::Instance()->getRudder()->applyCommand(rudder);
   Sailboat::Instance()->getSail()->applyCommand(sail);

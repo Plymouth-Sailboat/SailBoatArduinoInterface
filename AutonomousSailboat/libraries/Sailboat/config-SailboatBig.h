@@ -45,10 +45,10 @@
 
 //RUDDER
 #define RUDDER_POS_MIN  40
-#define RUDDER_POS_NEUTRAL  82
-#define RUDDER_POS_MAX  124
+#define RUDDER_POS_NEUTRAL  76
+#define RUDDER_POS_MAX  120
 
-#define RUDDER_MIN  -45
+#define RUDDER_MIN  -30
 #define RUDDER_NEUTRAL  0
 #define RUDDER_MAX  45
 
