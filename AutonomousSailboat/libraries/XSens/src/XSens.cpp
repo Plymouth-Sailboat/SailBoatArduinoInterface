@@ -40,10 +40,10 @@ void XSens::updateTest(){
 }
 
 void XSens::communicateData(){
-	msg.orientation.x = xbus.quat[0];
-	msg.orientation.y = xbus.quat[1];
-	msg.orientation.z = xbus.quat[2];
-	msg.orientation.w = xbus.quat[3];
+	msg.orientation.w = xbus.quat[0];
+	msg.orientation.x = xbus.quat[1];
+	msg.orientation.y = xbus.quat[2];
+	msg.orientation.z = xbus.quat[3];
 	
 	msg.angular_velocity.x = xbus.rot[0];
 	msg.angular_velocity.y = xbus.rot[1];
