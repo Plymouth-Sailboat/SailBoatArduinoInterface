@@ -16,7 +16,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Installing
 
-[Current version of release](https://github.com/Plymouth-Sailboat/SailBoatArduinoInterface/releases/latest). You can download the .hex files and upload them directly on the Arduino using [avrdude](http://www.ladyada.net/learn/avr/avrdude.html). Or you can compile the project yourself with the Arduino IDE if you are not familiar with avrdure commands.
+[Current version of release](https://github.com/Plymouth-Sailboat/SailBoatArduinoInterface/releases/latest). You can download the .hex files and upload them directly on the Arduino using [avrdude](http://www.ladyada.net/learn/avr/avrdude.html). Or you can compile the project yourself with the Arduino IDE if you are not familiar with avrdude commands.
 
 ### Building and Uploading
 
