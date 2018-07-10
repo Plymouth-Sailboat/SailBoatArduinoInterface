@@ -10,8 +10,9 @@
 
 #include <RCModule.h>
 
-#include <Rudder.h>
-#include <Sail.h>
+#include <Servo_Motor.h>
+//#include <Rudder.h>
+//#include <Sail.h>
 
 #include <ControllerInterface.h>
 #include <ros.h>
@@ -45,10 +46,10 @@ public:
 	
 	RC* getRC(){return (RC*)sens[SENSOR_RC];}
 	
-	Rudder* getRudder(){return (Rudder*)actuators[ACTUATOR_RUDDER];}
-	Sail* getSail(){return (Sail*)actuators[ACTUATOR_SAIL];}
+	Servo_Motor* getRudder(){return (Servo_Motor*)actuators[ACTUATOR_RUDDER];}
+	Servo_Motor* getSail(){return (Servo_Motor*)actuators[ACTUATOR_SAIL];}
 #ifdef ACTUATOR_RUDDER2
-	Rudder* getRudder2(){return (Rudder*)actuators[ACTUATOR_RUDDER2];}
+	Servo_Motor* getRudder2(){return (Servo_Motor*)actuators[ACTUATOR_RUDDER2];}
 #endif
 	
 	void setController(ControllerInterface* control);

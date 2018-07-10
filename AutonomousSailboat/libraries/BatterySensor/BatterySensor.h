@@ -13,10 +13,8 @@ public:
     void communicateData();
     
     double getMeasure(){return level;}
-    int getRaw(){return value;}
     
 private:
-    int value;
     float level;
     std_msgs::Float32 msg;
     

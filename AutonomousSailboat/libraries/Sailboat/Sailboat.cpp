@@ -84,10 +84,10 @@ void Sailboat::init(ros::NodeHandle* n){
     
     sens[SENSOR_RC] = new RC();
     
-    actuators[ACTUATOR_RUDDER] = new Rudder();
-    actuators[ACTUATOR_SAIL] = new Sail();
+    actuators[ACTUATOR_RUDDER] = new Servo_Motor(RUDDER_PIN,RUDDER_POS_NEUTRAL,RUDDER_POS_MAX,RUDDER_POS_MIN,RUDDER_MIN,RUDDER_MAX,"rudder");
+    actuators[ACTUATOR_SAIL] = new Servo_Motor(WINCH_PIN,WINCH_ANGLE_NEUTRAL,WINCH_ANGLE_MAX, WINCH_ANGLE_MIN,SAIL_MIN,SAIL_MAX,"sail");
 #ifdef ACTUATOR_RUDDER2
-    actuators[ACTUATOR_RUDDER2] = new Rudder("rudder2", RUDDER2_PIN, RUDDER2_POS_NEUTRAL, RUDDER2_POS_MIN, RUDDER2_POS_MAX, RUDDER2_MIN, RUDDER2_MAX);
+    actuators[ACTUATOR_RUDDER2] = new Servo_Motor(RUDDER2_PIN, RUDDER2_POS_NEUTRAL, RUDDER2_POS_MAX, RUDDER2_POS_MIN, RUDDER2_MIN,RUDDER2_MAX,"rudder2");
 #endif
     
     for(int i = 0; i < NB_SENSORS; ++i)
