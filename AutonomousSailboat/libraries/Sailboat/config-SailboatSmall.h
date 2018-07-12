@@ -42,7 +42,7 @@
 
 #define RUDDER_MIN  -45
 #define RUDDER_NEUTRAL  0
-#define RUDDER_MAX  20
+#define RUDDER_MAX  45
 
 //SAIL
 #define SAIL_MIN 0

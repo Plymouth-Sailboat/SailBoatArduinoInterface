@@ -10,8 +10,8 @@
 #include "RudderControl.h"
 #include "RCControl.h"
 
+#define EI_NOTPORTB
 #define EI_NOTPORTJ
-#define EI_NOTPORTK
 #define EI_NOTEXTERNAL
 #include <EnableInterrupt.h>
 
