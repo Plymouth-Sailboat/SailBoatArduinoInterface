@@ -2,11 +2,11 @@
 #define VERSION_ARDUINO "1.2"
 
 #ifdef SAILBOAT
-#define FLYSKY
+#define HK_TR6
 #include <config-SailboatSmall.h>
 #endif
 #ifdef SAILBOAT_BIG
-#define J5C01R
+#define FLYSKY
 #include <config-SailboatBig.h>
 #endif
 
