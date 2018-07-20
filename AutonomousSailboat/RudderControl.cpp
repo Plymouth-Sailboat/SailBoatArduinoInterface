@@ -21,5 +21,5 @@ void RudderControl::Control(const geometry_msgs::Twist& cmd) {
   WindSensor* wind = Sailboat::Instance()->getWindSensor();
 
   sail = SAIL_MAX * (cos(wind->getMeasure()) + 1) / 2;
-  Sailboat::Instance()->getSail()->applyCommand(sail);
+  Sailboat::Instance()->getSail()->applyCommand(abs(sail));
 }

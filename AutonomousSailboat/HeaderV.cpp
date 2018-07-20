@@ -33,7 +33,7 @@ void Header::Control(const geometry_msgs::Twist& cmd) {
   sail = SAIL_MAX * (cos(wind->getMeasure()) + 1) / 2;
 
   Sailboat::Instance()->getRudder()->applyCommand(rudder);
-  Sailboat::Instance()->getSail()->applyCommand(sail);
+  Sailboat::Instance()->getSail()->applyCommand(abs(sail));
 #ifdef ACTUATOR_RUDDER2
   Sailboat::Instance()->getRudder2()->applyCommand(rudder/4.5);
 #endif

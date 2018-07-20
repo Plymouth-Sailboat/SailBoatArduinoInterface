@@ -30,7 +30,7 @@ void SailCap::Control(const geometry_msgs::Twist& cmd) {
     rudder = RUDDER_MAX * sign(sin(yaw - theta));
 
   Sailboat::Instance()->getRudder()->applyCommand(rudder);
-  Sailboat::Instance()->getSail()->applyCommand(sail);
+  Sailboat::Instance()->getSail()->applyCommand(abs(sail));
 #ifdef ACTUATOR_RUDDER2
   Sailboat::Instance()->getRudder2()->applyCommand(rudder/4.5);
 #endif
