@@ -7,21 +7,21 @@
 class RC : public Sensor{
 public:
 	RC() : controlling(false), timer(0), previousController(RETURNHOME_CONTROLLER){
-		for(int i = 0; i < RC_NUM_CHANNELS; ++i){
+		for(int i = 0; i < 6; ++i){
 			rc_values[i] = 0; rc_start[i] = 0;
 		}
-		offsetmin[0] = RC_1_MIN;
-		offsetmax[0] = RC_1_MAX;
-		offsetmin[1] = RC_2_MIN;
-		offsetmax[1] = RC_2_MAX;
-		offsetmin[2] = RC_3_MIN;
-		offsetmax[2] = RC_3_MAX;
-		offsetmin[3] = RC_4_MIN;
-		offsetmax[3] = RC_4_MAX;
-		offsetmin[4] = RC_5_MIN;
-		offsetmax[4] = RC_5_MAX;
-		offsetmin[5] = RC_6_MIN;
-		offsetmax[5] = RC_6_MAX;
+		offsetmin[RC_1] = RC_1_MIN;
+		offsetmax[RC_1] = RC_1_MAX;
+		offsetmin[RC_2] = RC_2_MIN;
+		offsetmax[RC_2] = RC_2_MAX;
+		offsetmin[RC_3] = RC_3_MIN;
+		offsetmax[RC_3] = RC_3_MAX;
+		offsetmin[RC_4] = RC_4_MIN;
+		offsetmax[RC_4] = RC_4_MAX;
+		offsetmin[RC_5] = RC_5_MIN;
+		offsetmax[RC_5] = RC_5_MAX;
+		offsetmin[RC_6] = RC_6_MIN;
+		offsetmax[RC_6] = RC_6_MAX;
 		}
 		
 	void init(){
@@ -36,13 +36,13 @@ public:
 	bool controlling;
 	
 private:
-	uint16_t rc_values[RC_NUM_CHANNELS];
-	uint32_t rc_start[RC_NUM_CHANNELS];
+	uint16_t rc_values[6];
+	uint32_t rc_start[6];
 		
 	unsigned long timer;
 	unsigned long watchdog;
-	unsigned int offsetmin[RC_NUM_CHANNELS];
-	unsigned int offsetmax[RC_NUM_CHANNELS];
+	unsigned int offsetmin[6];
+	unsigned int offsetmax[6];
 	
 	int previousController;
 };
