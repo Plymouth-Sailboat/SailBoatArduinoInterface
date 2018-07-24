@@ -2,6 +2,11 @@
 
 void GPS::init(ros::NodeHandle* n){
 	gps.begin(GPS_BAUD_RATE);
+	delay(100);
+	gps.sendCommand(PMTK_SET_NMEA_OUTPUT_RMCGGA);
+	gps.sendCommand(PMTK_SET_NMEA_UPDATE_1HZ);
+	gps.sendCommand(PMTK_API_SET_FIX_CTL_1HZ);
+	gps.sendCommand(PGCMD_ANTENNA);
 	
 	SensorROS::init(n);
 }
@@ -11,7 +16,6 @@ void GPS::updateMeasures(){
 		char r = gps.read();
 	}
 	
-	
 	if (gps.newNMEAreceived()) {
     // a tricky thing here is if we print the NMEA sentence, or data
     // we end up not listening and catching other sentences! 
@@ -19,74 +23,80 @@ void GPS::updateMeasures(){
     //Serial.println(GPS.lastNMEA());   // this also sets the newNMEAreceived() flag to false
   
     if (!gps.parse(gps.lastNMEA()))   // this also sets the newNMEAreceived() flag to false
-		updateMeasures();
-      //return;  // we can fail to parse a sentence in which case we should just wait for another
+		return;  // we can fail to parse a sentence in which case we should just wait for another
 	}
-    
-    GPS_lat = 0;
-    GPS_long = 0;
 	
-	/*
-	if (gps.location.isValid()) {
-		// Catching location:
-		GPS_lat = gps.location.lat();  // In degrees
-		GPS_long = gps.location.lng();  // In degrees
-		if(GPS_latInit == 0)
-			GPS_latInit = GPS_lat;
-		if(GPS_longInit == 0)
-			GPS_longInit = GPS_long;
+	if (timer > millis())  timer = millis();
+
+	// approximately every 2 seconds or so, print out the current stats
+	if (millis() - timer > 1000) {
+		GPS_lat = 0;
+		GPS_long = 0;
 		
-		// Changing the reference:
-		GPS_PosX = (double)(EARTH_RADIUS*(GPS_lat - GPS_latInit)*(DEG_TO_RAD)*cos(GPS_longInit)); // x = EARTH_RADIUS*(a2-a1)*(pi/180)*cos(b1)
-		GPS_PosY = (double)(EARTH_RADIUS*(GPS_long - GPS_longInit)*(DEG_TO_RAD)); // y = EARTH_RADIUS*(b2-b1)*pi/180
+		/*
+		if (gps.location.isValid()) {
+			// Catching location:
+			GPS_lat = gps.location.lat();  // In degrees
+			GPS_long = gps.location.lng();  // In degrees
+			if(GPS_latInit == 0)
+				GPS_latInit = GPS_lat;
+			if(GPS_longInit == 0)
+				GPS_longInit = GPS_long;
+			
+			// Changing the reference:
+			GPS_PosX = (double)(EARTH_RADIUS*(GPS_lat - GPS_latInit)*(DEG_TO_RAD)*cos(GPS_longInit)); // x = EARTH_RADIUS*(a2-a1)*(pi/180)*cos(b1)
+			GPS_PosY = (double)(EARTH_RADIUS*(GPS_long - GPS_longInit)*(DEG_TO_RAD)); // y = EARTH_RADIUS*(b2-b1)*pi/180
+			
+			// Feedback:
+			//    Logger::Log(2, F("GPS X:"), String(*p_GPS_PosX));
+			//    Logger::Log(2, F("GPS Y:"), String(*p_GPS_PosY));
+		}
+		if (gps.altitude.isValid()) {
+			GPS_alt = gps.altitude.meters();
+			if(GPS_altInit == 0)
+				GPS_altInit = GPS_alt;
+		}
 		
-		// Feedback:
-		//    Logger::Log(2, F("GPS X:"), String(*p_GPS_PosX));
-		//    Logger::Log(2, F("GPS Y:"), String(*p_GPS_PosY));
+		if(gps.location.age() > 1500)
+			status = -1;
+		else
+			status = 0;
+		
+		if (gps.time.isValid())
+			time = gps.time.value();
+		
+		if (gps.course.isValid())
+			GPS_track = gps.course.deg();
+		
+		if (gps.hdop.isValid())
+			hdop = gps.hdop.value();
+		
+		if (gps.speed.isValid())
+			GPS_speed = gps.speed.mps();
+		
+		if (gps.satellites.isValid())
+			nbSatellites = gps.satellites.value();*/
+		
+		
+		time = gps.milliseconds;
+		//Serial.print("Fix: "); Serial.print((int)GPS.fix);
+		//Serial.print(" quality: "); Serial.println((int)GPS.fixquality); 
+		if (gps.fix) {
+			hdop = gps.HDOP;
+			
+		  GPS_lat = gps.latitudeDegrees;
+		  GPS_long = gps.longitudeDegrees;
+			if(GPS_altInit == 0)
+				GPS_altInit = GPS_alt;
+			if(GPS_latInit == 0)
+				GPS_latInit = GPS_lat;
+			if(GPS_longInit == 0)
+		  GPS_speed = gps.speed;
+		  GPS_track = gps.angle;
+		  GPS_alt = gps.altitude;
+		  nbSatellites = (int)gps.satellites;
+		}
 	}
-	if (gps.altitude.isValid()) {
-		GPS_alt = gps.altitude.meters();
-		if(GPS_altInit == 0)
-			GPS_altInit = GPS_alt;
-	}
-	
-	if(gps.location.age() > 1500)
-		status = -1;
-	else
-		status = 0;
-	
-	if (gps.time.isValid())
-		time = gps.time.value();
-	
-	if (gps.course.isValid())
-		GPS_track = gps.course.deg();
-	
-	if (gps.hdop.isValid())
-		hdop = gps.hdop.value();
-	
-	if (gps.speed.isValid())
-		GPS_speed = gps.speed.mps();
-	
-	if (gps.satellites.isValid())
-		nbSatellites = gps.satellites.value();*/
-	
-	
-    time = gps.milliseconds;
-    //Serial.print("Fix: "); Serial.print((int)GPS.fix);
-    //Serial.print(" quality: "); Serial.println((int)GPS.fixquality); 
-    if (gps.fix) {
-      GPS_lat = gps.latitudeDegrees;
-      GPS_long = gps.longitudeDegrees;
-		if(GPS_altInit == 0)
-			GPS_altInit = GPS_alt;
-		if(GPS_latInit == 0)
-			GPS_latInit = GPS_lat;
-		if(GPS_longInit == 0)
-      GPS_speed = gps.speed;
-      GPS_track = gps.angle;
-      GPS_alt = gps.altitude;
-      nbSatellites = (int)gps.satellites;
-    }
 	
 	//}
 	//else {

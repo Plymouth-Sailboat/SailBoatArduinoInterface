@@ -2,14 +2,14 @@
 #define GPS_SENSOR_H
 
 #include <SensorsInterface.h>
-#include <TinyGPS++.h>
+//#include <TinyGPS++.h>
 #include <Adafruit_GPS.h>
 #include <sensor_msgs/NavSatFix.h>
 #include <gps_common/GPSFix.h>
 
 class GPS : public SensorROS{
 public:
-	GPS(HardwareSerial& serial) : SensorROS("GPS", &msg, 1000), serial(serial), gps(&serial), GPS_latInit(0), GPS_longInit(0), GPS_altInit(0), status(-1), GPS_track(0), GPS_speed(0), time(0), hdop(0), nbSatellites(0){}
+	GPS(HardwareSerial& serial) : SensorROS("GPS", &msg, 10), serial(serial), gps(&Serial1), GPS_latInit(0), GPS_longInit(0), GPS_altInit(0), status(-1), GPS_track(0), GPS_speed(0), time(0), hdop(0), nbSatellites(0){}
 	
 	void init(ros::NodeHandle* n);
 	void updateMeasures();
@@ -35,6 +35,7 @@ private:
 	double GPS_track, GPS_speed, time, hdop;
 	int nbSatellites;
 	int status;
+	uint32_t timer;
 	
 	gps_common::GPSFix msg;
 };

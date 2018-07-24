@@ -22,15 +22,15 @@ All text above must be included in any redistribution
 #define _ADAFRUIT_GPS_H
 
 //comment this out if you don't want to include software serial in the library
-#define USE_SW_SERIAL
+//#define USE_SW_SERIAL
 
-#if defined(__AVR__) && defined(USE_SW_SERIAL)
+/*#if defined(__AVR__) && defined(USE_SW_SERIAL)
   #if ARDUINO >= 100
     #include <SoftwareSerial.h>
   #else
     #include <NewSoftSerial.h>
   #endif
-#endif
+#endif*/
 
 // different commands to set the update rate from once a second (1 Hz) to 10 times a second (10Hz)
 // Note that these only control the rate at which the position is echoed, to actually speed up the
@@ -92,26 +92,26 @@ All text above must be included in any redistribution
 
 #if ARDUINO >= 100
  #include "Arduino.h"
-#if defined (__AVR__) && !defined(__AVR_ATmega32U4__)
- #include "SoftwareSerial.h"
+//#if defined (__AVR__) && !defined(__AVR_ATmega32U4__)
+// #include "SoftwareSerial.h"
 #endif
-#else
+/*#else
  #include "WProgram.h"
  #include "NewSoftSerial.h"
-#endif
+#endif*/
 
 
 class Adafruit_GPS {
  public:
   void begin(uint32_t baud); 
 
-#if defined(__AVR__) && defined(USE_SW_SERIAL)
+/*#if defined(__AVR__) && defined(USE_SW_SERIAL)
   #if ARDUINO >= 100 
     Adafruit_GPS(SoftwareSerial *ser); // Constructor when using SoftwareSerial
   #else
     Adafruit_GPS(NewSoftSerial  *ser); // Constructor when using NewSoftSerial
   #endif
-#endif
+#endif*/
   Adafruit_GPS(HardwareSerial *ser); // Constructor when using HardwareSerial
 
   char *lastNMEA(void);
@@ -157,13 +157,13 @@ class Adafruit_GPS {
   boolean paused;
   
   uint8_t parseResponse(char *response);
-#if defined(__AVR__) && defined(USE_SW_SERIAL)
+/*#if defined(__AVR__) && defined(USE_SW_SERIAL)
   #if ARDUINO >= 100
     SoftwareSerial *gpsSwSerial;
   #else
     NewSoftSerial  *gpsSwSerial;
   #endif
-#endif
+#endif*/
   HardwareSerial *gpsHwSerial;
 };
 
