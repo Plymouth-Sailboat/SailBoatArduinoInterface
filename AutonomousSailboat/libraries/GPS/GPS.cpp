@@ -1,18 +1,32 @@
 #include <GPS.h>
 
 void GPS::init(ros::NodeHandle* n){
-	serial.begin(GPS_BAUD_RATE);
+	gps.begin(GPS_BAUD_RATE);
 	
 	SensorROS::init(n);
 }
 
 void GPS::updateMeasures(){
-	while (serial.available() > 0)
-		gps.encode(serial.read());
+	while (serial.available() > 0){
+		char r = gps.read();
+	}
+	
+	
+	if (gps.newNMEAreceived()) {
+    // a tricky thing here is if we print the NMEA sentence, or data
+    // we end up not listening and catching other sentences! 
+    // so be very wary if using OUTPUT_ALLDATA and trytng to print out data
+    //Serial.println(GPS.lastNMEA());   // this also sets the newNMEAreceived() flag to false
+  
+    if (!gps.parse(gps.lastNMEA()))   // this also sets the newNMEAreceived() flag to false
+		updateMeasures();
+      //return;  // we can fail to parse a sentence in which case we should just wait for another
+	}
     
     GPS_lat = 0;
     GPS_long = 0;
-    
+	
+	/*
 	if (gps.location.isValid()) {
 		// Catching location:
 		GPS_lat = gps.location.lat();  // In degrees
@@ -54,7 +68,25 @@ void GPS::updateMeasures(){
 		GPS_speed = gps.speed.mps();
 	
 	if (gps.satellites.isValid())
-		nbSatellites = gps.satellites.value();
+		nbSatellites = gps.satellites.value();*/
+	
+	
+    time = gps.milliseconds;
+    //Serial.print("Fix: "); Serial.print((int)GPS.fix);
+    //Serial.print(" quality: "); Serial.println((int)GPS.fixquality); 
+    if (gps.fix) {
+      GPS_lat = gps.latitudeDegrees;
+      GPS_long = gps.longitudeDegrees;
+		if(GPS_altInit == 0)
+			GPS_altInit = GPS_alt;
+		if(GPS_latInit == 0)
+			GPS_latInit = GPS_lat;
+		if(GPS_longInit == 0)
+      GPS_speed = gps.speed;
+      GPS_track = gps.angle;
+      GPS_alt = gps.altitude;
+      nbSatellites = (int)gps.satellites;
+    }
 	
 	//}
 	//else {
