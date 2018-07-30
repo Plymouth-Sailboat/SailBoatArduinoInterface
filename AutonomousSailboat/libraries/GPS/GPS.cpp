@@ -84,17 +84,26 @@ void GPS::updateMeasures(){
 		if (gps.fix) {
 			hdop = gps.HDOP;
 			
-		  GPS_lat = gps.latitudeDegrees;
-		  GPS_long = gps.longitudeDegrees;
-			if(GPS_altInit == 0)
+			GPS_lat = gps.latitudeDegrees;
+			GPS_long = gps.longitudeDegrees;
+			if(GPS_altInit == 0.0f)
 				GPS_altInit = GPS_alt;
-			if(GPS_latInit == 0)
+			if(GPS_latInit == 0.0f){
 				GPS_latInit = GPS_lat;
-			if(GPS_longInit == 0)
-		  GPS_speed = gps.speed;
-		  GPS_track = gps.angle;
-		  GPS_alt = gps.altitude;
-		  nbSatellites = (int)gps.satellites;
+				if(coldStart)
+					EEPROM.put(0,GPS_lat);
+			}
+			if(GPS_longInit == 0.0f){
+				GPS_longInit = GPS_long;
+				if(coldStart){
+					EEPROM.put(10,GPS_long);
+					coldStart = false;
+				}
+			}
+			GPS_speed = gps.speed;
+			GPS_track = gps.angle;
+			GPS_alt = gps.altitude;
+			nbSatellites = (int)gps.satellites;
 		}
 	}
 	

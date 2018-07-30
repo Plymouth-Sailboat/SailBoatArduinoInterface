@@ -14,11 +14,16 @@
 #define EI_NOTPORTJ
 #define EI_NOTEXTERNAL
 #include <EnableInterrupt.h>
+#include <avr/wdt.h>
+#include <EEPROM.h>
 
 ros::NodeHandle nh;
 
 ros::Subscriber<geometry_msgs::Twist, Sailboat> sub("sailboat_cmd", &Sailboat::cmdCallback, Sailboat::Instance());
 ros::Subscriber<std_msgs::String, Sailboat> sub2("sailboat_msg", &Sailboat::msgCallback, Sailboat::Instance());
+
+const char signature [] = "Sailboat";
+char * p = (char *) malloc (sizeof (signature));
 
 void setControllers() {
   ControllerInterface* controllers[NB_CONTROLLERS];
@@ -80,6 +85,17 @@ void setRCInterrupts() {
   enableInterrupt(RC_PIN_6, intCH6, CHANGE);
 }
 
+bool checkIfColdStart() {
+  if (strcmp (p, signature) == 0) { // signature is in RAM this was reset
+    return false;
+  }
+  else {  // signature not in RAM this was a power on
+    // add the signature to be retained in memory during reset
+    memcpy (p, signature, sizeof signature);  // copy signature into RAM
+    return true;
+  }
+}
+
 void setup() {
   Logger::Instance()->MessagesSetup();
 
@@ -101,6 +117,15 @@ void setup() {
 
   delay(10);
 
+  if(checkIfColdStart()){
+    for (int i = 0 ; i < EEPROM.length() ; ++i)
+      EEPROM.write(i, 0);
+    Sailboat::Instance()->getGPS()->informCold();
+  }
+  else
+    Sailboat::Instance()->setController(RETURNHOME_CONTROLLER);
+    
+  wdt_enable(WDTO_8S);
 
   if (LOGGER)
     Logger::Instance()->Toast("Sailboat is", "Ready!!", 0);
@@ -108,6 +133,8 @@ void setup() {
 }
 
 void loop() {
+  wdt_reset();
+  
   Sailboat::Instance()->updateSensors();
   //Sailboat::Instance()->updateTestSensors();
   Logger::Instance()->Update();
