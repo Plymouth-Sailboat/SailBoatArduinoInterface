@@ -9,6 +9,10 @@
 #define FLYSKY
 #include <config-SailboatBig.h>
 #endif
+#ifdef SAILBOAT_CATAMARAN
+#define FLYSKY
+#include <config-Catamaran.h>
+#endif
 
 #include <config-RC.h>
 
