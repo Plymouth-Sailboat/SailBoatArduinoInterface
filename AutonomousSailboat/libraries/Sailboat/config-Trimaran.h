@@ -51,7 +51,7 @@
 
 #define WINCH_ANGLE_MIN 38
 #define WINCH_ANGLE_NEUTRAL WINCH_ANGLE_MIN
-#define WINCH_ANGLE_MAX 112
+#define WINCH_ANGLE_MAX 90
 #define WINCH_DIAMETER 23 // in mm
 
 #endif
