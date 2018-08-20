@@ -13,6 +13,10 @@
 #define FLYSKY
 #include <config-Catamaran.h>
 #endif
+#ifdef SAILBOAT_TRIMARAN
+#define HK_TR6
+#include <config-Trimaran.h>
+#endif
 
 #include <config-RC.h>
 
