@@ -9,6 +9,7 @@ void GPS::init(ros::NodeHandle* n){
 	gps.sendCommand(PGCMD_ANTENNA);
 	
 	SensorROS::init(n);
+	n->advertise(pubNMEA);
 }
 
 void GPS::updateMeasures(){

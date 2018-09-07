@@ -43,11 +43,11 @@ private:
 	int status;
 	bool coldStart;
 	uint32_t timer;
-	std_msgs::String lastNMEA;
 	
 	gps_common::GPSFix msg;
 		
 	ros::Publisher pubNMEA;
+	std_msgs::String lastNMEA;
 };
 
 #endif
