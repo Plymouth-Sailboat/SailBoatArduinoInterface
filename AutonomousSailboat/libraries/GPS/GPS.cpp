@@ -20,7 +20,7 @@ void GPS::updateMeasures(){
     // we end up not listening and catching other sentences! 
     // so be very wary if using OUTPUT_ALLDATA and trytng to print out data
     //Serial.println(gps.lastNMEA());   // this also sets the newNMEAreceived() flag to false
-  
+	lastNMEA.data = gps.lastNMEA();
     if (!gps.parse(gps.lastNMEA()))   // this also sets the newNMEAreceived() flag to false
 		return;  // we can fail to parse a sentence in which case we should just wait for another
 	}
@@ -95,4 +95,5 @@ void GPS::communicateData(){
 	
 	msg.header.stamp = nh->now();
 	pub.publish(&msg);
+	pubNMEA.publish(&lastNMEA);
 }
