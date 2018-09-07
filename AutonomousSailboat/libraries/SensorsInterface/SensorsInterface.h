@@ -30,16 +30,17 @@ class Sensor{
 
 class SensorROS : public Sensor{
 	public:
-		SensorROS(const char* name, ros::Msg* msg, unsigned int period = 100) : Sensor(period), pub(name, msg), nh(NULL), comTimer(0){}
+		SensorROS(const char* name, ros::Msg* msg, unsigned int period = 100, unsigned int comperiod = 100) : Sensor(period), pub(name, msg), nh(NULL), comperiod(comperiod), comTimer(0){}
 		
 		void init(){}
 		virtual void init(ros::NodeHandle* n){n->advertise(pub); nh = n;}
-		void communicate(){if(millis() - comTimer > period){communicateData(); comTimer = millis();}}
+		void communicate(){if(millis() - comTimer > comperiod){communicateData(); comTimer = millis();}}
 		virtual void communicateData() = 0;
 	protected:
 		ros::Publisher pub;
 		ros::NodeHandle* nh;
 	private:
+		unsigned int comperiod;
 		unsigned long comTimer;
 };
 

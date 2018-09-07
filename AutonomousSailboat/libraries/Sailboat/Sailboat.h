@@ -18,7 +18,6 @@
 #include <ros.h>
 #include <geometry_msgs/Twist.h>
 #include <std_msgs/String.h>
-#include <TimeLib.h>
 
 class Sailboat{
 public:
@@ -66,7 +65,7 @@ public:
     void publishMsg(String msg);
     void publishMsg(const char* msg);
     
-    void resetWatchdogROS(){watchdogROS = minute();}
+    void resetWatchdogROS(){watchdogROS = millis();}
 	
 	static Sailboat* Instance(){if(sailboat == NULL) sailboat = new Sailboat(); return sailboat;}
 private:

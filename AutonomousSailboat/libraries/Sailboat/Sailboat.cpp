@@ -1,5 +1,4 @@
 #include <Sailboat.h>
-#include <TimeLib.h>
 #include <Wire.h>
 
 Sailboat* Sailboat::sailboat = NULL;
@@ -66,7 +65,7 @@ void Sailboat::msgCallback(const std_msgs::String& msg){
             publishMsg(String("From PC : ") + String(msg.data+1));
             break;
     }
-    watchdogROS = minute();
+    watchdogROS = millis();
 }
 
 void Sailboat::init(ros::NodeHandle* n){
@@ -96,12 +95,8 @@ void Sailboat::init(ros::NodeHandle* n){
     for(int i = 0; i < NB_ACTUATORS; ++i)
         actuators[i]->init(n);
     
-    watchdog = minute();
-    watchdogROS = minute();
-    if(watchdog > 58)
-        watchdog = -1;
-    if(watchdogROS > 58)
-        watchdogROS = -1;
+    watchdog = millis();
+    watchdogROS = millis();
     
     n->advertise(pubMsg);
 }
@@ -151,13 +146,13 @@ void Sailboat::Control(){
     if(millis() - timerMillis > 100){
         if(controller != NULL){
             controller->Control(cmd);
-            watchdog = minute();
+            watchdog = millis();
         }else{
-            if(minute() - watchdog > 1)
+            if(millis() - watchdog > 60000)
                 setController(RETURNHOME_CONTROLLER);
         }
         
-        if(minute() - watchdogROS > 5){
+        if(millis() - watchdogROS > 300000){
             if(LOGGER)
                 Logger::Instance()->Toast("ROS DEAD??", "ROS DEAD??", 0);
             publishMsg("ROS DEAD??");

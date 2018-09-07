@@ -124,7 +124,7 @@ void setup() {
   Sailboat::Instance()->init(&nh);
 
   delay(100);
-
+  
   setControllers();
   setRCInterrupts();
 
@@ -135,15 +135,17 @@ void setup() {
   delay(10);
 
   if(checkIfColdStart()){
-    for (int i = 0 ; i < EEPROM.length() ; ++i)
+    //Clearing EEPROM is too long, clearing only a part
+    for (int i = 0 ; i < 512; ++i)
       EEPROM.write(i, 0);
+    EEPROM.write(1000,0);
     Sailboat::Instance()->getGPS()->informCold();
   }
   else{
     Sailboat::Instance()->setController(RETURNHOME_CONTROLLER);
     EEPROM.write(1000, 0);
   }
-    
+
   watchdogSetup();
 
   if (LOGGER)
@@ -159,7 +161,6 @@ void loop() {
   Logger::Instance()->Update();
   Sailboat::Instance()->communicateData();
   Sailboat::Instance()->Control();
-
   nh.spinOnce();
-  delay(5);
+  delay(4);
 }
