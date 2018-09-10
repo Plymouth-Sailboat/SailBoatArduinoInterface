@@ -9,10 +9,11 @@
 #include <gps_common/GPSFix.h>
 #include <EEPROM.h>
 #include <TimeLib.h>
+#include <std_msgs/UInt32.h>
 
 class GPS : public SensorROS{
 public:
-	GPS(HardwareSerial& serial) : SensorROS("GPS/fix", &msg, 1, 500), serial(serial), gps(&Serial1), GPS_latInit(0), GPS_longInit(0), GPS_altInit(0), status(-1), coldStart(false), GPS_track(0), GPS_speed(0), time(0), hdop(0), nbSatellites(0), pubNMEA("GPS/NMEA", &lastNMEA){}
+	GPS(HardwareSerial& serial) : SensorROS("GPS/fix", &msg, 1, 500), serial(serial), gps(&Serial1), GPS_latInit(0), GPS_longInit(0), GPS_altInit(0), status(-1), coldStart(false), GPS_track(0), GPS_speed(0), time(0), hdop(0), nbSatellites(0), pubNMEA("GPS/NMEA", &lastNMEA), pubTime("Time", &timeU){}
 	
 	void init(ros::NodeHandle* n);
 	void updateMeasures();
@@ -45,9 +46,12 @@ private:
 	uint32_t timer;
 	
 	gps_common::GPSFix msg;
-		
+	
 	ros::Publisher pubNMEA;
 	std_msgs::String lastNMEA;
+	
+	ros::Publisher pubTime;
+	std_msgs::UInt32 timeU;
 };
 
 #endif

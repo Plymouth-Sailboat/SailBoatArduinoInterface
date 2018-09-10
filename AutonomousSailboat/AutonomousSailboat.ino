@@ -153,12 +153,14 @@ void setup() {
 
 void loop() {
   wdt_reset();
-  
+
   Sailboat::Instance()->updateSensors();
   //Sailboat::Instance()->updateTestSensors();
   Logger::Instance()->Update();
   Sailboat::Instance()->communicateData();
   Sailboat::Instance()->Control();
+  
+
   nh.spinOnce();
   delay(4);
 }
