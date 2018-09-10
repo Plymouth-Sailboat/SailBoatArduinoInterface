@@ -10,6 +10,7 @@ void GPS::init(ros::NodeHandle* n){
 	
 	SensorROS::init(n);
 	n->advertise(pubNMEA);
+	n->advertise(pubTime);
 }
 
 void GPS::updateMeasures(){
@@ -36,6 +37,7 @@ void GPS::updateMeasures(){
 		//Serial.print("Fix: "); Serial.print((int)GPS.fix);
 		//Serial.print(" quality: "); Serial.println((int)GPS.fixquality); 
 		status = (int)gps.fix-1;
+		timeU.data = time;
 		if (gps.fix) {
 			hdop = gps.HDOP;
 			
@@ -97,4 +99,5 @@ void GPS::communicateData(){
 	msg.header.stamp = nh->now();
 	pub.publish(&msg);
 	pubNMEA.publish(&lastNMEA);
+	pubTime.publish(&timeU);
 }
