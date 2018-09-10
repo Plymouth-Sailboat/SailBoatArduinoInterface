@@ -22,7 +22,7 @@
 
 /**CONTROLLERS**/
 /***********/
-#define NB_CONTROLLERS 8
+#define NB_CONTROLLERS 7
 
 #define STANDBY_CONTROLLER 0
 #define RUDDERSAIL_CONTROLLER 1
@@ -31,7 +31,6 @@
 #define RC_CONTROLLER 4
 #define SAILCAP_CONTROLLER 5
 #define RUDDER_CONTROLLER 6
-#define C_CONTROLLER 7
 
 
 /*******COMMON CONFIG********/

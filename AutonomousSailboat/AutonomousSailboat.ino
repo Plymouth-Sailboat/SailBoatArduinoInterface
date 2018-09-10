@@ -1,7 +1,6 @@
 #include <Sailboat.h>
 #include <Log.h>
 
-#include "Controller.h"
 #include "ReturnHome.h"
 #include "Standby.h"
 #include "HeaderV.h"
@@ -34,7 +33,6 @@ void setControllers() {
   controllers[RC_CONTROLLER] = new RCControl();
   controllers[SAILCAP_CONTROLLER] = new SailCap();
   controllers[RUDDER_CONTROLLER] = new RudderControl();
-  controllers[C_CONTROLLER] = new Controller(3);
 
   Sailboat::Instance()->setControllers(controllers);
   Sailboat::Instance()->setController(STANDBY_CONTROLLER);
