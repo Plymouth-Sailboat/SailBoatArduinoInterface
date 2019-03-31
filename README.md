@@ -28,7 +28,6 @@ This will launch the Arduino into Stanby Mode, just receiving data from the sens
 ## Authors
 
 * **Ulysse VAUTIER** - *Initial work* - [UlysseVautier](https://ulyssevautier.github.io/)
-* **Jian WAN** - [Jian Wan](https://www.plymouth.ac.uk/staff/jian-wan)
 * **Christophe Viel** - [Christophe Viel](https://www.researchgate.net/profile/Christophe_Viel)
 
 ## License
