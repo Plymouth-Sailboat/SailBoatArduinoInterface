@@ -1,6 +1,6 @@
 #include <WindSensor.h>
 
-void WindSensor::init(){
+void WindSensor::init(ros::NodeHandle* n){
 	pinMode(WIND_SENSOR_PIN, INPUT);
 #ifdef WIND_ANEMOMETER_PIN
 	pinMode(WIND_ANEMOMETER_PIN, INPUT); 
