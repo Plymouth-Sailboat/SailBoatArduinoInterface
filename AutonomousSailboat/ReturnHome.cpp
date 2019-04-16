@@ -1,7 +1,7 @@
 #include "ReturnHome.h"
 #include <Sailboat.h>
 
-ReturnHome::ReturnHome(){
+ReturnHome::ReturnHome():ControllerInterface(1000){
 }
 void ReturnHome::init() {
 }
