@@ -11,7 +11,7 @@
 
 class Sensor{
 	public:
-		Sensor(unsigned int period = 100) : period(period), timer(0){}
+		Sensor(unsigned long period = 100) : period(period), timer(0){}
 		
 		virtual void init(){}
 		void update(){if(millis() - timer > period){ updateMeasures(); timer = millis();}}
@@ -24,13 +24,13 @@ class Sensor{
 	protected:
 		unsigned int value;
 		
-		unsigned int period;
+		unsigned long period;
 		unsigned long timer;
 };
 
 class SensorROS : public Sensor{
 	public:
-		SensorROS(const char* name, ros::Msg* msg, unsigned int period = 100, unsigned int comperiod = 100) : Sensor(period), pub(name, msg), nh(NULL), comperiod(comperiod), comTimer(0){}
+		SensorROS(const char* name, ros::Msg* msg, unsigned long period = 100, unsigned long comperiod = 100) : Sensor(period), pub(name, msg), nh(NULL), comperiod(comperiod), comTimer(0){}
 		
 		void init(){}
 		virtual void init(ros::NodeHandle* n){n->advertise(pub); nh = n;}
@@ -40,7 +40,7 @@ class SensorROS : public Sensor{
 		ros::Publisher pub;
 		ros::NodeHandle* nh;
 	private:
-		unsigned int comperiod;
+		unsigned long comperiod;
 		unsigned long comTimer;
 };
 

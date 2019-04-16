@@ -82,8 +82,8 @@ private:
     ros::Publisher pubMsg;
     std_msgs::String sailboatmsgs;
 	
-	int watchdog;
-	int watchdogROS;
+	unsigned long watchdog;
+	unsigned long watchdogROS;
 	
 	unsigned long timerMillis;
 	unsigned long timerMillisCOM;

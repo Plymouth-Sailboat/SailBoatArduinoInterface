@@ -17,10 +17,10 @@ class ControllerInterface{
 	bool isActivated(){return activated;}
 	void setActivated(bool activ){activated = activ;}
   protected:
-	int period;
+	unsigned long period;
   private:
 	bool activated;
-	int timerControl;
+	unsigned long timerControl;
 };
 
 #endif
