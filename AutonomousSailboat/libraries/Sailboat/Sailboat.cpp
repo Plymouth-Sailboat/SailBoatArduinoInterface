@@ -145,7 +145,7 @@ void Sailboat::communicateData(){
 void Sailboat::Control(){
     if(millis() - timerMillis > 100){
         if(controller != NULL){
-            controller->Control(cmd);
+            controller->ControlTime(cmd);
             watchdog = millis();
         }else{
             if(millis() - watchdog > 60000)
