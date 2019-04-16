@@ -156,7 +156,8 @@ void Sailboat::Control(){
             if(LOGGER)
                 Logger::Instance()->Toast("ROS DEAD??", "ROS DEAD??", 0);
             publishMsg("ROS DEAD??");
-            setController(RETURNHOME_CONTROLLER);
+			if(controller != controllers[RC_CONTROLLER])
+				setController(RETURNHOME_CONTROLLER);
         }
         
         for(int i =0; i < NB_CONTROLLERS; ++i){
