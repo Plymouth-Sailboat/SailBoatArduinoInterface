@@ -16,7 +16,7 @@
 class WindSensor : public SensorROS{
 	public:
 		WindSensor() : SensorROS("wind", &msg), angle(0), windSpeed(0), anemometerRevolution(0), contactBounceTime(0), timeAnemometer(0){}
-		void init(ros::NodeHandle* n);
+		void init();
 		void updateMeasures();
 		void updateTest();
 		void communicateData();
