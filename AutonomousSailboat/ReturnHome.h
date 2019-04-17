@@ -23,6 +23,10 @@ class ReturnHome : public ControllerInterface {
     void init();
 
     void Control(const geometry_msgs::Twist& cmd);
+
+  private:
+    double posStart[2];
+    int q;
 };
 
 #endif
