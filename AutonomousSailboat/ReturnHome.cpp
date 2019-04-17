@@ -72,7 +72,7 @@ void ReturnHome::Control(const geometry_msgs::Twist& cmd) {
   else
     rudder = RUDDER_MAX * sign(sin(yaw - thetabar));
 
-  sail = SAIL_MAX * (cos(wind->getMeasure()-thetabar) + 1) / 2;
+  sail = SAIL_MAX * (cos(trueWind-thetabar) + 1) / 2;
 
   Sailboat::Instance()->getRudder()->applyCommand(rudder);
   Sailboat::Instance()->getSail()->applyCommand(abs(sail));

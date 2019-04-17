@@ -17,9 +17,8 @@ void RCControl::Control(const geometry_msgs::Twist& cmd) {
   if(autoCh < 0.5){
     Sailboat::Instance()->getSail()->applyCommand((sail-0.5)*2.0*SAIL_MAX);
   }else{
-    XSens* xsens = Sailboat::Instance()->getIMU();
     WindSensor* wind = Sailboat::Instance()->getWindSensor();
-    float sail = SAIL_MAX * (cos(wind->getMeasure()+xsens->getHeadingYaw()) + 1) / 2;
+    float sail = SAIL_MAX * (cos(wind->getMeasure()) + 1) / 2;
     Sailboat::Instance()->getSail()->applyCommand(abs(sail));
   }
 #ifdef ACTUATOR_RUDDER2
