@@ -12,6 +12,8 @@ void RudderControl::init() {
 void RudderControl::Control(const geometry_msgs::Twist& cmd) {
   double rudder = cmd.angular.x * RAD_TO_DEG;
   double rudder2 = cmd.angular.z * RAD_TO_DEG;
+
+  XSens *xsens = (XSens*)Sailboat::Instance()->getIMU();
   
   Sailboat::Instance()->getRudder()->applyCommand(rudder);
 #ifdef ACTUATOR_RUDDER2
@@ -20,6 +22,6 @@ void RudderControl::Control(const geometry_msgs::Twist& cmd) {
   double sail = 0;
   WindSensor* wind = Sailboat::Instance()->getWindSensor();
 
-  sail = SAIL_MAX * (cos(wind->getMeasure()+yaw) + 1) / 2;
+  sail = SAIL_MAX * (cos(wind->getMeasure()+xsens->getHeadingYaw()) + 1) / 2;
   Sailboat::Instance()->getSail()->applyCommand(abs(sail));
 }
