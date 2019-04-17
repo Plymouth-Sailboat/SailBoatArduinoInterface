@@ -30,7 +30,7 @@ void Header::Control(const geometry_msgs::Twist& cmd) {
   else
     rudder = RUDDER_MAX * sign(sin(yaw - theta));
 
-  sail = SAIL_MAX * (cos(wind->getMeasure()) + 1) / 2;
+  sail = SAIL_MAX * (cos(wind->getMeasure()+yaw-theta) + 1) / 2;
 
   Sailboat::Instance()->getRudder()->applyCommand(rudder);
   Sailboat::Instance()->getSail()->applyCommand(abs(sail));

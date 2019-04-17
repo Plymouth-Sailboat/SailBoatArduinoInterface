@@ -19,7 +19,7 @@ void RCControl::Control(const geometry_msgs::Twist& cmd) {
   }else{
     WindSensor* wind = Sailboat::Instance()->getWindSensor();
     XSens* xsens = Sailboat::Instance()->getIMU();
-    float sail = SAIL_MAX * (cos(wind->getMeasure()) + 1) / 2;
+    float sail = SAIL_MAX * (cos(wind->getMeasure()+yaw) + 1) / 2;
     Sailboat::Instance()->getSail()->applyCommand(abs(sail));
   }
 #ifdef ACTUATOR_RUDDER2
