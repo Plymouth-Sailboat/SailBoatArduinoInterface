@@ -46,16 +46,27 @@ void ReturnHome::Control(const geometry_msgs::Twist& cmd) {
                 , earth_r*sin(latAct)};
   double nb = sqrt(b[0]*b[0]+b[1]*b[1]+b[2]*b[2]);
   double na = sqrt(a[0]*a[0]+a[1]*a[1]+a[2]*a[2]);
+
+  double diflat = lat2-lat1;
+  double diflong = long2-long1;
+  double leng = (diflat*(latAct-lat1)+diflong*(longAct-long1))/(diflat*diflat+diflong*diflong);
+  double currline[2] = {lat1 + diflat*leng, long1 + diflong*leng};
+
+  float dksi = (latAct-currline[0]);
+  float dlambda = (longAct-currline[1]);
+  float ad = sin(dksi/2.0)*sin(dksi/2.0) + cos(currline[0])*cos(latAct)*sin(dlambda/2.0)*sin(dlambda/2.0);
+  double distToLine = earth_r*atan2(sqrt(ad),sqrt(1-ad));
   
   double n[3] = {(a[1]*b[2]-a[2]*b[1])/(na*nb),(b[0]*a[2]-a[0]*b[2])/(na*nb)
                 ,(a[0]*b[1]-a[1]*b[0])/(na*nb)};
   float e = n[0]*cur[0]+n[1]*cur[1]+n[2]*cur[2];
-
+  e = e>0?distToLine:-distToLine;
+  
   //Get bearing
-  double ba[3] = {b[0]-a[0],b[1]-a[1],b[2]-a[2]};
-  double baM[2] = {-sin(longAct)*ba[0]+cos(longAct)*ba[1], -cos(longAct)*sin(latAct)*b[0]+
-                  -sin(latAct)*sin(longAct)*b[1]+cos(latAct)*b[2]};
-  float phi = atan2(baM[1],baM[0]);
+  float yy = sin(long2-long1)*cos(lat2);
+  float xx = cos(lat1)*sin(lat2)-sin(lat1)*cos(lat2)*cos(long2-long1);
+  
+  float phi = -atan2(yy,xx);
   float thetabar = phi - 2*psi/M_PI*atan(e/r);
 
   if(abs(e) > r/2.0)
