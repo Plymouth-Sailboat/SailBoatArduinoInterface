@@ -16,6 +16,7 @@ class XSens : public SensorROS{
 		void communicateData();
 		
 		float getHeadingYaw(){return xbus.headingYaw;}
+		void setGPSPosition(float lat, float longitude, float alt);
 		
 		float* getQuat(){return xbus.quat;}
 		float* getAccel(){return xbus.accel;}

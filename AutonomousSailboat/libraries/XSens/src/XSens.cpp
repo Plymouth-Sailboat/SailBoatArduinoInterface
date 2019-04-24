@@ -1,20 +1,7 @@
 #include <XSens.h>
 #include <Wire.h>
 
-void XSens::init(ros::NodeHandle* n){
-	Wire.beginTransmission(address);
-	Wire.write(XSENS_PIPE_STATUS);
-	Wire.endTransmission();
-	
-	uint8_t data[4];
-	Wire.requestFrom(address,(uint8_t)4);
-	while(Wire.available()>0) {
-		for(int i = 0; i < 3; i++){
-			data[i] = Wire.read();
-		}
-	}
-	if(data[0] == 0x3e)
-		wokeUp = true;
+void XSens::init(ros::NodeHandle* n){	
 	
 	SensorROS::init(n);
 	n->advertise(pubV);
@@ -22,6 +9,9 @@ void XSens::init(ros::NodeHandle* n){
 
 void XSens::updateMeasures(){
 	xbus.read();
+	
+	if(!wokeUp)
+		wokeUp = xbus.wokeUp;
 }
 
 void XSens::updateTest(){
@@ -60,4 +50,8 @@ void XSens::communicateData(){
 	msg.header.stamp = nh->now();
 	pub.publish(&msg);
 	pubV.publish(&velMsg);
+}
+
+void XSens::setGPSPosition(float lat, float longitude, float alt){
+	xbus.setLatLongAlt(lat,longitude,alt);
 }
