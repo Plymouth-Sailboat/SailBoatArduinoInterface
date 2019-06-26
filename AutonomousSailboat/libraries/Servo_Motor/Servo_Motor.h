@@ -14,7 +14,7 @@
 class Servo_Motor : public ActuatorROS{
 	public:
 		Servo_Motor(unsigned int pin, unsigned int pwmNeutral, unsigned int pwmMin, unsigned int pwmMax, float anglemin, float anglemax,const char* name = "motor")
-		: ActuatorROS(name, &msg), pin(pin), pwmNeutral(pwmNeutral), pwmMin(pwmMin), pwmMax(pwmMax), anglemin(anglemin), anglemax(anglemax){}
+		: ActuatorROS(name, &msg), pin(pin), pwmNeutral(pwmNeutral), pwmMin(pwmMin), pwmMax(pwmMax), anglemin(anglemin), anglemax(anglemax), lastPwm(0){}
 		
 		#ifdef SERVO_SHIELD
 		void setMotor(Adafruit_PWMServoDriver* motor_ptr){motor = motor_ptr;}
@@ -53,6 +53,7 @@ class Servo_Motor : public ActuatorROS{
 		unsigned int pwmNeutral;
 		unsigned int pwmMin;
 		unsigned int pwmMax;
+		unsigned int lastPwm;
 		float anglemin;
 		float anglemax;
 };
