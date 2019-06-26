@@ -39,10 +39,16 @@
 
 /**PIN**/
 /********/
-//RUDDER
-#define RUDDER_PIN 6
-//SAIL
-#define WINCH_PIN 7
+#ifdef SERVO_SHIELD
+	#define SERVO_ADDRESS 0x40
+	#define RUDDER_SERVO 0
+	#define WINCH_SERVO 1
+#else
+	//RUDDER
+	#define RUDDER_PIN 6
+	//SAIL
+	#define WINCH_PIN 7
+#endif
 //WIND DIRECTION SENSOR
 #define WIND_SENSOR_PIN A0
 //BATTERY SENSOR

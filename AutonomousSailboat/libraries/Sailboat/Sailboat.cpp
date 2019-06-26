@@ -82,7 +82,24 @@ void Sailboat::init(ros::NodeHandle* n){
     sensors[SENSOR_BATTERY] = new BatterySensor();
     
     sens[SENSOR_RC] = new RC();
-    
+    #ifdef SERVO_SHIELD
+	Adafruit_PWMServoDriver* servo_motors_pwm = new Adafruit_PWMServoDriver(SERVO_ADDRESS);
+	servo_motors_pwm->begin();
+    actuators[ACTUATOR_RUDDER] = new Servo_Motor(RUDDER_SERVO,RUDDER_POS_NEUTRAL,RUDDER_POS_MAX,RUDDER_POS_MIN,RUDDER_MIN,RUDDER_MAX,"rudder");
+	actuators[ACTUATOR_RUDDER]->setMotor(servo_motors_pwm);
+    actuators[ACTUATOR_SAIL] = new Servo_Motor(WINCH_SERVO,WINCH_ANGLE_NEUTRAL,WINCH_ANGLE_MAX, WINCH_ANGLE_MIN,SAIL_MIN,SAIL_MAX,"sail");
+	actuators[ACTUATOR_SAIL]->setMotor(servo_motors_pwm);
+#ifdef ACTUATOR_RUDDER2
+    actuators[ACTUATOR_RUDDER2] = new Servo_Motor(RUDDER2_SERVO, RUDDER2_POS_NEUTRAL, RUDDER2_POS_MAX, RUDDER2_POS_MIN, RUDDER2_MIN,RUDDER2_MAX,"rudder2");
+	actuators[ACTUATOR_RUDDER2]->setMotor(servo_motors_pwm);
+#endif
+	#else
+    actuators[ACTUATOR_RUDDER] = new Servo_Motor(RUDDER_PIN,RUDDER_POS_NEUTRAL,RUDDER_POS_MAX,RUDDER_POS_MIN,RUDDER_MIN,RUDDER_MAX,"rudder");
+    actuators[ACTUATOR_SAIL] = new Servo_Motor(WINCH_PIN,WINCH_ANGLE_NEUTRAL,WINCH_ANGLE_MAX, WINCH_ANGLE_MIN,SAIL_MIN,SAIL_MAX,"sail");
+#ifdef ACTUATOR_RUDDER2
+    actuators[ACTUATOR_RUDDER2] = new Servo_Motor(RUDDER2_PIN, RUDDER2_POS_NEUTRAL, RUDDER2_POS_MAX, RUDDER2_POS_MIN, RUDDER2_MIN,RUDDER2_MAX,"rudder2");
+#endif
+	#endif
     actuators[ACTUATOR_RUDDER] = new Servo_Motor(RUDDER_PIN,RUDDER_POS_NEUTRAL,RUDDER_POS_MAX,RUDDER_POS_MIN,RUDDER_MIN,RUDDER_MAX,"rudder");
     actuators[ACTUATOR_SAIL] = new Servo_Motor(WINCH_PIN,WINCH_ANGLE_NEUTRAL,WINCH_ANGLE_MAX, WINCH_ANGLE_MIN,SAIL_MIN,SAIL_MAX,"sail");
 #ifdef ACTUATOR_RUDDER2
