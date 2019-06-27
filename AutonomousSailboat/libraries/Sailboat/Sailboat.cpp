@@ -1,5 +1,6 @@
 #include <Sailboat.h>
 #include <Wire.h>
+#include <CMPS12.h>
 
 Sailboat* Sailboat::sailboat = NULL;
 
@@ -78,11 +79,18 @@ void Sailboat::init(ros::NodeHandle* n){
 		sensors[SENSOR_GPS] = new GPS(Serial2);
     if(GPS_SERIAL == 3)
         sensors[SENSOR_GPS] = new GPS(Serial3);
+	#if defined(XSENS_IMU)
+	#pragma message("XSENS is used as IMU")
     sensors[SENSOR_IMU] = new XSens();
+	#elif defined(CMPS12_IMU)
+	#pragma message("CMPS12 is used as IMU")
+	sensors[SENSOR_IMU] = new CMPS12();
+	#endif
     sensors[SENSOR_BATTERY] = new BatterySensor();
     
     sens[SENSOR_RC] = new RC();
     #ifdef SERVO_SHIELD
+	#pragma message("Servo Shield from Adafruit is used")
 	Adafruit_PWMServoDriver* servo_motors_pwm = new Adafruit_PWMServoDriver(NULL, 0x40);
 	servo_motors_pwm->begin();
     actuators[ACTUATOR_RUDDER] = new Servo_Motor(RUDDER_SERVO,RUDDER_POS_NEUTRAL,RUDDER_POS_MAX,RUDDER_POS_MIN,RUDDER_MIN,RUDDER_MAX,"rudder");
@@ -94,6 +102,7 @@ void Sailboat::init(ros::NodeHandle* n){
 	((Servo_Motor*)actuators[ACTUATOR_RUDDER2])->setMotor(servo_motors_pwm);
 #endif
 	#else
+	#pragma message("Custom interface board is used")
     actuators[ACTUATOR_RUDDER] = new Servo_Motor(RUDDER_PIN,RUDDER_POS_NEUTRAL,RUDDER_POS_MAX,RUDDER_POS_MIN,RUDDER_MIN,RUDDER_MAX,"rudder");
     actuators[ACTUATOR_SAIL] = new Servo_Motor(WINCH_PIN,WINCH_ANGLE_NEUTRAL,WINCH_ANGLE_MAX, WINCH_ANGLE_MIN,SAIL_MIN,SAIL_MAX,"sail");
 #ifdef ACTUATOR_RUDDER2
