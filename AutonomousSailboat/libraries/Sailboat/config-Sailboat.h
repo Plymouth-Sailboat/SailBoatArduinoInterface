@@ -36,7 +36,7 @@
 /*******COMMON CONFIG********/
 
 #define EARTH_RADIUS	6371000  // Earth radius in metres
-#define XSENS_IMU
+#define CMPS12_IMU
 
 /**PIN**/
 /********/

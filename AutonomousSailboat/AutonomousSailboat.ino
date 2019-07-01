@@ -120,7 +120,6 @@ void setup() {
   nh.subscribe(sub2);
 
   Sailboat::Instance()->init(&nh);
-
   delay(100);
   
   setControllers();

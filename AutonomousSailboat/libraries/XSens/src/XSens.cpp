@@ -9,6 +9,7 @@ void XSens::init(ros::NodeHandle* n){
 
 void XSens::updateMeasures(){
 	xbus.read();
+	heading = xbus.headingYaw;
 	
 	if(!wokeUp)
 		wokeUp = xbus.wokeUp;

@@ -26,9 +26,7 @@ class Servo_Motor : public ActuatorROS{
 	private:
 	
 		void motorSetup(){
-			#ifdef SERVO_SHIELD
-			motor->begin();
-			#else
+			#ifndef SERVO_SHIELD
 			motor.attach(pin);
 			#endif		
 		}

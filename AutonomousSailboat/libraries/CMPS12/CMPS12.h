@@ -1,20 +1,18 @@
 #ifndef CMPS12_SENSOR_H
 #define CMPS12_SENSOR_H
 
-#include <SensorsInterface.h>
+#include <IMU.h>
 #include <sensor_msgs/Imu.h>
 #include <geometry_msgs/Twist.h>
 
-class CMPS12 : public SensorROS{
+class CMPS12 : public IMU{
 	public:
-		CMPS12(uint8_t address = 0x60) : SensorROS("IMU", &msg, 10, 10), address(address), wokeUp(false), pubV("IMU_Dv", &velMsg){}
+		CMPS12(uint8_t address = 0x60) : IMU("IMU", 10, 10), address(address), wokeUp(false), pubV("IMU_Dv", &velMsg){}
 		
 		void init(ros::NodeHandle* n);
 		void updateMeasures();
 		void updateTest();
 		void communicateData();
-		
-		float getHeadingYaw(){return angles[0];}
 		
 		float* getQuat(){return quat;}
 		float* getAccel(){return accel;}
@@ -29,7 +27,6 @@ class CMPS12 : public SensorROS{
 		
 		ros::Publisher pubV;
 		
-		sensor_msgs::Imu msg;
 		geometry_msgs::Twist velMsg;
 		
 		float quat[4];

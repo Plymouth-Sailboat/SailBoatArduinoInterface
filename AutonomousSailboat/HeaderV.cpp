@@ -20,10 +20,10 @@ void Header::Control(const geometry_msgs::Twist& cmd) {
     theta = atan2(y / norm, x / norm) + M_PI/2.0;
   }
 
-  XSens* xsens = Sailboat::Instance()->getIMU();
+  IMU* imu = Sailboat::Instance()->getIMU();
   WindSensor* wind = Sailboat::Instance()->getWindSensor();
 
-  float yaw = xsens->getHeadingYaw();
+  float yaw = imu->getHeading();
 
   if (cos(yaw - theta) >= 0)
     rudder = RUDDER_MAX * sin(yaw - theta);

@@ -85,6 +85,8 @@ void CMPS12::updateMeasures(){
 	rot[1]= roty;
 	rot[2]= rotz;
 	
+	heading = angles[0];
+	
 	if(!wokeUp)
 		wokeUp = true;
 }

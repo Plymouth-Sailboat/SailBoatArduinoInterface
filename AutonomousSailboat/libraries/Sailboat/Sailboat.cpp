@@ -91,8 +91,8 @@ void Sailboat::init(ros::NodeHandle* n){
     sens[SENSOR_RC] = new RC();
     #ifdef SERVO_SHIELD
 	#pragma message("Servo Shield from Adafruit is used")
-	Adafruit_PWMServoDriver* servo_motors_pwm = new Adafruit_PWMServoDriver(NULL, 0x40);
-	servo_motors_pwm->begin();
+	Adafruit_PWMServoDriver* servo_motors_pwm = new Adafruit_PWMServoDriver(&Wire, SERVO_ADDRESS);
+	servo_motors_pwm->reset();
     actuators[ACTUATOR_RUDDER] = new Servo_Motor(RUDDER_SERVO,RUDDER_POS_NEUTRAL,RUDDER_POS_MAX,RUDDER_POS_MIN,RUDDER_MIN,RUDDER_MAX,"rudder");
 	((Servo_Motor*)actuators[ACTUATOR_RUDDER])->setMotor(servo_motors_pwm);
     actuators[ACTUATOR_SAIL] = new Servo_Motor(WINCH_SERVO,WINCH_ANGLE_NEUTRAL,WINCH_ANGLE_MAX, WINCH_ANGLE_MIN,SAIL_MIN,SAIL_MAX,"sail");

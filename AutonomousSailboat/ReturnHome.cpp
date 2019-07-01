@@ -11,10 +11,10 @@ void ReturnHome::init() {
 void ReturnHome::Control(const geometry_msgs::Twist& cmd) {
   GPS* gps = Sailboat::Instance()->getGPS();
 
-  XSens* xsens = Sailboat::Instance()->getIMU();
+  IMU* imu = Sailboat::Instance()->getIMU();
   WindSensor* wind = Sailboat::Instance()->getWindSensor();
   
-  float yaw = xsens->getHeadingYaw();
+  float yaw = imu->getHeading();
   float trueWind = wind->getMeasure()+yaw;
 
   float psi = M_PI/4.0;
