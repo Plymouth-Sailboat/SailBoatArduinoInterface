@@ -32,6 +32,7 @@ void Sailboat::setController(ControllerInterface* control){
     
     actualControllerI = -1;
 }
+
 void Sailboat::setController(int index){
     if(controller != NULL)
         controller->setActivated(false);
@@ -93,6 +94,7 @@ void Sailboat::init(ros::NodeHandle* n){
 	#pragma message("Servo Shield from Adafruit is used")
 	Adafruit_PWMServoDriver* servo_motors_pwm = new Adafruit_PWMServoDriver(&Wire, SERVO_ADDRESS);
 	servo_motors_pwm->reset();
+	servo_motors_pwm->setPWMFreq(400);
     actuators[ACTUATOR_RUDDER] = new Servo_Motor(RUDDER_SERVO,RUDDER_POS_NEUTRAL,RUDDER_POS_MAX,RUDDER_POS_MIN,RUDDER_MIN,RUDDER_MAX,"rudder");
 	((Servo_Motor*)actuators[ACTUATOR_RUDDER])->setMotor(servo_motors_pwm);
     actuators[ACTUATOR_SAIL] = new Servo_Motor(WINCH_SERVO,WINCH_ANGLE_NEUTRAL,WINCH_ANGLE_MAX, WINCH_ANGLE_MIN,SAIL_MIN,SAIL_MAX,"sail");

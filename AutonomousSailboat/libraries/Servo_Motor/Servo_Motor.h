@@ -28,14 +28,14 @@ class Servo_Motor : public ActuatorROS{
 		void motorSetup(){
 			#ifndef SERVO_SHIELD
 			motor.attach(pin);
-			#endif		
+			#endif
 		}
 		
-		void motorWrite(unsigned int pwm){
+		void motorWrite(unsigned int us){
 			#ifdef SERVO_SHIELD
-			motor->setPWM(pin,0,pwm);
+			motor->setPWM(pin,0,us*400*4096); // Equation to match arduino servo
 			#else
-			motor.write(pwm);
+			motor.writeMicroseconds(1.125*us-50); // Equation to match servo shield
 			#endif		
 		}
 	

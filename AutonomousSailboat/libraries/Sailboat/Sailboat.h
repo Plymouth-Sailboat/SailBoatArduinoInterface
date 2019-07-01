@@ -39,7 +39,7 @@ public:
 	
 	WindSensor* getWindSensor(){return (WindSensor*)sensors[SENSOR_WINDSENSOR];}
 	GPS* getGPS(){return (GPS*)sensors[SENSOR_GPS];}
-	XSens* getIMU(){return (XSens*)sensors[SENSOR_IMU];}
+	IMU* getIMU(){return (XSens*)sensors[SENSOR_IMU];}
     BatterySensor* getBattery(){return (BatterySensor*)sensors[SENSOR_BATTERY];}
 	
 	RC* getRC(){return (RC*)sens[SENSOR_RC];}
