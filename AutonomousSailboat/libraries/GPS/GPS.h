@@ -40,6 +40,7 @@ private:
 	double GPS_PosX, GPS_PosY;  // Cartesian location of the boat
 	double GPS_track, GPS_speed, hdop;
 	time_t time;
+	uint32_t time_utc;
 	int nbSatellites;
 	int status;
 	bool coldStart;

@@ -35,13 +35,15 @@ void GPS::updateMeasures(){
 	// approximately every 2 seconds or so, print out the current stats
 	if (millis() - timerGPS > 1000) {
 		timerGPS = millis();
-		setTime((int)gps.hour, (int)gps.minute, (int)gps.seconds, (int)gps.day, (int)gps.month, (int)gps.year);
 		time = now();
 		//Serial.print("Fix: "); Serial.print((int)GPS.fix);
 		//Serial.print(" quality: "); Serial.println((int)GPS.fixquality); 
 		status = (int)gps.fix-1;
 		timeU.data = time;
+		time_utc = gps.hour*1000+gps.minute*10+gps.seconds;
 		if (gps.fix) {
+			setTime((int)gps.hour, (int)gps.minute, (int)gps.seconds, (int)gps.day, (int)gps.month, (int)gps.year);
+		
 			hdop = gps.HDOP;
 			
 			GPS_lat = gps.latitudeDegrees;
@@ -86,7 +88,7 @@ void GPS::communicateData(){
 	
 	msg.track = GPS_track;
 	msg.speed = GPS_speed;
-	msg.time = time;
+	msg.time = time_utc;
 	msg.hdop = hdop;
 	
 	msg.status.satellites_used = nbSatellites;
