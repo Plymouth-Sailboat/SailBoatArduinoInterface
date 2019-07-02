@@ -34,20 +34,20 @@ void Sailboat::setController(ControllerInterface* control){
 }
 
 void Sailboat::setController(int index){
-    if(controller != NULL)
-        controller->setActivated(false);
-    if(index < NB_CONTROLLERS){
-        actualControllerI = index;
-        controller = controllers[index];
-        controller->init();
-        controller->setActivated(true);
-        
-        ((RC*)sens[SENSOR_RC])->controlling = false;
-        
-        if(LOGGER)
-            Logger::Instance()->Toast("Changed to :", String(controllerNames[index]), 5000);
-        publishMsg(String("Changed to :") + String(controllerNames[index]));
-    }
+	if(!((RC*)sens[SENSOR_RC])->controlling ){
+		if(controller != NULL)
+			controller->setActivated(false);
+		if(index < NB_CONTROLLERS){
+			actualControllerI = index;
+			controller = controllers[index];
+			controller->init();
+			controller->setActivated(true);
+				
+			if(LOGGER)
+				Logger::Instance()->Toast("Changed to :", String(controllerNames[index]), 5000);
+			publishMsg(String("Changed to :") + String(controllerNames[index]));
+		}
+	}        
 }
 
 void Sailboat::cmdCallback(const geometry_msgs::Twist& msg){

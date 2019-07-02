@@ -24,7 +24,7 @@
 #define ACTUATOR_SAIL		1
 
 /**********************************************PINS********************************************/
-#define SERVO_SHIELD
+//#define SERVO_SHIELD
 
 
 
