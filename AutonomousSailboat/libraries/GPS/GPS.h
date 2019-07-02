@@ -13,7 +13,7 @@
 
 class GPS : public SensorROS{
 public:
-	GPS(HardwareSerial& serial) : SensorROS("GPS/fix", &msg, 1, 500), serial(serial), gps(&Serial1), GPS_latInit(0), GPS_longInit(0), GPS_altInit(0), status(-1), coldStart(false), GPS_track(0), GPS_speed(0), time(0), hdop(0), nbSatellites(0), pubNMEA("GPS/NMEA", &lastNMEA), pubTime("Time", &timeU){}
+	GPS(HardwareSerial& serial) : SensorROS("GPS/fix", &msg, 50, 500), serial(serial), gps(&Serial1), GPS_latInit(0), GPS_longInit(0), GPS_altInit(0), status(-1), coldStart(false), GPS_track(0), GPS_speed(0), time(0), hdop(0), nbSatellites(0), pubNMEA("GPS/NMEA", &lastNMEA), pubTime("Time", &timeU){}
 	
 	void init(ros::NodeHandle* n);
 	void updateMeasures();
@@ -43,7 +43,9 @@ private:
 	int nbSatellites;
 	int status;
 	bool coldStart;
-	uint32_t timer;
+	uint32_t timerGPS;
+	
+	String nmeaD;
 	
 	gps_common::GPSFix msg;
 	

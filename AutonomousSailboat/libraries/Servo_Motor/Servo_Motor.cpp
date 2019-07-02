@@ -22,10 +22,10 @@ void Servo_Motor::applyCommand(double command){
 
 	// Set the servo at the wanted position:
 	motorWrite(commandExact);
-	lastPwm = commandExact;
+	lastPwm = command;
 }
 
 void Servo_Motor::communicateData(){
-	msg.data = mapf(lastPwm, pwmMin, pwmMax, anglemin, anglemax);
+	msg.data = lastPwm;
 	pub.publish(&msg);
 }

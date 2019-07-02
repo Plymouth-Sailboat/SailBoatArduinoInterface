@@ -1,6 +1,7 @@
 #include <GPS.h>
 
 void GPS::init(ros::NodeHandle* n){
+	serial.begin(GPS_BAUD_RATE);
 	gps.begin(GPS_BAUD_RATE);
 	delay(100);
 	gps.sendCommand(PMTK_SET_NMEA_OUTPUT_RMCGGA);
@@ -11,6 +12,8 @@ void GPS::init(ros::NodeHandle* n){
 	SensorROS::init(n);
 	n->advertise(pubNMEA);
 	n->advertise(pubTime);
+	
+	nmeaD = "";
 }
 
 void GPS::updateMeasures(){
@@ -22,16 +25,16 @@ void GPS::updateMeasures(){
     // we end up not listening and catching other sentences! 
     // so be very wary if using OUTPUT_ALLDATA and trytng to print out data
     //Serial.println(gps.lastNMEA());   // this also sets the newNMEAreceived() flag to false
-	lastNMEA.data = gps.lastNMEA();
+	nmeaD += "\n"+String(gps.lastNMEA());
     if (!gps.parse(gps.lastNMEA()))   // this also sets the newNMEAreceived() flag to false
 		return;  // we can fail to parse a sentence in which case we should just wait for another
 	}
 	
-	if (timer > millis())  timer = millis();
+	if (timerGPS > millis())  timerGPS = millis();
 
 	// approximately every 2 seconds or so, print out the current stats
-	if (millis() - timer > 1000) {
-		timer = millis();
+	if (millis() - timerGPS > 1000) {
+		timerGPS = millis();
 		setTime((int)gps.hour, (int)gps.minute, (int)gps.seconds, (int)gps.day, (int)gps.month, (int)gps.year);
 		time = now();
 		//Serial.print("Fix: "); Serial.print((int)GPS.fix);
@@ -97,7 +100,12 @@ void GPS::communicateData(){
 	msg.position_covariance_type = 0;
 	
 	msg.header.stamp = nh->now();
+	
+	lastNMEA.data = nmeaD.c_str();
+	
 	pub.publish(&msg);
 	pubNMEA.publish(&lastNMEA);
 	pubTime.publish(&timeU);
+	
+	nmeaD = "";
 }
