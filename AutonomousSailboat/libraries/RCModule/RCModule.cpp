@@ -4,7 +4,6 @@
 
 void RC::updateMeasures(){
 	if(millis() - watchdog > 10000 && controlling){
-		Logger::Instance()->Log(0,"Changing Controller to : " + String(previousController), "RC Lost");
 		controlling = false;
 		Sailboat::Instance()->setController(previousController);
 	}
@@ -21,6 +20,6 @@ void RC::interruptCH(uint8_t channel, uint8_t pin){
 		previousController = Sailboat::Instance()->actualControllerIndex();
 		Sailboat::Instance()->setController(RC_CONTROLLER);
 	}
-	watchdog = millis();
 	controlling = true;
+	watchdog = millis();
 }
