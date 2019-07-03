@@ -40,7 +40,7 @@ void GPS::updateMeasures(){
 		//Serial.print(" quality: "); Serial.println((int)GPS.fixquality); 
 		status = (int)gps.fix-1;
 		timeU.data = time;
-		time_utc = gps.hour*10000+gps.minute*100+gps.seconds;
+		time_utc = ((uint32_t)gps.hour*10000)+(uint32_t)gps.minute*100+(uint32_t)gps.seconds;
 		if (gps.fix) {
 			setTime((int)gps.hour, (int)gps.minute, (int)gps.seconds, (int)gps.day, (int)gps.month, (int)gps.year);
 		
