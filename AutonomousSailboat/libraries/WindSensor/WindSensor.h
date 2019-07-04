@@ -3,6 +3,7 @@
 
 #include <SensorsInterface.h>
 #include <geometry_msgs/Pose2D.h>
+#include <SimpleKalmanFilter.h>
 
 #ifndef HARDWARE_TUNING
 #define WIND_SENSOR_OFFSET 198  // May need to be tuned!
@@ -15,7 +16,7 @@
 			 
 class WindSensor : public SensorROS{
 	public:
-		WindSensor() : SensorROS("wind", &msg), angle(0), windSpeed(0), anemometerRevolution(0), contactBounceTime(0), timeAnemometer(0){}
+		WindSensor() : SensorROS("wind", &msg), angle(0), windSpeed(0), anemometerRevolution(0), contactBounceTime(0), timeAnemometer(0), kf(5,5,0.08){}
 		void init();
 		void updateMeasures();
 		void updateTest();
@@ -32,6 +33,8 @@ class WindSensor : public SensorROS{
 		unsigned int anemometerRevolution;
 		unsigned long contactBounceTime;
 		unsigned long timeAnemometer;
+		
+		SimpleKalmanFilter kf;
 		
 };
 

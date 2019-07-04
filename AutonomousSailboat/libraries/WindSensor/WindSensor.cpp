@@ -43,6 +43,7 @@ void WindSensor::updateMeasures(){
 	angle = mapf(value, WIND_SENSOR_MIN, WIND_SENSOR_MAX, ANGLE_MIN, ANGLE_MAX);  // The angle is now in the [0;+360] interval
 	angle -= 180;
 	angle = -angle;
+	angle = kf.updateEstimate(angle);
 }
 
 void WindSensor::updateTest(){
