@@ -1,6 +1,5 @@
 #include <Sailboat.h>
 #include <Wire.h>
-#include <CMPS12.h>
 
 Sailboat* Sailboat::sailboat = NULL;
 
@@ -9,12 +8,12 @@ Sailboat::~Sailboat(){
         if(sensors[i] != NULL)
             delete sensors[i];
     }
-    
+
     for(int i = 0; i < NB_ACTUATORS; ++i){
         if(actuators[i] != NULL)
             delete actuators[i];
     }
-    
+
     for(int i = 0; i < NB_CONTROLLERS; ++i){
         if(controllers[i] != NULL)
             delete controllers[i];
@@ -27,9 +26,9 @@ void Sailboat::setController(ControllerInterface* control){
     controller = control;
     controller->init();
     controller->setActivated(true);
-    
+
     ((RC*)sens[SENSOR_RC])->controlling = false;
-    
+
     actualControllerI = -1;
 }
 
@@ -42,12 +41,12 @@ void Sailboat::setController(int index){
 			controller = controllers[index];
 			controller->init();
 			controller->setActivated(true);
-				
+
 			if(LOGGER)
 				Logger::Instance()->Toast("Changed to :", String(controllerNames[index]), 5000);
 			publishMsg(String("Changed to :") + String(controllerNames[index]));
 		}
-	}        
+	}
 }
 
 void Sailboat::cmdCallback(const geometry_msgs::Twist& msg){
@@ -72,23 +71,29 @@ void Sailboat::msgCallback(const std_msgs::String& msg){
 
 void Sailboat::init(ros::NodeHandle* n){
     Wire.begin();
-    
+
     sensors[SENSOR_WINDSENSOR] = new WindSensor();
+
+#ifdef USE_ARDUINO_GPS
 	if(GPS_SERIAL == 1)
 		sensors[SENSOR_GPS] = new GPS(Serial1);
 	if(GPS_SERIAL == 2)
 		sensors[SENSOR_GPS] = new GPS(Serial2);
-    if(GPS_SERIAL == 3)
-        sensors[SENSOR_GPS] = new GPS(Serial3);
-	#if defined(XSENS_IMU)
+  if(GPS_SERIAL == 3)
+    sensors[SENSOR_GPS] = new GPS(Serial3);
+#else
+  sensors[SENSOR_GPS] = new GPS();
+#endif
+
+#if defined(XSENS_IMU)
 	#pragma message("XSENS is used as IMU")
     sensors[SENSOR_IMU] = new XSens();
-	#elif defined(CMPS12_IMU)
+#elif defined(CMPS12_IMU)
 	#pragma message("CMPS12 is used as IMU")
 	sensors[SENSOR_IMU] = new CMPS12();
-	#endif
+#endif
     sensors[SENSOR_BATTERY] = new BatterySensor();
-    
+
     sens[SENSOR_RC] = new RC();
     #ifdef SERVO_SHIELD
 	#pragma message("Servo Shield from Adafruit is used")
@@ -111,16 +116,16 @@ void Sailboat::init(ros::NodeHandle* n){
     actuators[ACTUATOR_RUDDER2] = new Servo_Motor(RUDDER2_PIN, RUDDER2_POS_NEUTRAL, RUDDER2_POS_MAX, RUDDER2_POS_MIN, RUDDER2_MIN,RUDDER2_MAX,"rudder2");
 #endif
 	#endif
-    
+
     for(int i = 0; i < NB_SENSORS; ++i)
         sensors[i]->init(n);
-    
+
     for(int i = 0; i < NB_ACTUATORS; ++i)
         actuators[i]->init(n);
-    
+
     watchdog = millis();
     watchdogROS = millis();
-    
+
     n->advertise(pubMsg);
 }
 
@@ -140,7 +145,7 @@ void Sailboat::updateSensors(){
     for(int i = 0; i < NB_SENSORS; ++i){
         sensors[i]->update();
     }
-    
+
     for(int i = 0; i < NB_SENSORS_NOT_ROS; ++i){
         sens[i]->update();
     }
@@ -174,7 +179,7 @@ void Sailboat::Control(){
             if(millis() - watchdog > 60000)
                 setController(RETURNHOME_CONTROLLER);
         }
-        
+
         if(millis() - watchdogROS > 300000){
             if(LOGGER)
                 Logger::Instance()->Toast("ROS DEAD??", "ROS DEAD??", 0);
@@ -182,7 +187,7 @@ void Sailboat::Control(){
 			if(controller != controllers[RC_CONTROLLER])
 				setController(RETURNHOME_CONTROLLER);
         }
-        
+
         for(int i =0; i < NB_CONTROLLERS; ++i){
             if(controllers[i] != NULL && !controllers[i]->isActivated()){
                 controllers[i]->updateBackground();
@@ -190,4 +195,3 @@ void Sailboat::Control(){
         }
     }
 }
-
