@@ -8,27 +8,19 @@
 
 class XSens : public IMU{
 	public:
-		XSens(uint8_t address = 0x1d) : IMU("IMU", 10, 10), address(address), xbus(address), wokeUp(false), pubV("IMU_Dv", &velMsg){}
-		
+		XSens(uint8_t address = 0x1d) : IMU("IMU", 10, 10), address(address), xbus(address), pubV("IMU_Dv", &velMsg){}
+
 		void init(ros::NodeHandle* n);
-		void updateMeasures();
+		void updateMeasure();
 		void updateTest();
 		void communicateData();
-		
+
 		void setGPSPosition(float lat, float longitude, float alt);
-		
-		float* getQuat(){return xbus.quat;}
-		float* getAccel(){return xbus.accel;}
-		float* getMag(){return xbus.mag;}
-		float* getRot(){return xbus.rot;}		
 	private:
-		
+
 		uint8_t address;
-		
-		bool wokeUp;
-		
+
 		ros::Publisher pubV;
-		
 		geometry_msgs::Twist velMsg;
 		XBus xbus;
 };

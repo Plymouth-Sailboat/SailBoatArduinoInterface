@@ -1,18 +1,20 @@
 #include <XSens.h>
 #include <Wire.h>
 
-void XSens::init(ros::NodeHandle* n){	
-	
+void XSens::init(ros::NodeHandle* n){
+
 	SensorROS::init(n);
 	n->advertise(pubV);
 }
 
-void XSens::updateMeasures(){
+void XSens::updateMeasure(){
 	xbus.read();
-	heading = xbus.headingYaw;
-	
-	if(!wokeUp)
-		wokeUp = xbus.wokeUp;
+	memcpy(angles,xbus.angles,3*sizeof(float));
+	memcpy(quat,xbus.quat,4*sizeof(float));
+	memcpy(rot,xbus.rot,3*sizeof(float));
+	//memcpy(dv,xbus.dv,3*sizeof(float));
+	memcpy(accel,xbus.accel,3*sizeof(float));
+	memcpy(mag,xbus.mag,3*sizeof(float));
 }
 
 void XSens::updateTest(){
@@ -20,11 +22,11 @@ void XSens::updateTest(){
 	xbus.quat[1] = 0.001;
 	xbus.quat[2] = 0.189;
 	xbus.quat[3] = -0.063;
-	
+
 	xbus.rot[0] = 0.0;
 	xbus.rot[1] = 0.0;
 	xbus.rot[2] = 0.0;
-	
+
 	xbus.accel[0] = 0.0;
 	xbus.accel[1] = 0.0;
 	xbus.accel[2] = 0.0;
@@ -35,19 +37,19 @@ void XSens::communicateData(){
 	msg.orientation.x = xbus.quat[1];
 	msg.orientation.y = xbus.quat[2];
 	msg.orientation.z = xbus.quat[3];
-	
+
 	msg.angular_velocity.x = xbus.rot[0];
 	msg.angular_velocity.y = xbus.rot[1];
 	msg.angular_velocity.z = xbus.rot[3];
-	
+
 	msg.linear_acceleration.x = xbus.accel[0];
 	msg.linear_acceleration.y = xbus.accel[1];
 	msg.linear_acceleration.z = xbus.accel[2];
-	
+
 	velMsg.linear.x = xbus.dv[0];
 	velMsg.linear.y = xbus.dv[1];
 	velMsg.linear.z = xbus.dv[2];
-	
+
 	msg.header.stamp = nh->now();
 	pub.publish(&msg);
 	pubV.publish(&velMsg);
