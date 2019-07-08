@@ -35,6 +35,4 @@ void GPS::gps_callback(const gps_common::GPSFix& msg){
 		//msg.status.position_source;
 
 		//msg.position_covariance_type;
-
-		msg.header.stamp = nh->now();
 }
