@@ -13,7 +13,7 @@
 
 #define ANGLE_MAX 360
 #define ANGLE_MIN 0
-			 
+
 class WindSensor : public SensorROS{
 	public:
 		WindSensor() : SensorROS("wind", &msg), angle(0), windSpeed(0), anemometerRevolution(0), contactBounceTime(0), timeAnemometer(0), kf(5,5,0.08){}
@@ -21,11 +21,12 @@ class WindSensor : public SensorROS{
 		void updateMeasures();
 		void updateTest();
 		void communicateData();
-		
+
 		void updateAnemometer();
-		
+
 		double getMeasure(){return angle;}
-		
+		double getSpeed(){return windSpeed;}
+
 	private:
 		double angle;
 		geometry_msgs::Pose2D msg;
@@ -33,9 +34,9 @@ class WindSensor : public SensorROS{
 		unsigned int anemometerRevolution;
 		unsigned long contactBounceTime;
 		unsigned long timeAnemometer;
-		
+
 		SimpleKalmanFilter kf;
-		
+
 };
 
 #endif

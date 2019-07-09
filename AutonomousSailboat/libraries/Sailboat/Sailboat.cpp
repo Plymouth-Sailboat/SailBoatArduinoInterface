@@ -75,6 +75,7 @@ void Sailboat::init(ros::NodeHandle* n){
     sensors[SENSOR_WINDSENSOR] = new WindSensor();
 
 #ifdef USE_ARDUINO_GPS
+#pragma message("Using GPS on Arduino")
 	if(GPS_SERIAL == 1)
 		sensors[SENSOR_GPS] = new GPS(Serial1);
 	if(GPS_SERIAL == 2)
@@ -87,15 +88,15 @@ void Sailboat::init(ros::NodeHandle* n){
 
 #if defined(XSENS_IMU)
 	#pragma message("XSENS is used as IMU")
-    sensors[SENSOR_IMU] = new XSens();
+  sensors[SENSOR_IMU] = new XSens();
 #elif defined(CMPS12_IMU)
 	#pragma message("CMPS12 is used as IMU")
 	sensors[SENSOR_IMU] = new CMPS12();
 #endif
-    sensors[SENSOR_BATTERY] = new BatterySensor();
+  sensors[SENSOR_BATTERY] = new BatterySensor();
 
-    sens[SENSOR_RC] = new RC();
-    #ifdef SERVO_SHIELD
+  sens[SENSOR_RC] = new RC();
+#ifdef SERVO_SHIELD
 	#pragma message("Servo Shield from Adafruit is used")
 	Adafruit_PWMServoDriver* servo_motors_pwm = new Adafruit_PWMServoDriver(&Wire, SERVO_ADDRESS);
 	servo_motors_pwm->reset();
@@ -108,14 +109,14 @@ void Sailboat::init(ros::NodeHandle* n){
     actuators[ACTUATOR_RUDDER2] = new Servo_Motor(RUDDER2_SERVO, RUDDER2_POS_NEUTRAL, RUDDER2_POS_MAX, RUDDER2_POS_MIN, RUDDER2_MIN,RUDDER2_MAX,"rudder2");
 	((Servo_Motor*)actuators[ACTUATOR_RUDDER2])->setMotor(servo_motors_pwm);
 #endif
-	#else
+#else
 	#pragma message("Custom interface board is used")
     actuators[ACTUATOR_RUDDER] = new Servo_Motor(RUDDER_PIN,RUDDER_POS_NEUTRAL,RUDDER_POS_MAX,RUDDER_POS_MIN,RUDDER_MIN,RUDDER_MAX,"rudder");
     actuators[ACTUATOR_SAIL] = new Servo_Motor(WINCH_PIN,WINCH_ANGLE_NEUTRAL,WINCH_ANGLE_MAX, WINCH_ANGLE_MIN,SAIL_MIN,SAIL_MAX,"sail");
 #ifdef ACTUATOR_RUDDER2
     actuators[ACTUATOR_RUDDER2] = new Servo_Motor(RUDDER2_PIN, RUDDER2_POS_NEUTRAL, RUDDER2_POS_MAX, RUDDER2_POS_MIN, RUDDER2_MIN,RUDDER2_MAX,"rudder2");
 #endif
-	#endif
+#endif
 
     for(int i = 0; i < NB_SENSORS; ++i)
         sensors[i]->init(n);

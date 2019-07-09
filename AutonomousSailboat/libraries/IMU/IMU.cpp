@@ -1,4 +1,5 @@
 #include <IMU.h>
+#include <Sailboat.h>
 
 void IMU::mulquatvect(float vec[3], float quat[4], float res[3]){
 	float dotuv = quat[1]*vec[0]+quat[2]*vec[1]+quat[3]*vec[2];
@@ -18,18 +19,28 @@ void IMU::measureGravity(){
 		 wokeUp = true;
 	}
 	double dt = (millis()-timerDv)*0.001;
-	float g[4] = {0.0,0.0,0.0,9.81};
 
 	float qgq1[3];
-	mulquatvect(accel,quat,qgq1);
+	memcpy(accelRaw,accel,3*sizeof(float));
+	mulquatvect(accelRaw,quat,qgq1);
 
 	accel[0] = qgq1[0];
-	accel[1] = qgq1[1];
+	accel[1] =qgq1[1];
 	accel[2] = qgq1[2]-9.81f;
 
-	dv[0] = accel[0]*dt+dv[0];
-	dv[1] = accel[1]*dt+dv[1];
-	dv[2] = accel[2]*dt+dv[2];
+	dv[0] = kf.updateEstimate(accel[0]*dt+dv[0]);
+	dv[1] = kf1.updateEstimate(accel[1]*dt+dv[1]);
+	dv[2] = kf2.updateEstimate(accel[2]*dt+dv[2]);
 
 	timerDv = millis();
+}
+
+void IMU::fuseGPS_IMU(){
+	double speed = Sailboat::Instance()->getGPS()->getSpeed();
+	double track = Sailboat::Instance()->getGPS()->getTrack();
+	if(Sailboat::Instance()->getGPS()->getStatus()+1){
+		dv[0] = kf.updateEstimate(cos(track)*speed);
+		dv[1] = kf1.updateEstimate(sin(track)*speed);
+		dv[2] = kf2.updateEstimate(0);
+	}
 }

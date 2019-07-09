@@ -57,15 +57,15 @@ void CMPS12::updateMeasure(){
 	rotz += Wire.read();
 
 	angles[0] = yaw*0.001745329;
-	angles[1] = roll*0.01745329;
-	angles[2] = pitch*0.01745329;
+	angles[1] = pitch*0.01745329;
+	angles[2] = roll*0.01745329;
 
 	double cy = cos(-angles[0]*0.5);
 	double sy = sin(-angles[0]*0.5);
-	double cp = cos(angles[1]*0.5);
-	double sp = sin(angles[1]*0.5);
-	double cr = cos(-angles[2]*0.5);
-	double sr = sin(-angles[2]*0.5);
+	double cp = cos(-angles[2]*0.5);
+	double sp = sin(-angles[2]*0.5);
+	double cr = cos(-angles[1]*0.5);
+	double sr = sin(-angles[1]*0.5);
 
 	quat[0] = cy*cp*cr+sy*sp*sr;
 	quat[1] = cy*cp*sr-sy*sp*cr;
@@ -76,8 +76,8 @@ void CMPS12::updateMeasure(){
 	mag[1]= magy;
 	mag[2]= magz;
 
-	accel[0]= accx*0.01;
-	accel[1]= accy*0.01;
+	accel[0]= -accx*0.01;
+	accel[1]= -accy*0.01;
 	accel[2]= accz*0.01;
 
 	rot[0]= rotx;

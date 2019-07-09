@@ -36,8 +36,10 @@
 /*******COMMON CONFIG********/
 
 #define EARTH_RADIUS	6371000  // Earth radius in metres
-#define CMPS12_IMU
-//#define USE_ARDUINO_GPS
+//#define CMPS12_IMU
+#define XSENS_IMU
+#define USE_ARDUINO_GPS
+#define FUSE_GPS_IMU
 
 /**PIN**/
 /********/
