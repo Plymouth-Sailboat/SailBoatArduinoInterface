@@ -37,7 +37,7 @@ void IMU::measureGravity(){
 
 void IMU::fuseGPS_IMU(){
 	double speed = Sailboat::Instance()->getGPS()->getSpeed();
-	double track = Sailboat::Instance()->getGPS()->getTrack();
+	double track = -Sailboat::Instance()->getGPS()->getTrack()*M_PI/180.0;
 	if(Sailboat::Instance()->getGPS()->getStatus()+1){
 		dv[0] = kf.updateEstimate(cos(track)*speed);
 		dv[1] = kf1.updateEstimate(sin(track)*speed);

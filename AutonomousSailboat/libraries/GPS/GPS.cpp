@@ -8,28 +8,28 @@ void GPS::init(ros::NodeHandle* n){
 	gps.sendCommand(PMTK_SET_NMEA_UPDATE_1HZ);
 	gps.sendCommand(PMTK_API_SET_FIX_CTL_1HZ);
 	gps.sendCommand(PGCMD_ANTENNA);
-	
+
 	SensorROS::init(n);
 	n->advertise(pubNMEA);
 	n->advertise(pubTime);
-	
+
 	nmeaD = "";
 }
 
 void GPS::updateMeasures(){
 	while(serial.available() > 0)
 		char r = gps.read();
-	
+
 	if (gps.newNMEAreceived()) {
     // a tricky thing here is if we print the NMEA sentence, or data
-    // we end up not listening and catching other sentences! 
+    // we end up not listening and catching other sentences!
     // so be very wary if using OUTPUT_ALLDATA and trytng to print out data
     //Serial.println(gps.lastNMEA());   // this also sets the newNMEAreceived() flag to false
 	nmeaD += "\n"+String(gps.lastNMEA());
     if (!gps.parse(gps.lastNMEA()))   // this also sets the newNMEAreceived() flag to false
 		return;  // we can fail to parse a sentence in which case we should just wait for another
 	}
-	
+
 	if (timerGPS > millis())  timerGPS = millis();
 
 	// approximately every 2 seconds or so, print out the current stats
@@ -37,15 +37,15 @@ void GPS::updateMeasures(){
 		timerGPS = millis();
 		time = now();
 		//Serial.print("Fix: "); Serial.print((int)GPS.fix);
-		//Serial.print(" quality: "); Serial.println((int)GPS.fixquality); 
+		//Serial.print(" quality: "); Serial.println((int)GPS.fixquality);
 		status = (int)gps.fix-1;
 		timeU.data = time;
 		time_utc = ((uint32_t)gps.hour*10000)+(uint32_t)gps.minute*100+(uint32_t)gps.seconds;
 		if (gps.fix) {
 			setTime((int)gps.hour, (int)gps.minute, (int)gps.seconds, (int)gps.day, (int)gps.month, (int)gps.year);
-		
+
 			hdop = gps.HDOP;
-			
+
 			GPS_lat = gps.latitudeDegrees;
 			GPS_long = gps.longitudeDegrees;
 			if(GPS_altInit == 0.0f)
@@ -68,7 +68,7 @@ void GPS::updateMeasures(){
 			nbSatellites = (int)gps.satellites;
 		}
 	}
-	
+
 	//}
 	//else {
 	//  Logger::Message(F("\t"), F("GPS:"), F("Lost!"), 1);
@@ -85,12 +85,12 @@ void GPS::communicateData(){
 	msg.latitude = GPS_lat;
 	msg.longitude = GPS_long;
 	msg.altitude = GPS_alt;
-	
+
 	msg.track = GPS_track;
 	msg.speed = GPS_speed;
 	msg.time = time_utc;
 	msg.hdop = hdop;
-	
+
 	msg.status.satellites_used = nbSatellites;
 	msg.status.satellites_visible = nbSatellites;
 	/////********COULD BUILD SATELLITES INFO******////
@@ -98,16 +98,16 @@ void GPS::communicateData(){
 	msg.status.motion_source = 1;
 	msg.status.orientation_source = 1;
 	msg.status.position_source = 1;
-	
+
 	msg.position_covariance_type = 0;
-	
+
 	msg.header.stamp = nh->now();
-	
+
 	lastNMEA.data = nmeaD.c_str();
-	
+
 	pub.publish(&msg);
 	pubNMEA.publish(&lastNMEA);
 	pubTime.publish(&timeU);
-	
+
 	nmeaD = "";
 }
