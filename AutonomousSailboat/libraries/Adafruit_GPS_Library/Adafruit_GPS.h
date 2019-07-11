@@ -151,6 +151,9 @@ class Adafruit_GPS {
   float angle;              ///< Course in degrees from true north
   float magvariation;       ///< Magnetic variation in degrees (vs. true north)
   float HDOP;               ///< Horizontal Dilution of Precision - relative accuracy of horizontal position
+  float lon_std_dev;
+  float lat_std_dev;
+  float alt_std_dev;
   char lat;                 ///< N/S
   char lon;                 ///< E/W
   char mag;                 ///< Magnetic variation direction
@@ -181,8 +184,11 @@ class Adafruit_GPS {
   void parseLon(char *);
   boolean parseLonDir(char *);
   boolean parseFix(char *);
-  // Make all of these times far in the past by setting them near the middle of the 
-  // millis() range. Timing assumes that sentences are parsed promptly. 
+  boolean parseLonDev(char *);
+  boolean parseLatDev(char *);
+  boolean parseAltDev(char *);
+  // Make all of these times far in the past by setting them near the middle of the
+  // millis() range. Timing assumes that sentences are parsed promptly.
   uint32_t lastFix = 2000000000L;		// millis() when last fix received
   uint32_t lastTime = 2000000000L;    // millis() when last time received
   uint32_t lastDate = 2000000000L;    // millis() when last date received

@@ -41,6 +41,7 @@ private:
 	double GPS_lat, GPS_long, GPS_alt;
 	double GPS_PosX, GPS_PosY;  // Cartesian location of the boat
 	double GPS_track, GPS_speed, hdop;
+	float lat_std_dev, lon_std_dev, alt_std_dev;
 	time_t time;
 	uint32_t time_utc;
 	int nbSatellites;

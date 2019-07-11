@@ -208,6 +208,28 @@ boolean Adafruit_GPS::parse(char *nmea) {
     return true;
   }
 
+  if (strStartsWith(nmea, "$GPGST") || strStartsWith(nmea, "$GNGST")) {
+    // found GLL
+    p = strchr(p, ',')+1;
+    p = strchr(p, ',')+1;
+    p = strchr(p, ',')+1;
+    p = strchr(p, ',')+1;
+    p = strchr(p, ',')+1;
+    // parse out latitude
+    p = strchr(p, ',')+1;
+    if(!parseLatDev(p)) return false;
+
+    // parse out longitude
+    p = strchr(p, ',')+1;
+    if(!parseLonDev(p)) return false;
+
+    // get time
+    p = strchr(p, ',')+1;
+    if(!parseAltDev(p)) return false;
+
+    return true;
+  }
+
   // we dont parse the remaining, yet!
   return false;
 }
@@ -320,6 +342,30 @@ boolean Adafruit_GPS::parseLonDir(char *p) {
       else if (p[0] == 'E') lon = 'E';
       else if (p[0] == ',') lon = 0;
       else return false;
+    }
+    return true;
+}
+
+boolean Adafruit_GPS::parseLatDev(char *p) {
+    if (',' != *p)
+    {
+      lat_std_dev = atof(p);
+    }
+    return true;
+}
+
+boolean Adafruit_GPS::parseLonDev(char *p) {
+    if (',' != *p)
+    {
+      lon_std_dev = atof(p);
+    }
+    return true;
+}
+
+boolean Adafruit_GPS::parseAltDev(char *p) {
+    if (',' != *p)
+    {
+      alt_std_dev = atof(p);
     }
     return true;
 }

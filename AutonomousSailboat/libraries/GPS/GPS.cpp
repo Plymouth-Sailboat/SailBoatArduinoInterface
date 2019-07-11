@@ -65,6 +65,9 @@ void GPS::updateMeasures(){
 			GPS_speed = gps.speed*1.852*0.27777777778;
 			GPS_track = gps.angle;
 			GPS_alt = gps.altitude;
+			lat_std_dev = gps.lat_std_dev;
+			lon_std_dev = gps.lon_std_dev;
+			alt_std_dev = gps.alt_std_dev;
 			nbSatellites = (int)gps.satellites;
 		}
 	}
@@ -99,7 +102,10 @@ void GPS::communicateData(){
 	msg.status.orientation_source = 1;
 	msg.status.position_source = 1;
 
-	msg.position_covariance_type = 0;
+	msg.position_covariance_type = 1;
+	msg.position_covariance[0] = (hdop*lon_std_dev)*(hdop*lon_std_dev);
+	msg.position_covariance[4] = (hdop*lat_std_dev)*(hdop*lat_std_dev);
+	msg.position_covariance[8] = (hdop*alt_std_dev)*(hdop*alt_std_dev);
 
 	msg.header.stamp = nh->now();
 
