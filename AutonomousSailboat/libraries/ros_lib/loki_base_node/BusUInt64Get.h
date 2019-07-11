@@ -126,14 +126,15 @@ static const char BUSUINT64GET[] = "loki_base_node/BusUInt64Get";
     virtual int serialize(unsigned char *outbuffer) const
     {
       int offset = 0;
-      *(outbuffer + offset + 0) = (this->value >> (8 * 0)) & 0xFF;
-      *(outbuffer + offset + 1) = (this->value >> (8 * 1)) & 0xFF;
-      *(outbuffer + offset + 2) = (this->value >> (8 * 2)) & 0xFF;
-      *(outbuffer + offset + 3) = (this->value >> (8 * 3)) & 0xFF;
-      *(outbuffer + offset + 4) = (this->value >> (8 * 4)) & 0xFF;
-      *(outbuffer + offset + 5) = (this->value >> (8 * 5)) & 0xFF;
-      *(outbuffer + offset + 6) = (this->value >> (8 * 6)) & 0xFF;
-      *(outbuffer + offset + 7) = (this->value >> (8 * 7)) & 0xFF;
+      union {
+        uint64_t real;
+        uint32_t base;
+      } u_value;
+      u_value.real = this->value;
+      *(outbuffer + offset + 0) = (u_value.base >> (8 * 0)) & 0xFF;
+      *(outbuffer + offset + 1) = (u_value.base >> (8 * 1)) & 0xFF;
+      *(outbuffer + offset + 2) = (u_value.base >> (8 * 2)) & 0xFF;
+      *(outbuffer + offset + 3) = (u_value.base >> (8 * 3)) & 0xFF;
       offset += sizeof(this->value);
       union {
         int8_t real;
@@ -148,14 +149,16 @@ static const char BUSUINT64GET[] = "loki_base_node/BusUInt64Get";
     virtual int deserialize(unsigned char *inbuffer)
     {
       int offset = 0;
-      this->value =  ((uint64_t) (*(inbuffer + offset)));
-      this->value |= ((uint64_t) (*(inbuffer + offset + 1))) << (8 * 1);
-      this->value |= ((uint64_t) (*(inbuffer + offset + 2))) << (8 * 2);
-      this->value |= ((uint64_t) (*(inbuffer + offset + 3))) << (8 * 3);
-      this->value |= ((uint64_t) (*(inbuffer + offset + 4))) << (8 * 4);
-      this->value |= ((uint64_t) (*(inbuffer + offset + 5))) << (8 * 5);
-      this->value |= ((uint64_t) (*(inbuffer + offset + 6))) << (8 * 6);
-      this->value |= ((uint64_t) (*(inbuffer + offset + 7))) << (8 * 7);
+      union {
+        uint64_t real;
+        uint32_t base;
+      } u_value;
+      u_value.base = 0;
+      u_value.base |= ((uint32_t) (*(inbuffer + offset + 0))) << (8 * 0);
+      u_value.base |= ((uint32_t) (*(inbuffer + offset + 1))) << (8 * 1);
+      u_value.base |= ((uint32_t) (*(inbuffer + offset + 2))) << (8 * 2);
+      u_value.base |= ((uint32_t) (*(inbuffer + offset + 3))) << (8 * 3);
+      this->value = u_value.real;
       offset += sizeof(this->value);
       union {
         int8_t real;

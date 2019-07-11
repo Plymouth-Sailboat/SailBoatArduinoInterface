@@ -22,7 +22,7 @@ void Servo_Motor::applyCommand(double command){
 
 	// Set the servo at the wanted position:
 	motorWrite(commandExact);
-	lastPwm = command;
+	lastPwm = command*DEG_TO_RAD;
 }
 
 void Servo_Motor::communicateData(){
