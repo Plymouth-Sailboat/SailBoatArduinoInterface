@@ -44,3 +44,27 @@ void IMU::fuseGPS_IMU(){
 		dv[2] = kf2.updateEstimate(0);
 	}
 }
+
+
+void IMU::communicateData(){
+	msg.orientation.w = quat[0];
+	msg.orientation.x = quat[1];
+	msg.orientation.y = quat[2];
+	msg.orientation.z = quat[3];
+
+	msg.angular_velocity.x = rot[0];
+	msg.angular_velocity.y = rot[1];
+	msg.angular_velocity.z = rot[3];
+
+	msg.linear_acceleration.x = accel[0];
+	msg.linear_acceleration.y = accel[1];
+	msg.linear_acceleration.z = accel[2];
+
+	velMsg.linear.x = dv[0];
+	velMsg.linear.y = dv[1];
+	velMsg.linear.z = dv[2];
+
+	msg.header.stamp = nh->now();
+	pub.publish(&msg);
+	pubV.publish(&velMsg);
+}

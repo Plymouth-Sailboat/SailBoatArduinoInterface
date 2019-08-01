@@ -8,10 +8,11 @@
 #include <EEPROM.h>
 #include <TimeLib.h>
 #include <std_msgs/UInt32.h>
+#include <std_msgs/String.h>
 
 class GPS : public SensorROS{
 public:
-	GPS() : SensorROS("GPS/fix", &msg, 50, 500), subGPS("GPS/fix", &GPS::gps_callback, this), GPS_latInit(0), GPS_longInit(0), GPS_altInit(0), status(-1), coldStart(false), GPS_track(0), GPS_speed(0), time(0), hdop(0), nbSatellites(0){}
+	GPS() : SensorROS("GPS/fix", &msg, 50, 500)/*, pub("test", &test)*/, subGPS("GPS/fix", &GPS::gps_callback, this), GPS_latInit(0), GPS_longInit(0), GPS_altInit(0), status(-1), coldStart(false), GPS_track(0), GPS_speed(0), time(0), hdop(0), nbSatellites(0){}
 
 	void init(ros::NodeHandle* n);
 	void updateMeasures();
@@ -26,6 +27,8 @@ public:
 	double getLongInit(){float longinit = 0.0f; EEPROM.get(10,longinit); return longinit;}
 	double getX(){return GPS_PosX;}
 	double getY(){return GPS_PosY;}
+	double getSpeed(){return GPS_speed;}
+	double getTrack(){return GPS_track;}
 	time_t getTime(){return time;}
 	int getStatus(){return status;}
 	int getSatellites(){return nbSatellites;}
@@ -46,6 +49,8 @@ private:
 	uint32_t timerGPS;
 
 	gps_common::GPSFix msg;
+	//std_msgs::String test;
+	//ros::Publisher pub;
 
 	std_msgs::UInt32 timeU;
 };

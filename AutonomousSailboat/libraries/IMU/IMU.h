@@ -3,16 +3,17 @@
 
 #include <SensorsInterface.h>
 #include <sensor_msgs/Imu.h>
+#include <geometry_msgs/Twist.h>
 
 #include <SimpleKalmanFilter.h>
 
 
 class IMU : public SensorROS{
 	public:
-		IMU() : SensorROS("IMU", &msg, 10, 10), wokeUp(false), kf(0.005,0.005,0.001), kf1(0.005,0.005,0.001), kf2(0.005,0.005,0.001){for(int i = 0; i < 3; ++i)dv[i] = 0;}
-		IMU(const char* name, unsigned long period = 10, unsigned long comperiod = 10) : SensorROS(name, &msg, period, comperiod), wokeUp(false),  kf(0.05,0.05,0.1), kf1(0.05,0.05,0.1), kf2(0.5,0.5,0.1){for(int i = 0; i < 3; ++i)dv[i] = 0;}
+		IMU() : SensorROS("IMU", &msg, 10, 10), pubV("IMU_Dv", &velMsg), wokeUp(false), kf(0.005,0.005,0.001), kf1(0.005,0.005,0.001), kf2(0.005,0.005,0.001){for(int i = 0; i < 3; ++i)dv[i] = 0;}
+		IMU(const char* name, unsigned long period = 10, unsigned long comperiod = 10) : SensorROS(name, &msg, period, comperiod), pubV("IMU_Dv", &velMsg), wokeUp(false),  kf(0.05,0.05,0.1), kf1(0.05,0.05,0.1), kf2(0.5,0.5,0.1){for(int i = 0; i < 3; ++i)dv[i] = 0;}
 
-		virtual void init(ros::NodeHandle* n){}
+		virtual void init(ros::NodeHandle* n){SensorROS::init(n);n->advertise(pubV);}
 		virtual void updateMeasures(){
 			updateMeasure();
 			measureGravity();
@@ -25,7 +26,7 @@ class IMU : public SensorROS{
 		}
 		virtual void updateMeasure() = 0;
 		virtual void updateTest() = 0;
-		virtual void communicateData() = 0;
+		virtual void communicateData();
 
 		float* getQuat(){return quat;}
 		float* getAccel(){return accel;}
@@ -57,6 +58,8 @@ class IMU : public SensorROS{
 		bool wokeUp;
 
 		sensor_msgs::Imu msg;
+		ros::Publisher pubV;
+		geometry_msgs::Twist velMsg;
 	private:
 		void measureGravity();
 		void fuseGPS_IMU();

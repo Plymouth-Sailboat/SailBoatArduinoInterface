@@ -24,7 +24,7 @@
 #define ACTUATOR_SAIL		1
 
 /**********************************************PINS********************************************/
-//#define SERVO_SHIELD
+#define SERVO_SHIELD
 
 
 
@@ -36,11 +36,11 @@
 #define WIND_SENSOR_MAX 990
 
 //RUDDER
-#define RUDDER_POS_MIN  1200
-#define RUDDER_POS_NEUTRAL  103
-#define RUDDER_POS_MAX  2000
+#define RUDDER_POS_MIN  300 //60Hz
+#define RUDDER_POS_NEUTRAL  375
+#define RUDDER_POS_MAX  450 //60Hz
 
-#define RUDDER_MIN  -38
+#define RUDDER_MIN  -45
 #define RUDDER_NEUTRAL  0
 #define RUDDER_MAX  45
 
@@ -49,9 +49,9 @@
 #define SAIL_NEUTRAL SAIL_MIN
 #define SAIL_MAX 90
 
-#define WINCH_ANGLE_MIN 1430
+#define WINCH_ANGLE_MIN  150//60Hz
 #define WINCH_ANGLE_NEUTRAL WINCH_ANGLE_MIN
-#define WINCH_ANGLE_MAX 950
+#define WINCH_ANGLE_MAX 300 //60Hz
 #define WINCH_DIAMETER 23 // in mm
 
 #endif

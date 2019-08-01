@@ -1,7 +1,9 @@
 #include <GPSSubscriber.h>
+#include    <stdlib.h>
 
 void GPS::init(ros::NodeHandle* n){
 	n->subscribe(subGPS);
+	//n->advertise(pub);
 }
 
 void GPS::updateMeasures(){
@@ -14,6 +16,12 @@ void GPS::updateTest(){
 }
 
 void GPS::communicateData(){
+	//String ms = "working";
+	//char buf[100];
+	//ms+=String(GPS_lat);
+	//String(ms).toCharArray(buf,100);
+	//test.data = buf;
+	//pub.publish(&test);
 }
 
 void GPS::gps_callback(const gps_common::GPSFix& msg){
@@ -35,4 +43,20 @@ void GPS::gps_callback(const gps_common::GPSFix& msg){
 		//msg.status.position_source;
 
 		//msg.position_covariance_type;
+		if(status == 1){
+			if(GPS_altInit == 0.0f)
+				GPS_altInit = GPS_alt;
+			if(GPS_latInit == 0.0f){
+				GPS_latInit = GPS_lat;
+				if(coldStart)
+					EEPROM.put(0,GPS_lat);
+			}
+			if(GPS_longInit == 0.0f){
+				GPS_longInit = GPS_long;
+				if(coldStart){
+					EEPROM.put(10,GPS_long);
+					coldStart = false;
+				}
+			}
+		}
 }

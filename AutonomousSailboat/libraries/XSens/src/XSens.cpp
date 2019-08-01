@@ -2,9 +2,7 @@
 #include <Wire.h>
 
 void XSens::init(ros::NodeHandle* n){
-
-	SensorROS::init(n);
-	n->advertise(pubV);
+	IMU::init(n);
 }
 
 void XSens::updateMeasure(){
@@ -30,29 +28,6 @@ void XSens::updateTest(){
 	xbus.accel[0] = 0.0;
 	xbus.accel[1] = 0.0;
 	xbus.accel[2] = 0.0;
-}
-
-void XSens::communicateData(){
-	msg.orientation.w = xbus.quat[0];
-	msg.orientation.x = xbus.quat[1];
-	msg.orientation.y = xbus.quat[2];
-	msg.orientation.z = xbus.quat[3];
-
-	msg.angular_velocity.x = xbus.rot[0];
-	msg.angular_velocity.y = xbus.rot[1];
-	msg.angular_velocity.z = xbus.rot[3];
-
-	msg.linear_acceleration.x = xbus.accel[0];
-	msg.linear_acceleration.y = xbus.accel[1];
-	msg.linear_acceleration.z = xbus.accel[2];
-
-	velMsg.linear.x = xbus.dv[0];
-	velMsg.linear.y = xbus.dv[1];
-	velMsg.linear.z = xbus.dv[2];
-
-	msg.header.stamp = nh->now();
-	pub.publish(&msg);
-	pubV.publish(&velMsg);
 }
 
 void XSens::setGPSPosition(float lat, float longitude, float alt){

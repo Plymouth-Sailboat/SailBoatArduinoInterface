@@ -83,6 +83,7 @@ void Sailboat::init(ros::NodeHandle* n){
   if(GPS_SERIAL == 3)
     sensors[SENSOR_GPS] = new GPS(Serial3);
 #else
+#pragma message("Attach GPS on RPI")
   sensors[SENSOR_GPS] = new GPS();
 #endif
 

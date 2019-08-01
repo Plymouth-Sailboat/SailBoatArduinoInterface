@@ -15,38 +15,39 @@ class Servo_Motor : public ActuatorROS{
 	public:
 		Servo_Motor(unsigned int pin, unsigned int pwmNeutral, unsigned int pwmMin, unsigned int pwmMax, float anglemin, float anglemax,const char* name = "motor")
 		: ActuatorROS(name, &msg), pin(pin), pwmNeutral(pwmNeutral), pwmMin(pwmMin), pwmMax(pwmMax), anglemin(anglemin), anglemax(anglemax), lastPwm(0){}
-		
+
 		#ifdef SERVO_SHIELD
 		void setMotor(Adafruit_PWMServoDriver* motor_ptr){motor = motor_ptr;}
 		#endif
-		
+
 		void init(ros::NodeHandle* n);
 		void applyCommand(double command);
 		void communicateData();
 	private:
-	
+
 		void motorSetup(){
 			#ifndef SERVO_SHIELD
 			motor.attach(pin);
+			motor.setPWMFreq(60);
 			#endif
 		}
-		
+
 		void motorWrite(unsigned int us){
 			#ifdef SERVO_SHIELD
-			motor->setPWM(pin,0,us*400*4096); // Equation to match arduino servo
+			motor->setPWM(pin,0,us); // Equation to match arduino servo
 			#else
 			motor.writeMicroseconds(1.125*us-50); // Equation to match servo shield
-			#endif		
+			#endif
 		}
-	
+
 		std_msgs::Float32 msg;
-		
+
 		#ifdef SERVO_SHIELD
 		Adafruit_PWMServoDriver* motor;
 		#else
 		Servo motor;
 		#endif
-		
+
 		unsigned int pin;
 		unsigned int pwmNeutral;
 		unsigned int pwmMin;
