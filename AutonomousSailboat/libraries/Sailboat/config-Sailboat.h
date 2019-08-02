@@ -1,3 +1,6 @@
+#ifndef SAILBOAT_ALL_CONFIG_H
+#define SAILBOAT_ALL_CONFIG_H
+
 #define SAILBOAT_PRO
 #define VERSION_ARDUINO "2.0"
 
@@ -91,4 +94,6 @@
   //    MOSI    =====    PIN 51 / ICSP 4
   //    CLK     =====    PIN 52 / ICSP 3
 #define SD_PIN_CHIP_SELECT 53  // CS
+#endif
+
 #endif

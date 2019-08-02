@@ -159,7 +159,7 @@ void loop() {
   Sailboat::Instance()->communicateData();
   Sailboat::Instance()->Control();
   
-
+    
   nh.spinOnce();
   delay(4);
 }

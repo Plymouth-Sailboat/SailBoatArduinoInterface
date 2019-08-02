@@ -28,8 +28,11 @@ class Servo_Motor : public ActuatorROS{
 		void motorSetup(){
 			#ifndef SERVO_SHIELD
 			motor.attach(pin);
-			motor.setPWMFreq(60);
+			#else
+			motor->begin();
+			motor->setPWMFreq(60);
 			#endif
+			delay(10);
 		}
 
 		void motorWrite(unsigned int us){

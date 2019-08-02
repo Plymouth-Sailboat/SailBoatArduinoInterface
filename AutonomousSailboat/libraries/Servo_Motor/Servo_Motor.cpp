@@ -2,10 +2,10 @@
 
 void Servo_Motor::init(ros::NodeHandle* n){
 	motorSetup();
-	
+
 	// Set the rudder at the Neutral position
 	motorWrite(pwmNeutral);
-	
+
 	ActuatorROS::init(n);
 }
 
