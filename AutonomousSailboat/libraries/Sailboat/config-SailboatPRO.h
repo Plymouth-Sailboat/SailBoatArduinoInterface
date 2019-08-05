@@ -36,9 +36,9 @@
 #define WIND_SENSOR_MAX 990
 
 //RUDDER
-#define RUDDER_POS_MIN  300 //60Hz
+#define RUDDER_POS_MIN  450 //60Hz
 #define RUDDER_POS_NEUTRAL  375
-#define RUDDER_POS_MAX  450 //60Hz
+#define RUDDER_POS_MAX  300 //60Hz
 
 #define RUDDER_MIN  -45
 #define RUDDER_NEUTRAL  0
@@ -49,9 +49,9 @@
 #define SAIL_NEUTRAL SAIL_MIN
 #define SAIL_MAX 90
 
-#define WINCH_ANGLE_MIN  200//60Hz
+#define WINCH_ANGLE_MIN 300 //60Hz
 #define WINCH_ANGLE_NEUTRAL WINCH_ANGLE_MIN
-#define WINCH_ANGLE_MAX 300 //60Hz
+#define WINCH_ANGLE_MAX 200 //60Hz
 #define WINCH_DIAMETER 23 // in mm
 
 #endif
