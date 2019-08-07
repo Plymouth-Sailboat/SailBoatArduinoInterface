@@ -13,7 +13,7 @@ class IMU : public SensorROS{
 		IMU() : SensorROS("IMU", &msg, 10, 10), pubV("IMU_Dv", &velMsg), wokeUp(false), kf(0.005,0.005,0.001), kf1(0.005,0.005,0.001), kf2(0.005,0.005,0.001){for(int i = 0; i < 3; ++i)dv[i] = 0;}
 		IMU(const char* name, unsigned long period = 10, unsigned long comperiod = 10) : SensorROS(name, &msg, period, comperiod), pubV("IMU_Dv", &velMsg), wokeUp(false),  kf(0.05,0.05,0.1), kf1(0.05,0.05,0.1), kf2(0.5,0.5,0.1){for(int i = 0; i < 3; ++i)dv[i] = 0;}
 
-		virtual void init(ros::NodeHandle* n){SensorROS::init(n);n->advertise(pubV);}
+		virtual void init(ros::NodeHandle* n){SensorROS::init(n);n->advertise(pubV); timerFuse = millis();}
 		virtual void updateMeasures(){
 			updateMeasure();
 			measureGravity();
