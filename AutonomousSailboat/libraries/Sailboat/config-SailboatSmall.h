@@ -32,6 +32,9 @@
 /**CONFIG**/
 /**********/
 //WIND
+#define WIND_ANGLE_MIN -180
+#define WIND_ANGLE_MAX 180
+
 #define WIND_SENSOR_MIN 48
 #define WIND_SENSOR_MAX 990
 

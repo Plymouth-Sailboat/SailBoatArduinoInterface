@@ -24,6 +24,10 @@
 #define ACTUATOR_SAIL		1
 
 /**********************************************PINS********************************************/
+
+//WIND
+#define WIND_ANEMOMETER_PIN 3
+
 #define SERVO_SHIELD
 
 
@@ -32,8 +36,11 @@
 /**CONFIG**/
 /**********/
 //WIND
-#define WIND_SENSOR_MIN 48
-#define WIND_SENSOR_MAX 990
+#define WIND_ANGLE_MIN 0
+#define WIND_ANGLE_MAX 360
+
+#define WIND_SENSOR_MIN 0
+#define WIND_SENSOR_MAX 1024
 
 //RUDDER
 #define RUDDER_POS_MIN  450 //60Hz
