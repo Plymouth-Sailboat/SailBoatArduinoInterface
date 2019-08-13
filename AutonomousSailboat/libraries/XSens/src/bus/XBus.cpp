@@ -191,7 +191,7 @@ void XBus::setLatLongAlt(float lat, float longitude, float alt){
 
 }
 
-void Xbus::startBiasEstimation(){
+void XBus::startBiasEstimation(){
 	uint8_t* dataMes = new uint8_t[2];
 	dataMes[1] = 6;
 	uint8_t* dataS = buildMessage(SETNOROTATION,dataMes,2);
