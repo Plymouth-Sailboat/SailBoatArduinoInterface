@@ -178,7 +178,6 @@ void XBus::setLatLongAlt(float lat, float longitude, float alt){
 
 	uint8_t* dataS = buildMessage(SETLATLONG,dataMes,24);
 
-	Serial.println("writing latlong");
 	Wire.beginTransmission(address);
 	Wire.write((char*)dataS,28);
 	Wire.endTransmission();
@@ -192,11 +191,23 @@ void XBus::setLatLongAlt(float lat, float longitude, float alt){
 
 }
 
+void Xbus::startBiasEstimation(){
+	uint8_t* dataMes = new uint8_t[2];
+	dataMes[1] = 6;
+	uint8_t* dataS = buildMessage(SETNOROTATION,dataMes,2);
+
+	Wire.beginTransmission(address);
+	Wire.write((char*)dataS,6);
+	Wire.endTransmission();
+
+	delete dataS;
+	delete dataMes;
+}
+
 void XBus::goToConfig(){
 
 	uint8_t* dataS = buildMessage(GOTOCONFIG,NULL,0);
 
-	Serial.println("sending config");
 	Wire.beginTransmission(address);
 	Wire.write((char*)dataS,4);
 	Wire.endTransmission();
@@ -209,7 +220,6 @@ void XBus::goToConfig(){
 void XBus::goToMeas(){
 	uint8_t* dataS = buildMessage(GOTOMEAS,NULL,0);
 
-	Serial.println("sending Meas");
 	Wire.beginTransmission(address);
 	Wire.write((char*)dataS,4);
 	Wire.endTransmission();

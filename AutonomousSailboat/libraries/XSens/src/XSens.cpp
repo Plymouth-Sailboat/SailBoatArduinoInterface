@@ -3,6 +3,7 @@
 
 void XSens::init(ros::NodeHandle* n){
 	IMU::init(n);
+	xbus.startBiasEstimation();
 }
 
 void XSens::updateMeasure(){
