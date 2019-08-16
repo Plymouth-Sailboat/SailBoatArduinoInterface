@@ -13,6 +13,10 @@ class XSens : public IMU{
 		void updateMeasure();
 		void updateTest();
 
+		void startCalibration();
+		void stopCalibration();
+		void storeCalibration();
+
 		void setGPSPosition(float lat, float longitude, float alt);
 	private:
 

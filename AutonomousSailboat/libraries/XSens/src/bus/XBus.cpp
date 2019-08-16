@@ -204,6 +204,80 @@ void XBus::startBiasEstimation(){
 	delete dataMes;
 }
 
+
+void XBus::startCalibration(){
+	uint8_t* dataMes = new uint8_t[1];
+	dataMes[0] = 0;
+	uint8_t* dataS = buildMessage(ICCCOMMAND,dataMes,1);
+
+	Wire.beginTransmission(address);
+	Wire.write((char*)dataS,5);
+	Wire.endTransmission();
+
+	readUntilAck(0x75);
+
+	delete dataS;
+
+	dataMes[0] = 3;
+	dataS = buildMessage(ICCCOMMAND,dataMes,1);
+
+	Wire.beginTransmission(address);
+	Wire.write((char*)dataS,5);
+	Wire.endTransmission();
+
+	delete dataS;
+	delete dataMes;
+
+	readUntilAck(0x75);
+}
+
+
+void XBus::stopCalibration(){
+	uint8_t* dataMes = new uint8_t[1];
+	dataMes[0] = 1;
+	uint8_t* dataS = buildMessage(ICCCOMMAND,dataMes,1);
+
+	Wire.beginTransmission(address);
+	Wire.write((char*)dataS,5);
+	Wire.endTransmission();
+
+	readUntilAck(0x75);
+
+	delete dataS;
+
+	dataMes[0] = 3;
+	dataS = buildMessage(ICCCOMMAND,dataMes,1);
+
+	Wire.beginTransmission(address);
+	Wire.write((char*)dataS,5);
+	Wire.endTransmission();
+
+	delete dataS;
+	delete dataMes;
+
+	readUntilAck(0x75);
+}
+
+
+void XBus::storeCalibration(){
+	goToConfig();
+
+	uint8_t* dataMes = new uint8_t[1];
+	dataMes[0] = 2;
+	uint8_t* dataS = buildMessage(ICCCOMMAND,dataMes,1);
+
+	Wire.beginTransmission(address);
+	Wire.write((char*)dataS,5);
+	Wire.endTransmission();
+
+	readUntilAck(0x75);
+
+	delete dataS;
+	delete dataMes;
+
+	goToMeas();
+}
+
 void XBus::goToConfig(){
 
 	uint8_t* dataS = buildMessage(GOTOCONFIG,NULL,0);

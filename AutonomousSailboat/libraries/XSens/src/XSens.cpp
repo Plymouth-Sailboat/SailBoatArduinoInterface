@@ -16,6 +16,18 @@ void XSens::updateMeasure(){
 	memcpy(mag,xbus.mag,3*sizeof(float));
 }
 
+void XSens::startCalibration(){
+	xbus.startCalibration();
+}
+
+void XSens::stopCalibration(){
+	xbus.stopCalibration();
+}
+
+void XSens::storeCalibration(){
+	xbus.storeCalibration();
+}
+
 void XSens::updateTest(){
 	xbus.quat[0] = 0.980;
 	xbus.quat[1] = 0.001;
