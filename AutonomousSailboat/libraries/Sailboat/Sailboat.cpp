@@ -62,12 +62,18 @@ void Sailboat::msgCallback(const std_msgs::String& msg){
             break;
         case 'B':
 #ifdef XSENS_IMU
-          if(msg.data[1] == '1')
+          if(msg.data[1] == '1'){
             ((XSens*)sensors[SENSOR_IMU])->startCalibration();
-          if(msg.data[1] == '0')
+            publishMsg(String("Calibration XSens"));
+          }
+          if(msg.data[1] == '0'){
             ((XSens*)sensors[SENSOR_IMU])->stopCalibration();
-          if(msg.data[1] == '2')
+            publishMsg(String("Stopped Calibration"));
+          }
+          if(msg.data[1] == '2'){
             ((XSens*)sensors[SENSOR_IMU])->storeCalibration();
+            publishMsg(String("Storing calibration data"));
+          }
 #endif
             break;
         case 'P':
