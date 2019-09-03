@@ -2,6 +2,8 @@
 #include    <stdlib.h>
 
 void GPS::init(ros::NodeHandle* n){
+	//SensorROS::init(n);
+	nh = n;
 	n->subscribe(subGPS);
 	//n->advertise(pub);
 }
@@ -16,47 +18,43 @@ void GPS::updateTest(){
 }
 
 void GPS::communicateData(){
-	//String ms = "working";
-	//char buf[100];
-	//ms+=String(GPS_lat);
-	//String(ms).toCharArray(buf,100);
-	//test.data = buf;
-	//pub.publish(&test);
 }
 
-void GPS::gps_callback(const gps_common::GPSFix& msg){
-		GPS_lat=msg.latitude;
-		GPS_long=msg.longitude;
-		GPS_alt=msg.altitude;
+void GPS::gps_callback(const std_msgs::String& msg){
+	char* buf =	strdup(msg.data);
+	gps.parse(buf);
 
-		GPS_track = msg.track;
-		GPS_speed = msg.speed;
-		time_utc = msg.time;
-		hdop = msg.hdop;
+	status = (int)gps.fix-1;
+	timeU.data = time;
+	time_utc = ((uint32_t)gps.hour*10000)+(uint32_t)gps.minute*100+(uint32_t)gps.seconds;
+	if (gps.fix) {
+		setTime((int)gps.hour, (int)gps.minute, (int)gps.seconds, (int)gps.day, (int)gps.month, (int)gps.year);
 
-		nbSatellites = msg.status.satellites_used;
-		nbSatellites = msg.status.satellites_visible;
-		/////********COULD BUILD SATELLITES INFO******////
-		status = msg.status.status;
-		//msg.status.motion_source;
-		//msg.status.orientation_source;
-		//msg.status.position_source;
+		hdop = gps.HDOP;
 
-		//msg.position_covariance_type;
-		if(status == 0){
-			if(GPS_altInit == 0.0f)
-				GPS_altInit = GPS_alt;
-			if(GPS_latInit == 0.0f){
-				GPS_latInit = GPS_lat;
-				if(coldStart)
-					EEPROM.put(0,GPS_lat);
-			}
-			if(GPS_longInit == 0.0f){
-				GPS_longInit = GPS_long;
-				if(coldStart){
-					EEPROM.put(10,GPS_long);
-					coldStart = false;
-				}
+		GPS_lat = gps.latitudeDegrees;
+		GPS_long = gps.longitudeDegrees;
+		if(GPS_altInit == 0.0f)
+			GPS_altInit = GPS_alt;
+		if(GPS_latInit == 0.0f){
+			GPS_latInit = GPS_lat;
+			if(coldStart)
+				EEPROM.put(0,GPS_lat);
+		}
+		if(GPS_longInit == 0.0f){
+			GPS_longInit = GPS_long;
+			if(coldStart){
+				EEPROM.put(10,GPS_long);
+				coldStart = false;
 			}
 		}
+		GPS_speed = gps.speed*0.5144445;
+		GPS_track = gps.angle*M_PI/180.0;
+		GPS_alt = gps.altitude;
+		lat_std_dev = gps.lat_std_dev;
+		lon_std_dev = gps.lon_std_dev;
+		alt_std_dev = gps.alt_std_dev;
+		nbSatellites = (int)gps.satellites;
+	}
+	free(buf);
 }

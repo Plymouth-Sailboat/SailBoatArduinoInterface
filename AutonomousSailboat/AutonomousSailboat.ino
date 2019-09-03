@@ -21,6 +21,12 @@ ros::NodeHandle nh;
 ros::Subscriber<geometry_msgs::Twist, Sailboat> sub("sailboat_cmd", &Sailboat::cmdCallback, Sailboat::Instance());
 ros::Subscriber<std_msgs::String, Sailboat> sub2("sailboat_msg", &Sailboat::msgCallback, Sailboat::Instance());
 
+#ifdef WIND_ANEMOMETER_PIN
+void AnemometerReading() {
+  Sailboat::Instance()->getWindSensor()->updateAnemometer();
+}
+#endif
+
 const char signature [] = "Sailboat";
 char * p = (char *) malloc (sizeof (signature));
 
@@ -61,12 +67,6 @@ void intCH5() {
 void intCH6() {
   Sailboat::Instance()->getRC()->interruptCH(RC_6, RC_PIN_6);
 }
-
-#ifdef WIND_ANEMOMETER_PIN
-void AnemometerReading() {
-  Sailboat::Instance()->getWindSensor()->updateAnemometer();
-}
-#endif
 
 void setRCInterrupts() {
   pinMode(RC_PIN_1, INPUT);
