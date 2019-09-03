@@ -23,10 +23,11 @@
 #include <ros.h>
 #include <geometry_msgs/Twist.h>
 #include <std_msgs/String.h>
+#include <std_msgs/UInt32.h>
 
 class Sailboat{
 public:
-	Sailboat() : controller(NULL), pubMsg("sailboat_log", &sailboatmsgs), watchdog(0), watchdogROS(0), timerMillis(0), timerMillisCOM(0), timerMillisCOMAct(0){
+	Sailboat() : controller(NULL), pubMsg("sailboat_log", &sailboatmsgs), pubMode("sailboat_mode", &sailboatmode), watchdog(0), watchdogROS(0), timerMillis(0), timerMillisCOM(0), timerMillisCOMAct(0){
 		controllerNames[STANDBY_CONTROLLER] = "Standby";
 		controllerNames[RUDDERSAIL_CONTROLLER] = "Rudder-Sail";
 		controllerNames[RETURNHOME_CONTROLLER] = "Return-Home";
@@ -85,7 +86,9 @@ private:
 	geometry_msgs::Twist cmd;
 
   ros::Publisher pubMsg;
+  ros::Publisher pubMode;
   std_msgs::String sailboatmsgs;
+  std_msgs::UInt32 sailboatmode;
 
 	unsigned long watchdog;
 	unsigned long watchdogROS;

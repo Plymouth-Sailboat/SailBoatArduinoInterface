@@ -44,7 +44,9 @@ void Sailboat::setController(int index){
 
 			if(LOGGER)
 				Logger::Instance()->Toast("Changed to :", String(controllerNames[index]), 5000);
-			publishMsg(String("Changed to :") + String(controllerNames[index]));
+			publishMsg(String("Changed to :[") + String(index) + "]" + String(controllerNames[index]));
+      sailboatmode.data = index;
+      pubMode.publish(&sailboatmode);
 		}
 	}
 }
@@ -61,20 +63,18 @@ void Sailboat::msgCallback(const std_msgs::String& msg){
         case 'M':
             break;
         case 'B':
-#ifdef XSENS_IMU
           if(msg.data[1] == '1'){
-            ((XSens*)sensors[SENSOR_IMU])->startCalibration();
+            ((IMU*)sensors[SENSOR_IMU])->startCalibration();
             publishMsg(String("Calibration XSens"));
           }
           if(msg.data[1] == '0'){
-            ((XSens*)sensors[SENSOR_IMU])->stopCalibration();
+            ((IMU*)sensors[SENSOR_IMU])->stopCalibration();
             publishMsg(String("Stopped Calibration"));
           }
           if(msg.data[1] == '2'){
-            ((XSens*)sensors[SENSOR_IMU])->storeCalibration();
+            ((IMU*)sensors[SENSOR_IMU])->storeCalibration();
             publishMsg(String("Storing calibration data"));
           }
-#endif
             break;
         case 'P':
             if(LOGGER)
@@ -143,6 +143,7 @@ void Sailboat::init(ros::NodeHandle* n){
     watchdogROS = millis();
 
     n->advertise(pubMsg);
+    n->advertise(pubMode);
 }
 
 void Sailboat::publishMsg(String msg){

@@ -43,7 +43,7 @@ void GPS::gps_callback(const gps_common::GPSFix& msg){
 		//msg.status.position_source;
 
 		//msg.position_covariance_type;
-		if(status == 1){
+		if(status == 0){
 			if(GPS_altInit == 0.0f)
 				GPS_altInit = GPS_alt;
 			if(GPS_latInit == 0.0f){

@@ -28,6 +28,10 @@ class IMU : public SensorROS{
 		virtual void updateTest() = 0;
 		virtual void communicateData();
 
+		virtual void startCalibration(){}
+		virtual void stopCalibration(){}
+		virtual void storeCalibration(){}
+
 		float* getQuat(){return quat;}
 		float* getAccel(){return accel;}
 		float* getAccelRaw(){return accelRaw;}

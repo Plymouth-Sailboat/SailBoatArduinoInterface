@@ -1,5 +1,6 @@
 #include <IMU.h>
 #include <Sailboat.h>
+#include <math.h>
 
 void IMU::mulquatvect(float vec[3], float quat[4], float res[3]){
 	float dotuv = quat[1]*vec[0]+quat[2]*vec[1]+quat[3]*vec[2];
@@ -27,10 +28,16 @@ void IMU::measureGravity(){
 	accel[0] = qgq1[0];
 	accel[1] =qgq1[1];
 	accel[2] = qgq1[2]-9.81f;
-
 	dv[0] = kf.updateEstimate(accel[0]*dt+dv[0]);
 	dv[1] = kf1.updateEstimate(accel[1]*dt+dv[1]);
 	dv[2] = kf2.updateEstimate(accel[2]*dt+dv[2]);
+
+	if(abs(dv[0]) > 1000.0 || isnan(dv[0]))
+		dv[0] = 0.0;
+	if(abs(dv[1]) > 1000.0 || isnan(dv[1]))
+		dv[1] = 0.0;
+	if(abs(dv[2]) > 1000.0 || isnan(dv[2]))
+		dv[2] = 0.0;
 
 	timerDv = millis();
 }
@@ -38,9 +45,13 @@ void IMU::measureGravity(){
 void IMU::fuseGPS_IMU(){
 	double speed = Sailboat::Instance()->getGPS()->getSpeed();
 	double track = -Sailboat::Instance()->getGPS()->getTrack()*M_PI/180.0;
-	if(Sailboat::Instance()->getGPS()->getStatus()+1){
+	if(Sailboat::Instance()->getGPS()->getStatus()+1 && !isnan(speed) && abs(speed) < 100.0){
 		dv[0] = kf.updateEstimate(-sin(track)*speed);
 		dv[1] = kf1.updateEstimate(cos(track)*speed);
+		dv[2] = kf2.updateEstimate(0);
+	}else{
+		dv[0] = kf.updateEstimate(0);
+		dv[1] = kf1.updateEstimate(0);
 		dv[2] = kf2.updateEstimate(0);
 	}
 }
@@ -63,6 +74,10 @@ void IMU::communicateData(){
 	velMsg.linear.x = dv[0];
 	velMsg.linear.y = dv[1];
 	velMsg.linear.z = dv[2];
+
+	velMsg.angular.x = rot[0];
+	velMsg.angular.y = rot[1];
+	velMsg.angular.z = rot[2];
 
 	msg.header.stamp = nh->now();
 	pub.publish(&msg);
