@@ -23,13 +23,22 @@
 #define ACTUATOR_RUDDER		0
 #define ACTUATOR_SAIL		1
 
-/**********************************************PINS********************************************/
+/**********************************************HARDWARE********************************************/
+//RC Transceiver
+#define HK_TR6
+
+//Using Grove Shield or not
+#define SERVO_SHIELD
+
+//IMU
+//#define CMPS12_IMU
+#define XSENS_IMU
+//#define USE_ARDUINO_GPS
+#define FUSE_GPS_IMU
+
 
 //WIND
 #define WIND_ANEMOMETER_PIN 3
-
-#define SERVO_SHIELD
-
 
 
 /*****************************************CONFIGURATION****************************************/

@@ -1,32 +1,27 @@
 #ifndef SAILBOAT_ALL_CONFIG_H
 #define SAILBOAT_ALL_CONFIG_H
-
+//Choose the boat here
 #define SAILBOAT_PRO
 #define VERSION_ARDUINO "2.0"
 
 #ifdef SAILBOAT_PRO
 #pragma message("SAILBOAT_PRO chosen")
-#define HK_TR6
 #include <config-SailboatPRO.h>
 #endif
 #ifdef SAILBOAT
 #pragma message("SAILBOAT chosen")
-#define HK_TR6
 #include <config-SailboatSmall.h>
 #endif
 #ifdef SAILBOAT_BIG
 #pragma message("SAILBOAT_BIG chosen")
-#define FLYSKY
 #include <config-SailboatBig.h>
 #endif
 #ifdef SAILBOAT_CATAMARAN
 #pragma message("SAILBOAT_CATAMARAN chosen")
-#define FLYSKY
 #include <config-Catamaran.h>
 #endif
 #ifdef SAILBOAT_TRIMARAN
 #pragma message("SAILBOAT_TRIMARAN chosen")
-#define HK_TR6
 #include <config-Trimaran.h>
 #endif
 
@@ -46,12 +41,7 @@
 
 
 /*******COMMON CONFIG********/
-
 #define EARTH_RADIUS	6371000  // Earth radius in metres
-//#define CMPS12_IMU
-#define XSENS_IMU
-//#define USE_ARDUINO_GPS
-#define FUSE_GPS_IMU
 
 /**PIN**/
 /********/

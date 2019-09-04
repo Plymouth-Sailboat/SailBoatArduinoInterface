@@ -25,15 +25,23 @@
 #define ACTUATOR_RUDDER2	2
 
 
+/**********************************************HARDWARE********************************************/
+//RC Transceiver
+#define FLYSKY
 
-/**********************************************PINS********************************************/
-/**PIN MAPPING**/
-/**************/
+//Using Grove Shield or not
+#define SERVO_SHIELD
+
 //WIND
 #define WIND_ANEMOMETER_PIN 3
 //RUDDER2
 #define RUDDER2_PIN 5
 
+//IMU
+//#define CMPS12_IMU
+#define XSENS_IMU
+//#define USE_ARDUINO_GPS
+#define FUSE_GPS_IMU
 
 
 /*****************************************CONFIGURATION****************************************/
