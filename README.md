@@ -27,8 +27,11 @@ This will launch the Arduino into Stanby Mode, just receiving data from the sens
 
 ## Authors
 
-* **Ulysse VAUTIER** - *Initial work* - [UlysseVautier](https://ulyssevautier.github.io/)
-* **Christophe Viel** - [Christophe Viel](https://www.researchgate.net/profile/Christophe_Viel)
+* **[Ulysse VAUTIER](https://ulyssevautier.github.io/)**
+
+## Contributor
+
+* **[Christophe VIEL](https://www.researchgate.net/profile/Christophe_Viel)**
 
 ## License
 
@@ -36,9 +39,10 @@ This project is licensed under the GNU General Public License v3.0 - see the [LI
 
 ## Acknowledgments
 This project uses well-known libraries from :
+* [Adafruit GPS](https://github.com/adafruit/Adafruit_GPS)
 * [TinyGPS++](http://arduiniana.org/libraries/tinygpsplus/)
 * [LiquidCrystal](https://bitbucket.org/fmalpartida/new-liquidcrystal/wiki/Home)
-We are also using EnableInterrupt librarie due to some hardware error on our boards :
+We are also using EnableInterrupt librarie to have more interrupts on our boards :
 * [EnableInterrupt](https://github.com/GreyGnome/EnableInterrupt)
 
 ## Look at the Wiki!
