@@ -49,6 +49,7 @@
 	#define SERVO_ADDRESS 0x40
 	#define RUDDER_SERVO 0
 	#define WINCH_SERVO 1
+	#define RUDDER2_SERVO 2
 #else
 	//RUDDER
 	#define RUDDER_PIN 6
