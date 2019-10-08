@@ -88,7 +88,13 @@ void Sailboat::msgCallback(const std_msgs::String& msg){
 void Sailboat::init(ros::NodeHandle* n){
     Wire.begin();
 
+#ifdef USE_ARDUINO_WIND
+#pragma message("Using Wind Sensor on Arduino")
     sensors[SENSOR_WINDSENSOR] = new WindSensor();
+#else
+#pragma message("Attach Wind Sensor on RPI")
+    sensors[SENSOR_WINDSENSOR] = new WindSensor();
+#endif
 
 #ifdef USE_ARDUINO_GPS
 #pragma message("Using GPS on Arduino")

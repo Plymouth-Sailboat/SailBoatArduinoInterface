@@ -3,12 +3,18 @@
 
 #include <config-Sailboat.h>
 
+#ifdef USE_ARDUINO_WIND
 #include <WindSensor.h>
+#else
+#include <WindSensorSubscriber.h>
+#endif
+
 #ifdef USE_ARDUINO_GPS
 #include <GPS.h>
 #else
 #include <GPSSubscriber.h>
 #endif
+
 #include <XSens.h>
 #include <CMPS12.h>
 #include <BatterySensor.h>

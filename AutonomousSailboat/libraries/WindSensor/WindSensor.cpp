@@ -53,6 +53,7 @@ void WindSensor::updateMeasures(){
         angle += 360;
   angle -= 180;
 	angle = -angle;
+	angle = angle*DEG_TO_RAD
 	angle = kf.updateEstimate(angle);
 }
 
@@ -64,10 +65,10 @@ void WindSensor::communicateData(){
     msg.x = 0;
     msg.y = 0;
 #ifdef WIND_ANEMOMETER_PIN
-	msg.x = windSpeed*cos(angle*DEG_TO_RAD);
-	msg.y = windSpeed*sin(angle*DEG_TO_RAD);
+	msg.x = windSpeed*cos(angle);
+	msg.y = windSpeed*sin(angle);
 #endif
-	msg.theta = angle*DEG_TO_RAD;
+	msg.theta = angle;
 
 	pub.publish(&msg);
 }

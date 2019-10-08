@@ -35,6 +35,7 @@
 //#define CMPS12_IMU
 #define XSENS_IMU
 //#define USE_ARDUINO_GPS
+//#define USE_ARDUINO_WIND
 #define FUSE_GPS_IMU
 
 
