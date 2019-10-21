@@ -18,6 +18,14 @@ These instructions will get you a copy of the project up and running on your loc
 
 [Current version of release](https://github.com/Plymouth-Sailboat/SailBoatArduinoInterface/releases/latest). You can download the .hex files and upload them directly on the Arduino using [avrdude](http://www.ladyada.net/learn/avr/avrdude.html). Or you can compile the project yourself with the Arduino IDE if you are not familiar with avrdude commands.
 
+### ROS_LIB
+The Arduino depends on the ros_lib library. This library needs to be up to date, built from your Raspberry Pi. To do so, follow the [README](https://github.com/Plymouth-Sailboat/SailBoatROS#ROS_LIB) from the Raspberry PI package.  
+You essentially need to build a library on the Raspberry Pi side running the command :
+```
+rosrun rosserial_arduino make_libraries.py .
+```
+And replace the folder __ros_lib__ in the Arduino library folder by this one, and reupload your code to the Arduino.
+
 ### Building and Uploading
 
 First copy the folder `libraries` and put it in `~/Documents/Arduino/` on your PC (or `~/Arduino/` for Ubuntu users).
