@@ -53,7 +53,7 @@ void WindSensor::updateMeasures(){
         angle += 360;
   angle -= 180;
 	angle = -angle;
-	angle = angle*DEG_TO_RAD
+	angle = angle*DEG_TO_RAD;
 	angle = kf.updateEstimate(angle);
 }
 
