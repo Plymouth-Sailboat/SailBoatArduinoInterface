@@ -47,7 +47,7 @@ This will launch the Arduino into Stanby Mode, just receiving data from the sens
 This project is licensed under the GNU General Public License v3.0 - see the [LICENSE.md](LICENSE.md) file for details
 
 ## CI (Continuous Integration)
-This project uses Continuous Integration with [Travis CI](https://travis-ci.org/Plymouth-Sailboat/SailBoatArduinoInterface).
+This project uses Continuous Integration with [Travis CI](https://travis-ci.com/Plymouth-Sailboat/SailBoatArduinoInterface).
 
 ## Acknowledgments
 This project uses well-known libraries from :
