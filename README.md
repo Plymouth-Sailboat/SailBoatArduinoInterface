@@ -1,5 +1,6 @@
 [![Current version on Arduino](https://img.shields.io/badge/Arduino-v1.8.5-blue.svg)](https://www.arduino.cc/en/Main/Software)
 [![Current version of release](https://img.shields.io/github/release/Plymouth-Sailboat/SailBoatArduinoInterface/all.svg)](https://github.com/Plymouth-Sailboat/SailBoatArduinoInterface/releases/latest)
+[![Build Status](https://travis-ci.com/Plymouth-Sailboat/SailBoatArduinoInterface.svg?branch=master)](https://travis-ci.com/Plymouth-Sailboat/SailBoatArduinoInterface)
 
 # SailBoatArduinoInterface
 Arduino code for [Plymouth's Autonomous Sailboat](https://plymouth-sailboat.github.io/). This contains the libraries, controllers and architecture of our arduino low-level controller for our sailboats. This arduino acquires all the data from the different sensors and send them to the main PC. It has also security features in case the PC shuts down.
@@ -44,6 +45,9 @@ This will launch the Arduino into Stanby Mode, just receiving data from the sens
 ## License
 
 This project is licensed under the GNU General Public License v3.0 - see the [LICENSE.md](LICENSE.md) file for details
+
+## CI (Continuous Integration)
+This project uses Continuous Integration with [Travis CI](https://travis-ci.org/Plymouth-Sailboat/SailBoatArduinoInterface).
 
 ## Acknowledgments
 This project uses well-known libraries from :
