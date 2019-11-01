@@ -23,6 +23,7 @@ env:
 before_install:
    - source <(curl -SLs https://raw.githubusercontent.com/plymouth-sailboat/sailboatarduinointerface/master/install_for_travis.sh)
    - curl -SLs https://raw.githubusercontent.com/adafruit/travis-ci-arduino/master/run-clang-format.py > run-clang-format.py
+   - rm -rf $HOME/arduino_ide/libraries/*
 
 install:
    - ln -s $PWD/AutonomousSailboat/libraries/* $HOME/arduino_ide/libraries/
