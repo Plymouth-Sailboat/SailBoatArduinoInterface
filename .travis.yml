@@ -18,6 +18,12 @@ env:
   global:
 #    - ARDUINO_IDE_VERSION="1.8.10"
      - PRETTYNAME="Autonomous Sailboat"
+     - INSTALL_ESP32=0
+     - INSTALL_ZERO=0
+     - INSTALL_ESP8266=0
+     - INSTALL_AVR=0
+     - INSTALL_SAMD=0
+     - INSTALL_NRF52=0
 
 before_install:
    - source <(curl -SLs https://raw.githubusercontent.com/adafruit/travis-ci-arduino/master/install.sh)
@@ -27,7 +33,7 @@ install:
    - ln -s $PWD/AutonomousSailboat/libraries/* $HOME/arduino_ide/libraries/
 
 script:
-   - python run-clang-format.py -r .
+#   - python run-clang-format.py -r .
    - build_platform mega2560
 
 # Generate and deploy documentation
