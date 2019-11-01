@@ -18,15 +18,10 @@ env:
   global:
 #    - ARDUINO_IDE_VERSION="1.8.10"
      - PRETTYNAME="Autonomous Sailboat"
-     - INSTALL_ESP32=0
-     - INSTALL_ZERO=0
-     - INSTALL_ESP8266=0
-     - INSTALL_AVR=0
-     - INSTALL_SAMD=0
-     - INSTALL_NRF52=0
+     - INSTALL_PLATFORMS=" "
 
 before_install:
-   - source <(curl -SLs https://raw.githubusercontent.com/adafruit/travis-ci-arduino/master/install.sh)
+   - source <(curl -SLs https://raw.githubusercontent.com/plymouth-sailboat/sailboatarduinointerface/master/install_for_travis.sh)
    - curl -SLs https://raw.githubusercontent.com/adafruit/travis-ci-arduino/master/run-clang-format.py > run-clang-format.py
 
 install:
