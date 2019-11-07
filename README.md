@@ -5,6 +5,15 @@
 # SailBoatArduinoInterface
 Arduino code for [Plymouth's Autonomous Sailboat](https://plymouth-sailboat.github.io/). This contains the libraries, controllers and architecture of our arduino low-level controller for our sailboats. This arduino acquires all the data from the different sensors and send them to the main PC. It has also security features in case the PC shuts down.
 
+**For more information look at the Wikis. The project is separated into 3 categories : [SailboatMeca](https://github.com/Plymouth-Sailboat/Sailboat-Meca), [SailBoatROS](https://github.com/Plymouth-Sailboat/SailBoatROS) and [SailboatArduinoInterface](https://github.com/Plymouth-Sailboat/SailBoatArduinoInterface).**
+
+**[SailboatMeca](https://github.com/Plymouth-Sailboat/Sailboat-Meca) explains the hardware configuration of the boat. The sensors that are used, how to build the control box and how to attach all the components to the control box.**
+
+**[SailBoatROS](https://github.com/Plymouth-Sailboat/SailBoatROS) contains the code on the Raspberry Pi. It explains how to have a full environment ready on the Raspberry Pi 3B and Raspberry Pi 3B+ to have a working boat.**
+
+**[SailBoatArduinoInterface](https://github.com/Plymouth-Sailboat/SailBoatArduinoInterface) explains how to upload the code to the Arduino. It also explains how to change the configuration files or how to add sensors to comply with your hardware configuration.  
+Please look at all their wikis and READMEs.**
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
