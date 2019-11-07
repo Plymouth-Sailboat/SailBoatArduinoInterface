@@ -3,6 +3,9 @@
 [![Build Status](https://travis-ci.com/Plymouth-Sailboat/SailBoatArduinoInterface.svg?branch=master)](https://travis-ci.com/Plymouth-Sailboat/SailBoatArduinoInterface)
 
 # SailBoatArduinoInterface
+
+![boatgif](https://github.com/Plymouth-Sailboat/plymouth-sailboat.github.io/blob/master/img/misc/boatgif2.gif?raw=true)
+
 Arduino code for [Plymouth's Autonomous Sailboat](https://plymouth-sailboat.github.io/). This contains the libraries, controllers and architecture of our arduino low-level controller for our sailboats. This arduino acquires all the data from the different sensors and send them to the main PC. It has also security features in case the PC shuts down.
 
 **For more information look at the Wikis. The project is separated into 3 categories : [SailboatMeca](https://github.com/Plymouth-Sailboat/Sailboat-Meca), [SailBoatROS](https://github.com/Plymouth-Sailboat/SailBoatROS) and [SailboatArduinoInterface](https://github.com/Plymouth-Sailboat/SailBoatArduinoInterface).**
