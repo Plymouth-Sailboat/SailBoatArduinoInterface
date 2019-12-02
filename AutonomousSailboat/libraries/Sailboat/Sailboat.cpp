@@ -115,6 +115,9 @@ void Sailboat::init(ros::NodeHandle* n){
 #elif defined(CMPS12_IMU)
 	#pragma message("CMPS12 is used as IMU")
 	sensors[SENSOR_IMU] = new CMPS12();
+#elif defined(JY901_IMU)
+	#pragma message("JY901 is used as IMU")
+	sensors[SENSOR_IMU] = new JY901IMU();
 #endif
   sensors[SENSOR_BATTERY] = new BatterySensor();
 

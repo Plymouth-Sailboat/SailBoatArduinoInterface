@@ -17,6 +17,7 @@
 
 #include <XSens.h>
 #include <CMPS12.h>
+#include <JY901IMU.h>
 #include <BatterySensor.h>
 
 #include <RCModule.h>
