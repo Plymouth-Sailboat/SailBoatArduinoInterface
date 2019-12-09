@@ -15,7 +15,7 @@
 
 class GPS : public SensorROS{
 public:
-	GPS() : SensorROS("Test/GPS/fix", &msg, 50, 500)/*, pub("test", &test)*/, subGPS("GPS/NMEA", &GPS::gps_callback, this), gps(nullptr),GPS_latInit(0), GPS_longInit(0), GPS_altInit(0), status(-1), coldStart(false), GPS_track(0), GPS_speed(0), time(0), hdop(0), nbSatellites(0), GPS_lat(0), GPS_long(0), GPS_alt(0){}
+	GPS() : SensorROS("Test/GPS/fix", &msg, 50, 500), subGPS("GPS/NMEA", &GPS::gps_callback, this), gps(nullptr),GPS_latInit(0), GPS_longInit(0), GPS_altInit(0), status(-1), coldStart(false), GPS_track(0), GPS_speed(0), time(0), hdop(0), nbSatellites(0), GPS_lat(0), GPS_long(0), GPS_alt(0){}
 
 	void init(ros::NodeHandle* n);
 	void updateMeasures();
