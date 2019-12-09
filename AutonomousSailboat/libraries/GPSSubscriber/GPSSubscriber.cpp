@@ -48,7 +48,7 @@ void GPS::gps_callback(const std_msgs::String& msg){
 				coldStart = false;
 			}
 		}
-		GPS_speed = gps.speed*0.5144445;
+		GPS_speed = gps.speed;
 		GPS_track = gps.angle*M_PI/180.0;
 		GPS_alt = gps.altitude;
 		lat_std_dev = gps.lat_std_dev;
