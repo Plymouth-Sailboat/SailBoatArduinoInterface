@@ -143,11 +143,13 @@ void setup() {
     EEPROM.write(1000, 0);
   }
 
+  
   watchdogSetup();
 
   if (LOGGER)
     Logger::Instance()->Toast("Sailboat is", "Ready!!", 0);
   //Sailboat::Instance()->publishMsg(String("Sailboat is Ready! Version : ") + String(VERSION_ARDUINO));
+  
 }
 
 void loop() {

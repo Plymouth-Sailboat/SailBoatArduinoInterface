@@ -1,7 +1,7 @@
 #include "XBus.h"
 #include <Wire.h>
 
-XBus::XBus(uint8_t address) : address(address){
+XBus::XBus(uint8_t address) : address(address), measuring(true){
 	for(int i = 0; i < 3; ++i){
 		accel[i] = 0;
 		rot[i] = 0;
@@ -103,11 +103,17 @@ void XBus::readPipeMeas(){
 bool XBus::readUntilAck(uint8_t ACK){
 	unsigned long t_now = millis();
 	bool res = false;
-	while(datanotif[0] != ACK && millis()-t_now < 5000){
+	while(datanotif[0] != ACK && millis()-t_now < 1000){
 		readPipeStatus();
 		readPipeNotif();
-		res = datanotif[0] == ACK;
-		delay(1);
+		if(notificationSize > 0)
+			res = datanotif[0] == ACK;
+		else{
+			if(ACK==0x31){
+				res = true;
+				break;
+			}
+		}
 	}
 	return res;
 }
@@ -151,7 +157,6 @@ void XBus::quatToAngles(){
 }
 
 void XBus::setLatLongAlt(float lat, float longitude, float alt){
-
 	uint8_t* dataMes = new uint8_t[24];
 	goToConfig();
 
@@ -200,12 +205,15 @@ void XBus::startBiasEstimation(){
 	Wire.write((char*)dataS,6);
 	Wire.endTransmission();
 
+
+	readUntilAck(0x23);
 	delete dataS;
 	delete dataMes;
 }
 
 
 void XBus::startCalibration(){
+	goToMeas();
 	uint8_t* dataMes = new uint8_t[1];
 	dataMes[0] = 0;
 	uint8_t* dataS = buildMessage(ICCCOMMAND,dataMes,1);
@@ -270,16 +278,15 @@ void XBus::storeCalibration(){
 	Wire.write((char*)dataS,5);
 	Wire.endTransmission();
 
-	readUntilAck(0x75);
-
 	delete dataS;
 	delete dataMes;
+
+	readUntilAck(0x75);
 
 	goToMeas();
 }
 
 void XBus::goToConfig(){
-
 	uint8_t* dataS = buildMessage(GOTOCONFIG,NULL,0);
 
 	Wire.beginTransmission(address);
@@ -289,6 +296,8 @@ void XBus::goToConfig(){
 	readUntilAck(0x31);
 
 	delete dataS;
+
+	measuring = false;
 }
 
 void XBus::goToMeas(){
@@ -298,15 +307,17 @@ void XBus::goToMeas(){
 	Wire.write((char*)dataS,4);
 	Wire.endTransmission();
 
-	readUntilAck(0x11);
+	measuring = readUntilAck(0x11);
 
 	delete dataS;
 }
 
 void XBus::read(){
-	readPipeStatus();
-	readPipeNotif();
-	readPipeMeas();
-	parseData(datameas, measurementSize);
-	quatToAngles();
+	if(measuring){
+		readPipeStatus();
+		readPipeNotif();
+		readPipeMeas();
+		parseData(datameas, measurementSize);
+		quatToAngles();
+	}
 }

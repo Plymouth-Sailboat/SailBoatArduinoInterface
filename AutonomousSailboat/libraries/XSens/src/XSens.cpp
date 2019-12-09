@@ -3,7 +3,8 @@
 
 void XSens::init(ros::NodeHandle* n){
 	IMU::init(n);
-	xbus.startBiasEstimation();
+	//xbus.goToMeas();
+	//xbus.startBiasEstimation();
 }
 
 void XSens::updateMeasure(){
@@ -26,6 +27,9 @@ void XSens::stopCalibration(){
 
 void XSens::storeCalibration(){
 	xbus.storeCalibration();
+}
+void XSens::startGyroCalibration(){
+	xbus.startBiasEstimation();
 }
 
 void XSens::updateTest(){

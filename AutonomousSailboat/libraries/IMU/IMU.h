@@ -31,6 +31,7 @@ class IMU : public SensorROS{
 		virtual void startCalibration(){}
 		virtual void stopCalibration(){}
 		virtual void storeCalibration(){}
+		virtual void startGyroCalibration(){}
 
 		float* getQuat(){return quat;}
 		float* getAccel(){return accel;}

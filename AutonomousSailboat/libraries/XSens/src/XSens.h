@@ -16,6 +16,7 @@ class XSens : public IMU{
 		void startCalibration();
 		void stopCalibration();
 		void storeCalibration();
+		void startGyroCalibration();
 
 		void setGPSPosition(float lat, float longitude, float alt);
 	private:
