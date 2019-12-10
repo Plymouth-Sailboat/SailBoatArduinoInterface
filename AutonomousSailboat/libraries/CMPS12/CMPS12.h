@@ -12,6 +12,8 @@ class CMPS12 : public IMU{
 		void updateMeasure();
 		void updateTest();
 
+		void storeCalibration();
+
 		float* getQuat(){return quat;}
 		float* getAccel(){return accel;}
 		float* getMag(){return mag;}
