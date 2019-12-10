@@ -1,6 +1,5 @@
 #include <Sailboat.h>
 #include <Log.h>
-
 #include "ReturnHome.h"
 #include "Standby.h"
 #include "HeaderV.h"
@@ -149,7 +148,6 @@ void setup() {
   if (LOGGER)
     Logger::Instance()->Toast("Sailboat is", "Ready!!", 0);
   //Sailboat::Instance()->publishMsg(String("Sailboat is Ready! Version : ") + String(VERSION_ARDUINO));
-  
 }
 
 void loop() {

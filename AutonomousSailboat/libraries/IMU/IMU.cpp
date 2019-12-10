@@ -28,9 +28,16 @@ void IMU::measureGravity(){
 	accel[0] = qgq1[0];
 	accel[1] =qgq1[1];
 	accel[2] = qgq1[2]-9.81f;
-	dv[0] = kf.updateEstimate(accel[0]*dt+dv[0]);
-	dv[1] = kf1.updateEstimate(accel[1]*dt+dv[1]);
-	dv[2] = kf2.updateEstimate(accel[2]*dt+dv[2]);
+
+	//float meas[4] = {accel[0]*dt + dv[0],accel[1]*dt + dv[1],accel[0],accel[1]};
+	float meas[4] = {0,0,accel[0],accel[1]};
+	kfP.predict();
+	kfP.update(meas);
+	dv[0] = meas[0];
+	dv[1] = meas[1];
+	//dv[0] = kf.updateEstimate(accel[0]*dt+dv[0]);
+	//dv[1] = kf1.updateEstimate(accel[1]*dt+dv[1]);
+	//dv[2] = kf2.updateEstimate(accel[2]*dt+dv[2]);
 
 	if(abs(dv[0]) > 1000.0 || isnan(dv[0]))
 		dv[0] = 0.0;
@@ -46,20 +53,29 @@ void IMU::fuseGPS_IMU(){
 	double speed = Sailboat::Instance()->getGPS()->getSpeed();
 	double track = -Sailboat::Instance()->getGPS()->getTrack()*M_PI/180.0;
 	if(Sailboat::Instance()->getGPS()->getStatus()+1 && !isnan(speed) && abs(speed) < 100.0){
-		dv[0] = kf.updateEstimate(-sin(track)*speed);
-		dv[1] = kf1.updateEstimate(cos(track)*speed);
-		dv[2] = kf2.updateEstimate(0);
-	}else{
-		dv[0] = kf.updateEstimate(0);
-		dv[1] = kf1.updateEstimate(0);
-		dv[2] = kf2.updateEstimate(0);
-	}
+		//dv[0] = kf.updateEstimate(-sin(track)*speed);
+		//dv[1] = kf1.updateEstimate(cos(track)*speed);
+		//dv[2] = kf2.updateEstimate(0);
+		float meas[4] = {-sin(track)*speed,cos(track)*speed,0,0};
+		kfP.predict();
+		kfP.update(meas);
+	}/*else{
+		//dv[0] = kf.updateEstimate(0);
+		//dv[1] = kf1.updateEstimate(0);
+		//dv[2] = kf2.updateEstimate(0);
+		//float meas[4] = {0,0,accel[0],accel[1]};
+		//kfP.predict();
+		//kfP.update(meas);
+		//dv[0] = meas[0];
+		//dv[1] = meas[1];
+	}*/
 	if(abs(dv[0]) > 1000.0 || isnan(dv[0]))
 		dv[0] = 0.0;
 	if(abs(dv[1]) > 1000.0 || isnan(dv[1]))
 		dv[1] = 0.0;
 	if(abs(dv[2]) > 1000.0 || isnan(dv[2]))
 		dv[2] = 0.0;
+
 }
 
 
