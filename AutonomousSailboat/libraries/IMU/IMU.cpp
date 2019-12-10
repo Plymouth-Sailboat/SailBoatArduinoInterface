@@ -54,6 +54,12 @@ void IMU::fuseGPS_IMU(){
 		dv[1] = kf1.updateEstimate(0);
 		dv[2] = kf2.updateEstimate(0);
 	}
+	if(abs(dv[0]) > 1000.0 || isnan(dv[0]))
+		dv[0] = 0.0;
+	if(abs(dv[1]) > 1000.0 || isnan(dv[1]))
+		dv[1] = 0.0;
+	if(abs(dv[2]) > 1000.0 || isnan(dv[2]))
+		dv[2] = 0.0;
 }
 
 
